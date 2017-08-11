@@ -10,7 +10,7 @@ The expectation is that different data types will lend themselves to different d
 
 1) Have your own Amazon Web Services account.
 
-	- Create one at aws.amazon.com
+	- Create one at http://aws.amazon.com
  
 2) Obtain Access Keys:
  
@@ -22,7 +22,7 @@ The expectation is that different data types will lend themselves to different d
  
 3) Have Amazon Web Services Command Line Interface (AWS CLI) installed on your computer.
 
-	- Installation options can be found at aws.amazon.com/cli
+	- Installation options can be found at http://aws.amazon.com/cli
 
 	- To run AWS CLI on Windows, navigate to C:\Program Files\Amazon\ and run "aws
 	 --version" to confirm that the program is installed.
