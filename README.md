@@ -29,14 +29,14 @@ The expectation is that different data types will lend themselves to different d
  
 4) Run the following command through AWS CLI:
 
-aws configure
- 
-and enter the following:
- 
-* Access Key (from step 2)
-* Secret Access Key (from step 2)
-* Default region name (us-east-1)
-* Default output format (ex: json)
+	aws configure
+	 
+	and enter the following:
+	 
+	* Access Key (from step 2)
+	* Secret Access Key (from step 2)
+	* Default region name (us-east-1)
+	* Default output format (ex: json)
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ Run the following to check access:
 aws s3 ls s3://*bucket name*/ --recursive --human-readable --summarize
 ```
 
-####Directory structure within buckets:
+#### Directory structure within buckets:
 
 The directory structure within the buckets will take the following form:
 
@@ -60,7 +60,7 @@ So for example, accessing Wyoming CV Pilots BSM data for a specific time and loc
 
 wydot/BSM/2017-08-03T17:49:07+00:00/41.3N_-105.6E/wydot-filtered-bsm-1501782546127.json
 
-Where in this example the actual file is titled 'wydot-filtered-bsm-1501782546127.json'.
+Where in this example the actual BSM file is titled 'wydot-filtered-bsm-1501782546127.json'.
 
 #### Downloading from the S3 Bucket
 
