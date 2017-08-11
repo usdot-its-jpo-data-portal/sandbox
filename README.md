@@ -2,10 +2,11 @@
 
 This document is meant to propose a data hierarchy to structure the processed data ingested from the CV Pilot programs. The system will provide multiple ways of viewing the data which will include an S3 bucket within AWS and various analytical or data views that will pull data from that S3 bucket. These analytical tools may include databases, noSQL, Athena, or other analytical tools to structure/reorganize and pull the data. The S3 bucket provides an alternative that is similar to traversing a directory structure. The intention of the hierarchy is for it to provide a consistent structure within a pilot program, to be easily understood by a human traversing the directories, to be structured sufficiently so 3rd parties could easily build additional software applications to pull data from the hierarchy, and to be flexible enough to capture different data types.
 The expectation is that different data types will lend themselves to different directory hierarchies. In addition, the different pilot sites may have compelling reasons to organize the data in different hierarchies for the same data type. The below hierarchy is intended for processed basic safety messages (BSM), where one message is captured per file. More details on BSM are available at:
-	http://standards.sae.org/j2735_201603/
-	https://www.its.dot.gov/itspac/october2012/PDF/data_availability.pdf
+	- http://standards.sae.org/j2735_201603/
 
-# Prerequisites
+	- https://www.its.dot.gov/itspac/october2012/PDF/data_availability.pdf
+
+### Prerequisites
 
 1) Have your own Amazon Web Services account.
 
@@ -37,7 +38,7 @@ The expectation is that different data types will lend themselves to different d
 	- Default region name (us-east-1)
 	- Default output format (ex: json)
 
-# Getting Started
+## Getting Started
 
 Now go to your command window. The title of the two s3 bucket is: 
 
@@ -64,6 +65,6 @@ Where in this example the actual file is titled 'wydot-filtered-bsm-150178254612
 
 To download from the S3 Bucket, enter the following command:
 
-'''
+```
 aws s3 sync {local_directory} s3://bucketname/
-'''
+```
