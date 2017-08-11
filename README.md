@@ -28,9 +28,9 @@ The expectation is that different data types will lend themselves to different d
 	 --version" to confirm that the program is installed.
  
 4) Run the following command through AWS CLI:
-
+	```
 	aws configure
-	 
+	```
 	and enter the following:
 	 
 	* Access Key (from step 2)
