@@ -54,7 +54,7 @@ aws s3 ls s3://*bucket name*/ --recursive --human-readable --summarize
 
 The directory structure within the buckets will take the following form:
 
-<Source_Name>/<Data_Type>/<Date_Time>/<Location>/<File_Name>
+{Source_Name}/{Data_Type}/{Date_Time}/{Location}/{File_Name}
 
 So for example, accessing Wyoming CV Pilots BSM data for a specific time and location will look like: 
 
