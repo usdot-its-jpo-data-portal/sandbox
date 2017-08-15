@@ -47,7 +47,7 @@ Now go to your command window. The title of the two s3 buckets are:
 
 Run the following to check access:
 ```
-aws s3 ls s3://*bucket name*/ --recursive --human-readable --summarize --profile[profile_name]
+aws s3 ls s3://*bucket name*/ --recursive --human-readable --summarize --profile {profile_name}
 ```
 
 #### Directory structure within buckets:
@@ -64,8 +64,10 @@ Where in this example the actual BSM file is titled 'wydot-filtered-bsm-15017825
 
 #### Downloading from the S3 Bucket
 
-To download from the S3 Bucket, enter the following command:
+To download all data from the S3 Bucket, enter the following command:
 
 ```
 aws s3 cp s3://bucketname/ {local_directory} --recursive --profile public
 ```
+
+To limit the data being dowloaded you can use AWS CLI's filtering which is detailed here: http://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters.
