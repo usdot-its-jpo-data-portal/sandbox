@@ -4,7 +4,11 @@ This document is meant to propose a data hierarchy to structure the processed da
 
 The S3 bucket provides an alternative that is similar to traversing a directory structure. The intention of the hierarchy is for it to provide a consistent structure within a pilot program, be easily understood by a human traversing the directories, be structured sufficiently so third parties can build software applications using the data, and to be flexible enough to capture different data types. 
 
-The expectation is that different data types will lend themselves to different directory hierarchies. In addition, the different pilot sites may have compelling reasons to organize the data in different hierarchies for the same data type. The below hierarchy is intended for processed BSMs from the Wyoming CV Pilot site, where one message is captured per file. More details on BSM are available at http://standards.sae.org/j2735_201603/ and https://www.its.dot.gov/itspac/october2012/PDF/data_availability.pdf. 
+The expectation is that different data types will lend themselves to different directory hierarchies. In addition, the different pilot sites may have compelling reasons to organize the data in different hierarchies for the same data type. The below hierarchy is intended for processed BSMs from the Wyoming CV Pilot site, where one message is captured per file. More details on BSM are available at:
+
+http://standards.sae.org/j2735_201603/ 
+and 
+https://www.its.dot.gov/itspac/october2012/PDF/data_availability.pdf 
 
 ### Prerequisites
 
