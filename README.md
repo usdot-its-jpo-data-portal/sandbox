@@ -125,7 +125,7 @@ schemaVersion|N/A|Version number of the full file schema
 
 #### Doing simple data analysis on the Wyoming Connected Vehicles (CV) Data
 
-A basic tutorial in python 
-[Introduction to WY CV data through ITS JPO Sandbox](notebooks/Introduction%20to%20WY%20CV%20data%20through%20ITS%20JPO%20Sandbox.ipynb) create for using to walkthrough
+A basic tutorial Covering acceessing the data in a Python Jypter Notebook:
+- [Introduction to WY CV data through ITS JPO Sandbox](notebooks/Introduction%20to%20WY%20CV%20data%20through%20ITS%20JPO%20Sandbox.ipynb) 
 
 
