@@ -95,14 +95,14 @@ Near real-time feed of CV data coming in from the [Wyoming Connected Vehicle Pil
 
 All files are in a JSON format and are broken into three core fields:
 
-- metadata - Includes all additional metadata informaiton add to the file to provide additional contex for the data
+- metadata - Includes all additional metadata information added to the file to provide additional contex for the data
 - payload - The [J2735 Standard](http://standards.sae.org/j2735_201603/) information that includes information like vehicle location, speed, and heading
 - schemaVersion - Version number of the full file schema
 
 
 Base Field Name | Field Name | Definition
  ---  |  ---  |  ---
-metadata|generatedAt|Closest time to which the message was created, either signed or received by On Board Unit (OBU) in UTC format.  This information is taken from communication header.
+metadata|generatedAt|Closest time to which the message was created, either signed or received by On Board Unit (OBU) in UTC format. This information is taken from the communication header.
 metadata|logFileName|Name of the deposited file into the ODE
 metadata|validSignature|Boolean of signed vs unsigned data based on the SCMS System
 metadata|sanitized|Boolean value indicating whether the data has been sanitized by the[Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp)
@@ -113,11 +113,16 @@ metadata|serialId/bundleSize|Size of the bundle within the processed file
 metadata|serialId/bundleId|Bundle identifier
 metadata|serialId/recordId|Record identier within the bundle
 metadata|serialId/serialNumber|Combined identifier within open stream
+<<<<<<< HEAD
 metadata|receivedAt|Time the ODE received the data n UTC format
 metadata|latency| Difference between generatedAt and receivedAt time in seconds
+=======
+metadata|receivedAt|Time the ODE received the data in UTC format
+metadata|latency| Difference in generatedAt and receivedAt time in seconds
+>>>>>>> 8476c313222e71dda2f93f6b30888b1df2953423
 metadata|schemaVersion|Version number of the metadata schema
 payload| dataType| Type of J2735 message 
-payload|data| This includes all fields from from [J2735 Standard](http://standards.sae.org/j2735_201603/)
+payload|data| This includes all fields from [J2735 Standard](http://standards.sae.org/j2735_201603/)
 payload|schemaVersion|Version number of the payload schema
 schemaVersion|N/A|Version number of the full file schema
 
@@ -129,7 +134,11 @@ schemaVersion|N/A|Version number of the full file schema
 
 #### Doing simple data analysis on the Wyoming Connected Vehicles (CV) Data
 
+<<<<<<< HEAD
 A basic tutorial Covering acceessing the data in a Python Jupyter Notebook:
+=======
+A basic tutorial Covering accessing the data in a Python Jypter Notebook:
+>>>>>>> 8476c313222e71dda2f93f6b30888b1df2953423
 - [Introduction to WY CV data through ITS JPO Sandbox](notebooks/Introduction%20to%20WY%20CV%20data%20through%20ITS%20JPO%20Sandbox.ipynb) 
 
 
