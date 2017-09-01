@@ -16,6 +16,7 @@ The expectation is that different data types will lend themselves to different d
 - [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode) - This ITS JPO Open Source tool is used to collect and process Connected Vehicle data in near real time, and route it to other data repositories, including the Amazon S3 bucket.  Processing performed by the ODE includes validation, integration, sanitization (removal of private data), and integration
 - [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp) - This  ITS JPO Open source module is used to sanitize the data to ensure no personal information is shared with the public.  For more information on how this is done please review the documentation in the GitHub Repository.
 - [Connected Vehicles Performance Evaluation Platform (CVPEP)](https://github.com/VolpeUSDOT/CV-PEP) - Limited access Platform for storing raw CV data for evaluation.
+- [ITS JPO Data Site - Beta](https://www.its.dot.gov/data/) - Beta version of ITS JPO data site which allows users to search for various ITS data.
 
 ### Prerequisites
 
