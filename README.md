@@ -52,9 +52,8 @@ The expectation is that different data types will lend themselves to different d
 
 ## Getting Started
 
-Now go to your command window. The title of the two s3 buckets are: 
+Now go to your command window. The title of the s3 bucket is: 
 
- *	CV PEP (restricted access): usdot-its-cvpilot-eval-data
  *	RDE (public access): usdot-its-cvpilot-public-data
 
 Run the following to check access:
