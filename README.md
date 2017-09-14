@@ -13,6 +13,8 @@ The expectation is that different data types will lend themselves to different d
 
 ### Related ITS JPO Projects
 
+
+- [ITS JPO Connected Vehicles (CV) Pilot Deployment Program](https://www.its.dot.gov/pilots/cv_pilot_plan.htm)- The program seeks to spur innovation among early adopters of connected vehicle application concepts, using best available and emerging technologies. The pilot deployments are expected to integrate connected vehicle research concepts into practical and effective elements, enhancing existing operational capabilities.
 - [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode) - This ITS JPO Open Source tool is used to collect and process Connected Vehicle data in near real time, and route it to other data repositories, including the Amazon S3 bucket.  Processing performed by the ODE includes validation, integration, sanitization (removal of private data), and integration
 - [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp) - This  ITS JPO Open source module is used to sanitize the data to ensure no personal information is shared with the public.  For more information on how this is done please review the documentation in the GitHub Repository.
 - [Connected Vehicles Performance Evaluation Platform (CVPEP)](https://github.com/VolpeUSDOT/CV-PEP) - Limited access Platform for storing raw CV data for evaluation.
@@ -105,7 +107,7 @@ Base Field Name | Field Name | Definition
 metadata|generatedAt|Closest time to which the message was created, either signed or received by On Board Unit (OBU) in UTC format. This information is taken from the communication header.
 metadata|logFileName|Name of the deposited file into the ODE
 metadata|validSignature|Boolean of signed vs unsigned data based on the SCMS System
-metadata|sanitized|Boolean value indicating whether the data has been sanitized by the[Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp)
+metadata|sanitized|Boolean value indicating whether the data has been sanitized by the [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp)
 metadata|payloadType|Java class identifying the type of payload included with the message
 metadata|serialId|Unique record identifier for the message
 metadata|serialId/streamId|Stream that process the original log file
@@ -131,7 +133,7 @@ schemaVersion|N/A|Version number of the full file schema
 
 #### Doing simple data analysis on the Wyoming Connected Vehicles (CV) Data
 
-A basic tutorial Covering acceessing the data in a Python Jupyter Notebook:
+A basic tutorial Covering accessing the data in a Python Jupyter Notebook:
 - [Introduction to WY CV data through ITS JPO Sandbox](notebooks/Introduction%20to%20WY%20CV%20data%20through%20ITS%20JPO%20Sandbox.ipynb) 
 
 
