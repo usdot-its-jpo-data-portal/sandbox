@@ -97,7 +97,7 @@ Near real-time feed of CV data coming in from the [Wyoming Connected Vehicle Pil
 
 All files are in a JSON format and are broken into three core fields:
 
-- metadata - Includes all additional metadata information added to the file to provide additional contex for the data
+- metadata - Includes all additional metadata information added to the file to provide additional context for the data
 - payload - The [J2735 Standard](http://standards.sae.org/j2735_201603/) information that includes information like vehicle location, speed, and heading
 - schemaVersion - Version number of the full file schema
 
