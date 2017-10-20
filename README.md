@@ -63,6 +63,11 @@ Run the following to check access:
 aws s3 ls s3://{bucket name}/ --recursive --human-readable --summarize --profile {profile_name}
 ```
 
+For Example:
+```
+aws s3 ls s3://usdot-its-cvpilot-public-data/ --recursive --human-readable --summarize --profile default
+```
+
 #### Directory structure within buckets:
 
 The directory structure within the buckets will take the following form:
@@ -82,58 +87,30 @@ Where in this example the actual BSM file is titled 'wydot-filtered-bsm-15017825
 To download all data from the S3 Bucket, enter the following command:
 
 ```
-aws s3 cp s3://bucketname/ {local_directory} --recursive --profile public
+aws s3 cp s3://{bucketname}/{local_directory} --recursive
+```
+
+For Example:
+```
+aws s3 cp s3://usdot-its-cvpilot-public-data/wydot/BSM/20170815T234600645Z/41.3N_-105.6E/wydot-filtered-bsm-1501782546127.json --recursive
 ```
 
 To limit the data being dowloaded you can use AWS CLI's filtering which is detailed here: http://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters.
 
 ## Data Types
 
+
+
 ### Wyoming CV Data
 
-Near real-time feed of CV data coming in from the [Wyoming Connected Vehicle Pilot]( https://www.its.dot.gov/pilots/pilots_wydot.htm).
-
-#### BSM Data Format
-
-All files are in a JSON format and are broken into three core fields:
-
-- metadata - Includes all additional metadata information added to the file to provide additional context for the data
-- payload - The [J2735 Standard](http://standards.sae.org/j2735_201603/) information that includes information like vehicle location, speed, and heading
-- schemaVersion - Version number of the full file schema
-
-
-Base Field Name | Field Name | Definition
- ---  |  ---  |  ---
-metadata|generatedAt|Closest time to which the message was created, either signed or received by On Board Unit (OBU) in UTC format. This information is taken from the communication header.
-metadata|logFileName|Name of the deposited file into the ODE
-metadata|validSignature|Boolean of signed vs unsigned data based on the SCMS System
-metadata|sanitized|Boolean value indicating whether the data has been sanitized by the [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp)
-metadata|payloadType|Java class identifying the type of payload included with the message
-metadata|serialId|Unique record identifier for the message
-metadata|serialId/streamId|Stream that process the original log file
-metadata|serialId/bundleSize|Size of the bundle within the processed file
-metadata|serialId/bundleId|Bundle identifier
-metadata|serialId/recordId|Record identier within the bundle
-metadata|serialId/serialNumber|Combined identifier within open stream
-metadata|receivedAt|Time the ODE received the data n UTC format
-metadata|latency| Difference between generatedAt and receivedAt time in seconds
-metadata|receivedAt|Time the ODE received the data in UTC format
-metadata|latency| Difference in generatedAt and receivedAt time in seconds
-metadata|schemaVersion|Version number of the metadata schema
-payload| dataType| Type of J2735 message 
-payload|data| This includes all fields from [J2735 Standard](http://standards.sae.org/j2735_201603/)
-payload|schemaVersion|Version number of the payload schema
-schemaVersion|N/A|Version number of the full file schema
-
-#### Sample Data
-
-- [Sample of Wyoming CV Data](/sample/wydot-filtered-bsm-1502840971677.json)
+-  [For details on Wyoming CV DATA BSMs and TIMs messages and samples](https://github.com/usdot-jpo-ode/jpo-ode/blob/develop/docs/metadata_standards.md)
 
 
 
 #### Doing simple data analysis on the Wyoming Connected Vehicles (CV) Data
 
-A basic tutorial Covering accessing the data in a Python Jupyter Notebook:
+A basic tutorial covering accessing the data in a Python Jupyter Notebook 
+(note analysis of the data can be done by almost any programming langauge just Python was selected for this example):
 - [Introduction to WY CV data through ITS JPO Sandbox](notebooks/Introduction%20to%20WY%20CV%20data%20through%20ITS%20JPO%20Sandbox.ipynb) 
 
 
