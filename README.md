@@ -103,7 +103,7 @@ To limit the data being dowloaded you can use AWS CLI's filtering which is detai
 
 ### Wyoming CV Data
 
--  [For details on Wyoming CV DATA BSMs and TIMs messages and samples](https://github.com/usdot-jpo-ode/jpo-ode/blob/develop/docs/metadata_standards.md)
+-  [Details on Wyoming CV DATA BSMs and TIMs messages and samples](https://github.com/usdot-jpo-ode/jpo-ode/blob/develop/docs/metadata_standards.md)
 
 
 
