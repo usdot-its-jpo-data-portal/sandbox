@@ -1,4 +1,4 @@
-# Accessing CV Pilots Data From a Public Amazon S3 Bucket - Beta
+# Accessing CV Pilots Data From a Public Amazon S3 Bucket
 
 This repository is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs and other streaming data sources. Currently this is a beta system using a folder hierarchy for processed Basic Safety Messages (BSM) from the Wyoming CV Pilot site.
 
