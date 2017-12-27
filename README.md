@@ -3,18 +3,18 @@
 
 **Table of Contents**
 
-* [1. Background](#1.-backgound)
-	* [1.1 Related ITS JPO Projects](#1.1-related-its-jpo-projects)
-* [2.0 Getting Started](#2.0-getting-started)
-	* [2.1 Prerequisites for accessing full data sets](#prerequisites-for-accessing-full-data-sets)
-	* [2.2 Accessing Files](accessing-files)
-	* [2.2 Directory Structure](#directory-structure)
-	* [2.3 Downloading from S3](#downloading-from-s3)
- * [3.0 Data Types](#data-types)
- 	* [3.1 Wyoming CV Data](#wyoming-cv-data)
-* [4.0 Get Involved](#get-involved)
+* [Background](backgound)
+	* [Related ITS JPO Projects](#related-its-jpo-projects)
+* [Getting Started](#getting-started)
+	* [Prerequisites for accessing full data sets](#prerequisites-for-accessing-full-data-sets)
+	* [Accessing Files](accessing-files)
+	* [Directory Structure](#directory-structure)
+	* [Downloading from S3](#downloading-from-s3)
+ * [Data Types](#data-types)
+ 	* [Wyoming CV Data](#wyoming-cv-data)
+* [Get Involved](#get-involved)
 
-## 1. Background
+## Background
 This repository contains information on accessing complete data sets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program. It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs and other streaming data sources. Currently this is a beta system using a folder hierarchy for processed Basic Safety Messages (BSM) from the Wyoming CV Pilot site.
 
 USDOT JPO are soliciting user feedback on the current folder hierarchy to determine what the best approach is and to help inform future directory hierarchies for other data types. To provide input on the hieracrchy or the data please [Open an Issue](https://github.com/usdot-its-jpo-data-portal/sandbox/issues). 
@@ -28,7 +28,7 @@ The expectation is that different data types will lend themselves to different d
 - [General CV information: Vehicle Based Data and Availability](https://www.its.dot.gov/itspac/october2012/PDF/data_availability.pdf) - General introduction slides on CV data
 - [Sample of the WYDOT BSM data](https://data.transportation.gov/Automobiles/Wyoming-CV-Pilot-Basic-Safety-Message-One-Day-Samp/9k4m-a3jc) - Sample of WYDOT BSM data
 
-### 1.1 Related ITS JPO Projects
+### Related ITS JPO Projects
 
 - [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode) - This ITS JPO Open Source tool is used to collect and process Connected Vehicle data in near real time, and route it to other data repositories, including the Amazon S3 bucket.  
 - [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp) - This  ITS JPO Open source module is used to sanitize the data to ensure no personal information is shared with the public.  
@@ -37,9 +37,9 @@ The expectation is that different data types will lend themselves to different d
 
 
 
-## 2. Getting Started
+## Getting Started
 
-### 2.1 Prerequisites for accessing full data sets
+### Prerequisites for accessing full data sets
 
 1) Have your own Free Amazon Web Services account.
 
@@ -71,7 +71,7 @@ The expectation is that different data types will lend themselves to different d
 	* Default region name (us-east-1)
 	* Default output format (ex: json)
 
-### 2.3 Accessing files
+### Accessing files
 
 Now go to your command window. The title of the s3 bucket is: 
 
@@ -87,7 +87,7 @@ For Example:
 aws s3 ls s3://usdot-its-cvpilot-public-data/ --recursive --human-readable --summarize --profile default
 ```
 
-### 2.3 Directory structure within buckets:
+### Directory Structure
 
 The directory structure within the buckets will take the following form:
 
@@ -101,7 +101,7 @@ So for example, accessing Wyoming CV Pilots BSM data for a specific time and loc
 
 Where in this example the actual BSM file is titled 'wydot-filtered-bsm-1501782546127.json'.
 
-### 2.4 Downloading from the S3
+### Downloading from the S3
 
 To download all data from the S3 Bucket, enter the following command:
 
@@ -116,11 +116,11 @@ aws s3 cp s3://usdot-its-cvpilot-public-data/wydot/BSM/20170815T234600645Z/41.3N
 
 To limit the data being dowloaded you can use AWS CLI's filtering which is detailed here: http://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters.
 
-## 3.0 Data Types
+## Data Types
 
 
 
-### 3.1 Wyoming CV Data
+### Wyoming CV Data
 
 - [Details on Wyoming CV DATA BSMs and TIMs messages and samples](https://github.com/usdot-jpo-ode/jpo-ode/blob/develop/docs/metadata_standards.md)
 
@@ -133,7 +133,7 @@ To limit the data being dowloaded you can use AWS CLI's filtering which is detai
 
 - [Single file Sample](https://github.com/usdot-its-jpo-data-portal/sandbox/blob/master/sample/wydot-filtered-tim-1512415831724.json)
 
-## 4.0 Get Involved
+## Get Involved
 ------------
 
 We welcome your feedback and ideas. Here's how to reach us:
