@@ -3,11 +3,11 @@
 
 **Table of Contents**
 
-* [Background](backgound)
+* [Background](#backgound)
 	* [Related ITS JPO Projects](#related-its-jpo-projects)
 * [Getting Started](#getting-started)
 	* [Prerequisites for accessing full data sets](#prerequisites-for-accessing-full-data-sets)
-	* [Accessing Files](accessing-files)
+	* [Accessing Files](#accessing-files)
 	* [Directory Structure](#directory-structure)
 	* [Downloading from S3](#downloading-from-s3)
  * [Data Types](#data-types)
@@ -101,7 +101,7 @@ So for example, accessing Wyoming CV Pilots BSM data for a specific time and loc
 
 Where in this example the actual BSM file is titled 'wydot-filtered-bsm-1501782546127.json'.
 
-### Downloading from the S3
+### Downloading from S3
 
 To download all data from the S3 Bucket, enter the following command:
 
