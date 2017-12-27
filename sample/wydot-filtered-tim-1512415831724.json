@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "logFileName": "rxMsg_1512398557_fe80::226:adff:fe05:14c1.csv",
+    "odeReceivedAt": "2017-12-04T19:30:05.978Z[UTC]",
+    "payloadType": "us.dot.its.jpo.ode.model.OdeTimPayload",
+    "receivedMessageDetails": {
+      "locationData": {
+        "elevation": 0,
+        "heading": 92.1,
+        "latitude": 41.0986645,
+        "longitude": -105.1227162,
+        "speed": 30.2
+      },
+      "rxSource": "RSU"
+    },
+    "recordGeneratedAt": "2017-12-01T13:26:24.497Z[UTC]",
+    "recordGeneratedBy": "OBU",
+    "recordType": "rxMsg",
+    "sanitized": false,
+    "schemaVersion": 3,
+    "serialId": {
+      "bundleId": 13,
+      "bundleSize": 1,
+      "recordId": 2,
+      "serialNumber": 0,
+      "streamId": "010df2f5-b5b7-4d89-98f9-e46227fb94db"
+    },
+    "validSignature": false
+  },
+  "payload": {
+    "data": {
+      "MessageFrame": {
+        "messageId": 31,
+        "value": {
+          "TravelerInformation": {
+            "dataFrames": {
+              "TravelerDataFrame": {
+                "content": {
+                  "exitService": {
+                    "SEQUENCE": {
+                      "item": {
+                        "itis": 7991
+                      }
+                    }
+                  }
+                },
+                "duratonTime": 24520,
+                "frameType": {
+                  "commercialSignage": ""
+                },
+                "msgId": {
+                  "furtherInfoID": "0000"
+                },
+                "priority": 2,
+                "regions": {
+                  "GeographicalPath": {
+                    "description": {
+                      "oldRegion": {
+                        "area": {
+                          "regionPointSet": {
+                            "anchor": {
+                              "elevation": 2670,
+                              "lat": 424918451,
+                              "long": -834196504
+                            },
+                            "nodeList": {
+                              "RegionOffsets": [
+                                {
+                                  "xOffset": -186,
+                                  "yOffset": 48
+                                },
+                                {
+                                  "xOffset": 158,
+                                  "yOffset": -118
+                                },
+                                {
+                                  "xOffset": 138,
+                                  "yOffset": 40
+                                },
+                                {
+                                  "xOffset": 89,
+                                  "yOffset": 117
+                                },
+                                {
+                                  "xOffset": -3,
+                                  "yOffset": 156
+                                },
+                                {
+                                  "xOffset": -458,
+                                  "yOffset": -29
+                                },
+                                {
+                                  "xOffset": 0,
+                                  "yOffset": 0
+                                },
+                                {
+                                  "xOffset": 76,
+                                  "yOffset": -166
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "direction": "0000000000000000"
+                      }
+                    },
+                    "id": {
+                      "id": 0
+                    }
+                  }
+                },
+                "sspLocationRights": 0,
+                "sspMsgRights1": 0,
+                "sspMsgRights2": 0,
+                "sspTimRights": 0,
+                "startTime": 487705,
+                "startYear": 2016
+              }
+            },
+            "msgCnt": 1,
+            "packetID": "000000000039F63AA6"
+          }
+        }
+      }
+    },
+    "dataType": "TravelerInformation"
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "logFileName": "bsmTx_1512491800_fe80::226:adff:fe05:14c1.csv",
+    "odeReceivedAt": "2017-12-05T17:45:13.736Z[UTC]",
+    "payloadType": "us.dot.its.jpo.ode.model.OdeBsmPayload",
+    "recordGeneratedAt": "2017-12-05T16:33:58Z[UTC]",
+    "recordGeneratedBy": "OBU",
+    "recordType": "bsmTx",
+    "sanitized": true,
+    "schemaVersion": 3,
+    "serialId": {
+      "bundleId": 8457,
+      "bundleSize": 1,
+      "recordId": 2,
+      "serialNumber": 0,
+      "streamId": "9d372bb3-4d23-4877-a760-076cc6018e4f"
+    },
+    "validSignature": true
+  },
+  "payload": {
+    "data": {
+      "coreData": {
+        "accelSet": {
+          "accelYaw": 0.00
+        },
+        "accuracy": {
+          "semiMajor": 2.05,
+          "semiMinor": 3.20
+        },
+        "brakes": {
+          "abs": "unavailable",
+          "auxBrakes": "unavailable",
+          "brakeBoost": "unavailable",
+          "scs": "unavailable",
+          "traction": "unavailable",
+          "wheelBrakes": {
+            "leftFront": false,
+            "leftRear": false,
+            "rightFront": false,
+            "rightRear": false,
+            "unavailable": true
+          }
+        },
+        "heading": 258.6000,
+        "id": "5B820000",
+        "msgCnt": 38,
+        "position": {
+          "elevation": 2222.0,
+          "latitude": 41.0997729,
+          "longitude": -105.1547481
+        },
+        "secMark": 58000,
+        "size": {
+          "length": 1190,
+          "width": 490
+        },
+        "speed": 27.98,
+        "transmission": "NEUTRAL"
+      },
+      "partII": [
+        {
+          "id": "VehicleSafetyExtensions",
+          "value": {
+            "pathHistory": {
+              "crumbData": [
+                {
+                  "elevationOffset": 0.0,
+                  "latOffset": -0.0000192,
+                  "lonOffset": -0.0001306,
+                  "timeOffset": 0.40
+                },
+                {
+                  "elevationOffset": 0.0,
+                  "latOffset": -0.0001563,
+                  "lonOffset": -0.0013271,
+                  "timeOffset": 4.10
+                },
+                {
+                  "elevationOffset": 1.0,
+                  "latOffset": -0.0002405,
+                  "lonOffset": -0.0025387,
+                  "timeOffset": 7.90
+                }
+              ]
+            },
+            "pathPrediction": {
+              "confidence": 70.0,
+              "radiusOfCurve": -25.4
+            }
+          }
+        },
+        {
+          "id": "SupplementalVehicleExtensions",
+          "value": {
+            "classDetails": {
+              "fuelType": "unknownFuel",
+              "hpmsType": "none",
+              "keyType": 0,
+              "regional": [],
+              "role": "basicVehicle"
+            },
+            "regional": [],
+            "vehicleData": {
+              "height": 3.70
+            },
+            "weatherProbe": {}
+          }
+        }
+      ]
+    },
+    "dataType": "us.dot.its.jpo.ode.plugin.j2735.J2735Bsm"
+  }
+}

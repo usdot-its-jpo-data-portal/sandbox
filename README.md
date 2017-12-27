@@ -1,28 +1,47 @@
-# Accessing CV Pilots Data From a Public Amazon S3 Bucket - Beta
-
-This repository is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs and other streaming data sources. Currently this is a beta system using a folder hierarchy for processed Basic Safety Messages (BSM) from the Wyoming CV Pilot site.
-
-We are soliciting user feedback on the current BSM folder hierarchy to determine what the best approach is and to help inform future directory hierarchies for other data types. The system will provide multiple ways of viewing the data which will include an S3 bucket within Amazon Web Services (AWS) and various analytical or data views that will pull data from that S3 bucket. These analytical tools may include databases, noSQL, Athena, or other analytical tools to structure/reorganize and pull the data.
-
-The S3 bucket provides an alternative that is similar to traversing a directory structure. The intention of the hierarchy is for it to provide a consistent structure within a pilot program, be easily understood by a human traversing the directories, be structured sufficiently so third parties can build software applications using the data, and to be flexible enough to capture different data types. 
-
-The expectation is that different data types will lend themselves to different directory hierarchies. In addition, the different pilot sites may have compelling reasons to organize the data in different hierarchies for the same data type. The below hierarchy is intended for processed BSMs from the Wyoming CV Pilot site, where one message is captured per file. More details on BSM are available at:
-
-- [J2735 Standard](http://standards.sae.org/j2735_201603/)
-- [Vehicle Based Data and Availability](https://www.its.dot.gov/itspac/october2012/PDF/data_availability.pdf) 
-
-### Related ITS JPO Projects
+# Accessing CV Pilots Data From a Public Amazon S3 Bucket
 
 
-- [ITS JPO Connected Vehicles (CV) Pilot Deployment Program](https://www.its.dot.gov/pilots/cv_pilot_plan.htm)- The program seeks to spur innovation among early adopters of connected vehicle application concepts, using best available and emerging technologies. The pilot deployments are expected to integrate connected vehicle research concepts into practical and effective elements, enhancing existing operational capabilities.
-- [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode) - This ITS JPO Open Source tool is used to collect and process Connected Vehicle data in near real time, and route it to other data repositories, including the Amazon S3 bucket.  Processing performed by the ODE includes validation, integration, sanitization (removal of private data), and integration
-- [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp) - This  ITS JPO Open source module is used to sanitize the data to ensure no personal information is shared with the public.  For more information on how this is done please review the documentation in the GitHub Repository.
+**Table of Contents**
+
+* [1. Background](#backgound)
+	* [1.1 Related ITS JPO Projects](#related-its-jpo-projects)
+* [2.0 Getting Started](#getting-started)
+	* [2.1 Prerequisites for accessing full data sets](#prerequisites-for-accessing-full-data-sets)
+	* [2.2 Accessing Files](accessing-files)
+	* [2.2 Directory Structure](#directory-structure)
+	* [2.3 Downloading from S3](#downloading-from-s3)
+ * [3.0 Data Types](#data-types)
+ 	* [3.1 Wyoming CV Data](#wyoming-cv-data)
+* [4.0 Get Involved](#get-involved)
+
+## 1. Background
+This repository contains information on accessing complete data sets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program. It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs and other streaming data sources. Currently this is a beta system using a folder hierarchy for processed Basic Safety Messages (BSM) from the Wyoming CV Pilot site.
+
+USDOT JPO are soliciting user feedback on the current folder hierarchy to determine what the best approach is and to help inform future directory hierarchies for other data types. To provide input on the hieracrchy or the data please [Open an Issue](https://github.com/usdot-its-jpo-data-portal/sandbox/issues). 
+
+The AWS S3 bucket provides an alternative that is similar to traversing a directory structure. The intention of the hierarchy is for it to provide a consistent structure within a pilot program, be easily understood by a human traversing the directories, be structured sufficiently so third parties can build software applications using the data, and to be flexible enough to capture different data types. 
+
+The expectation is that different data types will lend themselves to different directory hierarchies. In addition, the different pilot sites may have compelling reasons to organize the data in different hierarchies for the same data type. The below hierarchy is intended for processed BSMs from the Wyoming CV Pilot site. More details on BSM are available at:
+
+- [ITS JPO Connected Vehicles (CV) Pilot Deployment Program](https://www.its.dot.gov/pilots/cv_pilot_plan.htm)-  The pilot deployments are expected to integrate connected vehicle research concepts into practical and effective elements, enhancing existing operational capabilities.
+- [J2735 Standard](http://standards.sae.org/j2735_201603/) -  Standard for CV data
+- [General CV information: Vehicle Based Data and Availability](https://www.its.dot.gov/itspac/october2012/PDF/data_availability.pdf) - General introduction slides on CV data
+- [Sample of the WYDOT BSM data](https://data.transportation.gov/Automobiles/Wyoming-CV-Pilot-Basic-Safety-Message-One-Day-Samp/9k4m-a3jc) - Sample of WYDOT BSM data
+
+### 1.1 Related ITS JPO Projects
+
+- [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode) - This ITS JPO Open Source tool is used to collect and process Connected Vehicle data in near real time, and route it to other data repositories, including the Amazon S3 bucket.  
+- [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp) - This  ITS JPO Open source module is used to sanitize the data to ensure no personal information is shared with the public.  
 - [Connected Vehicles Performance Evaluation Platform (CVPEP)](https://github.com/VolpeUSDOT/CV-PEP) - Limited access Platform for storing raw CV data for evaluation.
-- [ITS JPO Data Site - Beta](https://www.its.dot.gov/data/) - Beta version of ITS JPO data site which allows users to search for various ITS data.
+- [ITS JPO Data Site ](https://www.its.dot.gov/data/) -  ITS JPO data site which allows users to search for various ITS data.
 
-### Prerequisites
 
-1) Have your own Amazon Web Services account.
+
+## Getting Started
+
+### Prerequisites for accessing full data sets
+
+1) Have your own Free Amazon Web Services account.
 
 	- Create one at http://aws.amazon.com
  
@@ -52,7 +71,7 @@ The expectation is that different data types will lend themselves to different d
 	* Default region name (us-east-1)
 	* Default output format (ex: json)
 
-## Getting Started
+### Accessing files
 
 Now go to your command window. The title of the s3 bucket is: 
 
@@ -103,15 +122,23 @@ To limit the data being dowloaded you can use AWS CLI's filtering which is detai
 
 ### Wyoming CV Data
 
--  [Details on Wyoming CV DATA BSMs and TIMs messages and samples](https://github.com/usdot-jpo-ode/jpo-ode/blob/develop/docs/metadata_standards.md)
+- [Details on Wyoming CV DATA BSMs and TIMs messages and samples](https://github.com/usdot-jpo-ode/jpo-ode/blob/develop/docs/metadata_standards.md)
 
+#### WYDOT BSM
 
+- [Single file Sample](https://github.com/usdot-its-jpo-data-portal/sandbox/blob/master/sample/wydot-filtered-bsm-1512496037271.json)
+- [Data Set Sample of the WYDOT BSM data](https://data.transportation.gov/Automobiles/Wyoming-CV-Pilot-Basic-Safety-Message-One-Day-Samp/9k4m-a3jc)
 
-#### Doing simple data analysis on the Wyoming Connected Vehicles (CV) Data
+ #### WYDOT TIM
 
-A basic tutorial covering accessing the data in a Python Jupyter Notebook 
-(note analysis of the data can be done by almost any programming langauge just Python was selected for this example):
-- [Introduction to WY CV data through ITS JPO Sandbox](notebooks/Introduction%20to%20WY%20CV%20data%20through%20ITS%20JPO%20Sandbox.ipynb) 
+- [Single file Sample](https://github.com/usdot-its-jpo-data-portal/sandbox/blob/master/sample/wydot-filtered-tim-1512415831724.json)
+
+Get Involved
+------------
+
+We welcome your feedback and ideas. Here's how to reach us:
+
+- [Open an Issue](https://github.com/usdot-its-jpo-data-portal/sandbox/issues)
 
 
 
