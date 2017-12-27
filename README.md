@@ -3,9 +3,9 @@
 
 **Table of Contents**
 
-* [1. Background](#backgound)
-	* [1.1 Related ITS JPO Projects](#related-its-jpo-projects)
-* [2.0 Getting Started](#getting-started)
+* [1. Background](#1.-backgound)
+	* [1.1 Related ITS JPO Projects](#1.1-related-its-jpo-projects)
+* [2.0 Getting Started](#2.0-getting-started)
 	* [2.1 Prerequisites for accessing full data sets](#prerequisites-for-accessing-full-data-sets)
 	* [2.2 Accessing Files](accessing-files)
 	* [2.2 Directory Structure](#directory-structure)
@@ -37,9 +37,9 @@ The expectation is that different data types will lend themselves to different d
 
 
 
-## Getting Started
+## 2. Getting Started
 
-### Prerequisites for accessing full data sets
+### 2.1 Prerequisites for accessing full data sets
 
 1) Have your own Free Amazon Web Services account.
 
@@ -71,7 +71,7 @@ The expectation is that different data types will lend themselves to different d
 	* Default region name (us-east-1)
 	* Default output format (ex: json)
 
-### Accessing files
+### 2.3 Accessing files
 
 Now go to your command window. The title of the s3 bucket is: 
 
@@ -87,7 +87,7 @@ For Example:
 aws s3 ls s3://usdot-its-cvpilot-public-data/ --recursive --human-readable --summarize --profile default
 ```
 
-#### Directory structure within buckets:
+### 2.3 Directory structure within buckets:
 
 The directory structure within the buckets will take the following form:
 
@@ -101,7 +101,7 @@ So for example, accessing Wyoming CV Pilots BSM data for a specific time and loc
 
 Where in this example the actual BSM file is titled 'wydot-filtered-bsm-1501782546127.json'.
 
-#### Downloading from the S3 Bucket
+### 2.4 Downloading from the S3
 
 To download all data from the S3 Bucket, enter the following command:
 
@@ -116,11 +116,11 @@ aws s3 cp s3://usdot-its-cvpilot-public-data/wydot/BSM/20170815T234600645Z/41.3N
 
 To limit the data being dowloaded you can use AWS CLI's filtering which is detailed here: http://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters.
 
-## Data Types
+## 3.0 Data Types
 
 
 
-### Wyoming CV Data
+### 3.1 Wyoming CV Data
 
 - [Details on Wyoming CV DATA BSMs and TIMs messages and samples](https://github.com/usdot-jpo-ode/jpo-ode/blob/develop/docs/metadata_standards.md)
 
@@ -129,11 +129,11 @@ To limit the data being dowloaded you can use AWS CLI's filtering which is detai
 - [Single file Sample](https://github.com/usdot-its-jpo-data-portal/sandbox/blob/master/sample/wydot-filtered-bsm-1512496037271.json)
 - [Data Set Sample of the WYDOT BSM data](https://data.transportation.gov/Automobiles/Wyoming-CV-Pilot-Basic-Safety-Message-One-Day-Samp/9k4m-a3jc)
 
- #### WYDOT TIM
+#### WYDOT TIM
 
 - [Single file Sample](https://github.com/usdot-its-jpo-data-portal/sandbox/blob/master/sample/wydot-filtered-tim-1512415831724.json)
 
-Get Involved
+## 4.0 Get Involved
 ------------
 
 We welcome your feedback and ideas. Here's how to reach us:
