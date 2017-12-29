@@ -17,11 +17,18 @@
 ## Background
 This repository contains information on accessing complete data sets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program. It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs and other streaming data sources. Currently this is a beta system using a folder hierarchy for processed Basic Safety Messages (BSM) from the Wyoming CV Pilot site.
 
-USDOT JPO are soliciting user feedback on the current folder hierarchy to determine what the best approach is and to help inform future directory hierarchies for other data types. To provide input on the hieracrchy or the data please [Open an Issue](https://github.com/usdot-its-jpo-data-portal/sandbox/issues). 
+USDOT JPO is soliciting user feedback on the current folder hierarchy to determine what the best approach is and to help inform future directory hierarchies for other data types. To provide input on the hierarchy or the data please [Open an Issue](https://github.com/usdot-its-jpo-data-portal/sandbox/issues). 
 
-The AWS S3 bucket provides an alternative that is similar to traversing a directory structure. The intention of the hierarchy is for it to provide a consistent structure within a pilot program, be easily understood by a human traversing the directories, be structured sufficiently so third parties can build software applications using the data, and to be flexible enough to capture different data types. 
+The AWS S3 bucket provides an alternative that is similar to traversing a directory structure. The intention of the hierarchy is to: 
 
-The expectation is that different data types will lend themselves to different directory hierarchies. In addition, the different pilot sites may have compelling reasons to organize the data in different hierarchies for the same data type. The below hierarchy is intended for processed BSMs from the Wyoming CV Pilot site. More details on BSM are available at:
+- Provide a consistent structure within a pilot program
+- Be easily understood by a human traversing the directories
+- Be structured sufficiently so third parties can build software applications using the data
+- Be flexible enough to capture different data types. 
+
+The expectation is that different data types will lend themselves to different directory hierarchies. In addition, the pilot sites may have compelling reasons to organize the data in different hierarchies for the same data type. The below hierarchy is intended for processed BSMs from the Wyoming CV Pilot site. 
+
+Additional information about CV data is available at:
 
 - [ITS JPO Connected Vehicles (CV) Pilot Deployment Program](https://www.its.dot.gov/pilots/cv_pilot_plan.htm)-  The pilot deployments are expected to integrate connected vehicle research concepts into practical and effective elements, enhancing existing operational capabilities.
 - [J2735 Standard](http://standards.sae.org/j2735_201603/) -  Standard for CV data
