@@ -6,8 +6,8 @@
 * [Background](#backgound)
 	* [Related ITS JPO Projects](#related-its-jpo-projects)
 * [Getting Started](#getting-started)
-	* [Prerequisites for accessing full data sets](#prerequisites-for-accessing-full-data-sets)
-	* [Accessing Files](#accessing-files)
+	* [Prerequisites for using AWS CLI](#prerequisites-for-using-aws-cli)
+	* [Accessing Files through AWS CLI](#accessing-files-through-aws-cli)
 	* [Directory Structure](#directory-structure)
 	* [Downloading from S3](#downloading-from-s3)
  * [Data Types](#data-types)
@@ -15,7 +15,7 @@
 * [Get Involved](#get-involved)
 
 ## Background
-This repository contains information on accessing complete data sets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program. It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs and other streaming data sources. Currently this is a beta system using a folder hierarchy for processed Basic Safety Messages (BSM) from the Wyoming CV Pilot site.
+This repository contains information on accessing complete data sets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program. It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs and other streaming data sources. Currently this is a beta system using a folder hierarchy for processed Basic Safety Messages (BSM) and Traveler Information Messages (TIM) from the Wyoming CV Pilot site.
 
 USDOT JPO is soliciting user feedback on the current folder hierarchy to determine what the best approach is and to help inform future directory hierarchies for other data types. To provide input on the hierarchy or the data please [Open an Issue](https://github.com/usdot-its-jpo-data-portal/sandbox/issues). 
 
@@ -43,10 +43,11 @@ Additional information about CV data is available at:
 - [ITS JPO Data Site ](https://www.its.dot.gov/data/) -  ITS JPO data site which allows users to search for various ITS data.
 
 
-
 ## Getting Started
 
-### Prerequisites for accessing full data sets
+There are two ways to access the full data sets on Amazon s3. The first way is through the [Web Interface](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html). This allows the user to browse through the folder structure and click and download individual BSMs. Alternatively, the data can be downloaded programmatically using the Amazon Command Line Interface (CLI) by following the directions below.
+
+### Prerequisites for using AWS CLI
 
 1) Have your own Free Amazon Web Services account.
 
@@ -78,7 +79,7 @@ Additional information about CV data is available at:
 	* Default region name (us-east-1)
 	* Default output format (ex: json)
 
-### Accessing files
+### Accessing files through AWS CLI
 
 Now go to your command window. The title of the s3 bucket is: 
 
@@ -98,15 +99,14 @@ aws s3 ls s3://usdot-its-cvpilot-public-data/ --recursive --human-readable --sum
 
 The directory structure within the buckets will take the following form:
 
-	{Source_Name}/{Data_Type}/{Date_Time}/{Location}/{File_Name}
+	{Source_Name}/{Data_Type}/{Year}/{Month}/{Day}/{Hour}
 
-So for example, accessing Wyoming CV Pilots BSM data for a specific time and location will look like: 
-
-
-	wydot/BSM/20170815T234600645Z/41.3N_-105.6E/wydot-filtered-bsm-1501782546127.json
+So for example, accessing Wyoming CV Pilots BSM data for a specific time will look like: 
 
 
-Where in this example the actual BSM file is titled 'wydot-filtered-bsm-1501782546127.json'.
+	wydot/BSM/2017/08/15/23/wydot-filtered-bsm-1501782546127.json
+ 
+Where in this example the actual BSM file is titled 'wydot-filtered-bsm-1501782546127.json'. Data prior to January 18, 2018 is one message per file, from that date onwards files will contain multiple messages. 
 
 ### Downloading from S3
 
@@ -116,9 +116,9 @@ To download all data from the S3 Bucket, enter the following command:
 aws s3 cp s3://{bucketname}/{local_directory} --recursive
 ```
 
-For Example:
+For example, to download all BSM data from 2017:
 ```
-aws s3 cp s3://usdot-its-cvpilot-public-data/wydot/BSM/20170815T234600645Z/41.3N_-105.6E/wydot-filtered-bsm-1501782546127.json --recursive
+aws s3 cp s3://usdot-its-cvpilot-public-data/wydot/BSM/2017/ --recursive
 ```
 
 To limit the data being dowloaded you can use AWS CLI's filtering which is detailed here: http://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters.
