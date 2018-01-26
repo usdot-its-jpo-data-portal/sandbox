@@ -148,7 +148,7 @@ Wyoming-CV-Pilot-Basic-Safety-Message-One-Day-Samp/9k4m-a3jc)
  -A basic tutorial covering accessing the data in a Python Jupyter Notebook 
  (note analysis of the data can be done by almost any programming langauge just Python was selected for this example):
 
- -- [Introduction to WY CV data through ITS JPO Sandbox](example/accessing_wydot.ipynb)
+ - [Introduction to WY CV data through ITS JPO Sandbox](example/accessing_wydot.ipynb)
 
 ## Get Involved
 ------------
