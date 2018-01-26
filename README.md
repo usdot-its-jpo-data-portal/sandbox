@@ -131,7 +131,7 @@ To limit the data being dowloaded you can use AWS CLI's filtering which is detai
 ### Wyoming CV Data
 
 - [Details on Wyoming CV DATA BSMs and TIMs messages and samples](https://github.com/usdot-jpo-ode/jpo-ode/blob/develop/docs/metadata_standards.md)
-
+- [Sample Data](Wyoming-CV-Pilot-Basic-Safety-Message-One-Day-Samp/9k4m-a3jc)
 - [Full data set in AWS]((http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html))
 
 #### WYDOT BSM
