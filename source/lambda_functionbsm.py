@@ -56,6 +56,16 @@ def setMetadata(formatted_bsm, bsm_dict):
 	formatted_bsm['metadata_serialId_recordId'] = bsm_dict['serialId']['recordId']
 	formatted_bsm['metadata_serialId_serialNumber'] = bsm_dict['serialId']['serialNumber']
 	formatted_bsm['metadata_receivedAt'] = bsm_dict['odeReceivedAt'].replace('Z[UTC]','')
+	if bsm_dict['metadata']['schemaVersion'] == 5:
+		formatted_bsm['metadata_rmd_elevation'] = bsm_dict['receivedMessageDetails']['locationData']['elevation']
+		formatted_bsm['metadata_rmd_heading'] = bsm_dict['receivedMessageDetails']['locationData']['heading']
+		formatted_bsm['metadata_rmd_latitude'] = bsm_dict['receivedMessageDetails']['locationData']['latitude']
+		formatted_bsm['metadata_rmd_longitude'] = bsm_dict['receivedMessageDetails']['locationData']['longitude']
+		formatted_bsm['metadata_rmd_speed'] = bsm_dict['receivedMessageDetails']['locationData']['speed']
+		try:
+			formatted_bsm['metadata_rmd_rxSource'] = bsm_dict['receivedMessageDetails']['rxSource']
+		except KeyError:
+			pass
 	formatted_bsm['metadata_schemaVersion'] = bsm_dict['schemaVersion']
 	formatted_bsm['metadata_bsmSource'] = bsm_dict['bsmSource']
 	return formatted_bsm
@@ -154,14 +164,19 @@ def setSPVE(formatted_bsm, bsm_dict):
 	Returns:
 		formatted_bsm with additional keys 
 	'''
-	formatted_bsm['part2_spve_tr_conn_pivotoffset'] = bsm_dict.get('connection',{}).get('pivotOffset')
-	formatted_bsm['part2_spve_tr_conn_pivotangle'] = bsm_dict.get('connection',{}).get('pivotAngle')
-	formatted_bsm['part2_spve_tr_conn_pivots'] = str(bsm_dict.get('connection',{}).get('pivots'))
-	formatted_bsm['part2_spve_tr_ssprights'] = bsm_dict.get('sspRights')
-	formatted_bsm['part2_spve_tr_units_isDolly'] = str(bsm_dict.get('units').get('isDolly'))
-	formatted_bsm['part2_spve_tr_units_width'] = bsm_dict.get('units').get('width')
-	formatted_bsm['part2_spve_tr_units_length'] = bsm_dict.get('units').get('length')
-	formatted_bsm['part2_spve_tr_units_height'] = bsm_dict.get('units').get('height')
+	formatted_bsm['part2_spve_vehalert_sspRights'] = bsm_dict.get('vehicleAlerts',{}).get('sspRights')
+	formatted_bsm['part2_spve_vehalert_event_sspRights'] = bsm_dict.get('vehicleAlerts',{}).get('events',{}).get('sspRights')
+	formatted_bsm['part2_spve_vehalert_event_events'] = str(bsm_dict.get('vehicleAlerts',{}).get('events',{}).get('events'))
+	formatted_bsm['part2_spve_vehalert_lightsUse'] = bsm_dict.get('vehicleAlerts',{}).get('lightsUse')
+	formatted_bsm['part2_spve_vehalert_multi'] = bsm_dict.get('vehicleAlerts',{}).get('multi')
+	formatted_bsm['part2_spve_vehalert_responseType'] = bsm_dict.get('vehicleAlerts',{}).get('responseType')
+	formatted_bsm['part2_spve_vehalert_sirenUse'] = bsm_dict.get('vehicleAlerts',{}).get('sirenUse')
+	formatted_bsm['part2_spve_event_desc'] = str(bsm_dict.get('description',{}).get('description'))
+	formatted_bsm['part2_spve_event_extent'] = bsm_dict.get('description',{}).get('extent')
+	formatted_bsm['part2_spve_event_heading'] = bsm_dict.get('description',{}).get('heading')
+	formatted_bsm['part2_spve_tr_ssprights'] = bsm_dict.get('trailers',{}).get('sspRights')
+	formatted_bsm['part2_spve_tr_conn'] = bsm_dict.get('trailers',{}).get('connection')
+	formatted_bsm['part2_spve_tr_units'] = bsm_dict.get('trailers',{}).get('units')
 	return formatted_bsm
 
 def process_bsm(bsm_in):
@@ -190,7 +205,7 @@ def process_bsm(bsm_in):
 				elif elem["id"] == "SupplementalVehicleExtensions":
 					formatted_bsm = setSUVE(formatted_bsm, elem['value'].get('classDetails',{}))
 				else:
-					formatted_bsm = setSPVE(formatted_bsm, elem['value'].get('trailers',{}))
+					formatted_bsm = setSPVE(formatted_bsm, elem['value'])
 			formatted_bsm['coreData_position'] = "POINT (" + str(formatted_bsm["coreData_position_long"]) + " " + str(formatted_bsm["coreData_position_lat"]) + ")"
 			bsm_list.append(formatted_bsm)
 		except:
