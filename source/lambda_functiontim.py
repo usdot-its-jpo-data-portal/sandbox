@@ -49,26 +49,39 @@ def setMetadata(formatted_tim, tim_dict):
 	Returns:
 		formatted_tim with additional keys
 	'''
+	formatted_tim['metadata_schemaVersion'] = tim_dict.get('schemaVersion')
 	formatted_tim['metadata_generatedAt'] = tim_dict.get('recordGeneratedAt', '').replace('Z[UTC]','')
 	formatted_tim['metadata_recordGeneratedBy'] = tim_dict.get('recordGeneratedBy')
-	formatted_tim['metadata_logFileName'] = tim_dict.get('logFileName')
-	formatted_tim['metadata_securityResultCode'] = tim_dict.get('securityResultCode')
 	formatted_tim['metadata_sanitized'] = str(tim_dict.get('sanitized', ''))
 	formatted_tim['metadata_payloadType'] = tim_dict.get('payloadType')
-	formatted_tim['metadata_recordType'] = tim_dict.get('recordType')
 	formatted_tim['metadata_serialId_streamId'] = tim_dict.get('serialId', {}).get('streamId')
 	formatted_tim['metadata_serialId_bundleSize'] = tim_dict.get('serialId', {}).get('bundleSize')
 	formatted_tim['metadata_serialId_bundleId'] = tim_dict.get('serialId', {}).get('bundleId')
 	formatted_tim['metadata_serialId_recordId'] = tim_dict.get('serialId', {}).get('recordId')
 	formatted_tim['metadata_serialId_serialNumber'] = tim_dict.get('serialId', {}).get('serialNumber')
 	formatted_tim['metadata_receivedAt'] = tim_dict.get('odeReceivedAt', '').replace('Z[UTC]','')
+
+	# version 5
+	formatted_tim['metadata_logFileName'] = tim_dict.get('logFileName')
+	formatted_tim['metadata_recordType'] = tim_dict.get('recordType')
 	formatted_tim['metadata_rmd_elevation'] = tim_dict.get('receivedMessageDetails', {}).get('locationData', {}).get('elevation')
 	formatted_tim['metadata_rmd_heading'] = tim_dict.get('receivedMessageDetails', {}).get('locationData', {}).get('heading')
 	formatted_tim['metadata_rmd_latitude'] = tim_dict.get('receivedMessageDetails', {}).get('locationData', {}).get('latitude')
 	formatted_tim['metadata_rmd_longitude'] = tim_dict.get('receivedMessageDetails', {}).get('locationData', {}).get('longitude')
 	formatted_tim['metadata_rmd_speed'] = tim_dict.get('receivedMessageDetails', {}).get('locationData', {}).get('speed')
 	formatted_tim['metadata_rmd_rxSource'] = tim_dict.get('receivedMessageDetails', {}).get('rxSource')
-	formatted_tim['metadata_schemaVersion'] = tim_dict.get('schemaVersion')
+
+	# version 6
+	formatted_tim['metadata_request_rsus'] = json.dumps(tim_dict.get('request', {}).get('rsus', {}).get('rsus'))
+	formatted_tim['metadata_request_snmp_mode'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('mode'))
+	formatted_tim['metadata_request_snmp_deliverystop'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('deliverystop'))
+	formatted_tim['metadata_request_snmp_rsuid'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('rsuid'))
+	formatted_tim['metadata_request_snmp_deliverystart'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('deliverystart'))
+	formatted_tim['metadata_request_snmp_enable'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('enable'))
+	formatted_tim['metadata_request_snmp_channel'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('channel'))
+	formatted_tim['metadata_request_snmp_msgid'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('msgid'))
+	formatted_tim['metadata_request_snmp_interval'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('interval'))
+	formatted_tim['metadata_request_snmp_status'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('status'))
 	return formatted_tim
 
 def setMiscellaneous(formatted_tim, tim_dict):
@@ -134,12 +147,18 @@ def setTravelerDataFrame(formatted_tim, tim_dict):
 	formatted_tim['travelerdataframe_msgId_lat'] = tim_dict.get('msgId',{}).get('roadSignID',{}).get('position',{}).get('lat')
 	formatted_tim['travelerdataframe_msgId_long'] = tim_dict.get('msgId',{}).get('roadSignID',{}).get('position',{}).get('long')
 	formatted_tim['travelerdataframe_priority'] = tim_dict.get('priority')
-	formatted_tim['travelerdataframe_content_itis'] = tim_dict.get('content',{}).get('advisory',{}).get('SEQUENCE',{}).get('item', {}).get('itis')
 	formatted_tim['travelerdataframe_url'] = tim_dict.get('url')
 	formatted_tim['travelerdataframe_sspTimRights'] = tim_dict.get('sspTimRights')
 	formatted_tim['travelerdataframe_sspLocationRights'] = tim_dict.get('sspLocationRights')
 	formatted_tim['travelerdataframe_frameType'] = str(tim_dict.get('frameType'))
 	formatted_tim['travelerdataframe_startTime'] = tim_dict.get('startTime')
+
+	if formatted_tim['metadata_schemaVersion'] == 5:
+		formatted_tim['travelerdataframe_content_itis'] = tim_dict.get('content',{}).get('advisory',{}).get('SEQUENCE',{}).get('item', {}).get('itis')
+		formatted_tim['travelerdataframe_content_advisory_sequence'] = None
+	elif formatted_tim['metadata_schemaVersion'] == 6:
+		formatted_tim['travelerdataframe_content_itis'] = None
+		formatted_tim['travelerdataframe_content_advisory_sequence'] = json.dumps(tim_dict.get('content',{}).get('advisory',{}).get('SEQUENCE',{}))
 	return formatted_tim
 
 def setRegions(formatted_tim, tim_dict):
@@ -168,6 +187,15 @@ def setRegions(formatted_tim, tim_dict):
 	formatted_tim['travelerdataframe_direction'] = str(tim_dict.get('direction'))
 	return formatted_tim
 
+def getTravelerDataFrames(timdict):
+	travelerInformation = tim_dict.get('payload', {}).get('data', {}).get('MessageFrame', {}).get('value', {}).get('TravelerInformation', {})
+
+	if formatted_tim['metadata_schemaVersion'] == 5:
+		travelerDataFrames = travelerInformation.get('dataFrames', {}).get('TravelerDataFrame')
+	elif formatted_tim['metadata_schemaVersion'] == 6:
+		travelerDataFrames = travelerInformation.get('dataFrames', {}).get('TravelerDataFrame') or travelerInformation.get('dataFrames', {}).get('dataFrames', {}).get('TravelerDataFrame')
+	return travelerDataFrames
+
 def process_tim(tim_in):
 	'''
 	The main method that processes each Traveler Information Message from the input file. Reads JSON, calls
@@ -187,7 +215,8 @@ def process_tim(tim_in):
 			formatted_tim = setMetadata(formatted_tim, tim_dict.get('metadata', {}))
 			formatted_tim = setMiscellaneous(formatted_tim, tim_dict.get('payload', {}))
 			formatted_tim = setTravelerInformation(formatted_tim, tim_dict.get('payload', {}).get('data', {}).get('MessageFrame', {}).get('value', {}).get('TravelerInformation'))
-			formatted_tim = setTravelerDataFrame(formatted_tim, tim_dict.get('payload', {}).get('data', {}).get('MessageFrame', {}).get('value', {}).get('TravelerInformation', {}).get('dataFrames', {}).get('TravelerDataFrame'))
+			travelerDataFrames = getTravelerDataFrames(tim_dict)
+			formatted_tim = setTravelerDataFrame(formatted_tim, travelerDataFrames)
 			tim_list.append(formatted_tim)
 		except:
 			pass
