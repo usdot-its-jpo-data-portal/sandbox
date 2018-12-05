@@ -52,43 +52,53 @@ def setMetadata(formatted_tim, tim_dict):
 	Returns:
 		formatted_tim with additional keys
 	'''
-	schemaVersion = tim_dict.get('schemaVersion')
-	formatted_tim['metadata_schemaVersion'] = schemaVersion
+	formatted_tim['metadata_schemaVersion'] = tim_dict.get('schemaVersion')
 	formatted_tim['metadata_generatedAt'] = tim_dict.get('recordGeneratedAt', '').replace('Z[UTC]','')
+	formatted_tim['metadata_receivedAt'] = tim_dict.get('odeReceivedAt', '').replace('Z[UTC]','')
 	formatted_tim['metadata_recordGeneratedBy'] = tim_dict.get('recordGeneratedBy')
 	formatted_tim['metadata_sanitized'] = str(tim_dict.get('sanitized', ''))
 	formatted_tim['metadata_payloadType'] = tim_dict.get('payloadType')
-	formatted_tim['metadata_serialId_streamId'] = tim_dict.get('serialId', {}).get('streamId')
-	formatted_tim['metadata_serialId_bundleSize'] = tim_dict.get('serialId', {}).get('bundleSize')
-	formatted_tim['metadata_serialId_bundleId'] = tim_dict.get('serialId', {}).get('bundleId')
-	formatted_tim['metadata_serialId_recordId'] = tim_dict.get('serialId', {}).get('recordId')
-	formatted_tim['metadata_serialId_serialNumber'] = tim_dict.get('serialId', {}).get('serialNumber')
-	formatted_tim['metadata_receivedAt'] = tim_dict.get('odeReceivedAt', '').replace('Z[UTC]','')
+
+	serialId = tim_dict.get('serialId', {})
+	if serialId:
+		formatted_tim['metadata_serialId_streamId'] = serialId.get('streamId')
+		formatted_tim['metadata_serialId_bundleSize'] = serialId.get('bundleSize')
+		formatted_tim['metadata_serialId_bundleId'] = serialId.get('bundleId')
+		formatted_tim['metadata_serialId_recordId'] = serialId.get('recordId')
+		formatted_tim['metadata_serialId_serialNumber'] = serialId.get('serialNumber')
 
 	# version 5
 	formatted_tim['metadata_logFileName'] = tim_dict.get('logFileName')
 	formatted_tim['metadata_recordType'] = tim_dict.get('recordType')
-	formatted_tim['metadata_rmd_elevation'] = tim_dict.get('receivedMessageDetails', {}).get('locationData', {}).get('elevation')
-	formatted_tim['metadata_rmd_heading'] = tim_dict.get('receivedMessageDetails', {}).get('locationData', {}).get('heading')
-	formatted_tim['metadata_rmd_latitude'] = tim_dict.get('receivedMessageDetails', {}).get('locationData', {}).get('latitude')
-	formatted_tim['metadata_rmd_longitude'] = tim_dict.get('receivedMessageDetails', {}).get('locationData', {}).get('longitude')
-	formatted_tim['metadata_rmd_speed'] = tim_dict.get('receivedMessageDetails', {}).get('locationData', {}).get('speed')
-	formatted_tim['metadata_rmd_rxSource'] = tim_dict.get('receivedMessageDetails', {}).get('rxSource')
+
+	rmd = tim_dict.get('receivedMessageDetails', {})
+	if rmd:
+		rmd_locationData = rmd.get('locationData', {})
+		formatted_tim['metadata_rmd_elevation'] = rmd_locationData.get('elevation')
+		formatted_tim['metadata_rmd_heading'] = rmd_locationData.get('heading')
+		formatted_tim['metadata_rmd_latitude'] = rmd_locationData.get('latitude')
+		formatted_tim['metadata_rmd_longitude'] = rmd_locationData.get('longitude')
+		formatted_tim['metadata_rmd_speed'] = rmd_locationData.get('speed')
+		formatted_tim['metadata_rmd_rxSource'] = rmd.get('rxSource')
 
 	# version 6
-	rsus = tim_dict.get('request', {}).get('rsus')
-	if type(rsus) == dict and 'rsus' in rsus:
-		rsus = rsus.get('rsus')
-	formatted_tim['metadata_request_rsus'] = json.dumps(rsus)
-	formatted_tim['metadata_request_snmp_mode'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('mode'))
-	formatted_tim['metadata_request_snmp_deliverystop'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('deliverystop'))
-	formatted_tim['metadata_request_snmp_rsuid'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('rsuid'))
-	formatted_tim['metadata_request_snmp_deliverystart'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('deliverystart'))
-	formatted_tim['metadata_request_snmp_enable'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('enable'))
-	formatted_tim['metadata_request_snmp_channel'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('channel'))
-	formatted_tim['metadata_request_snmp_msgid'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('msgid'))
-	formatted_tim['metadata_request_snmp_interval'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('interval'))
-	formatted_tim['metadata_request_snmp_status'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('status'))
+	request_obj = tim_dict.get('request', {})
+	if request_obj:
+		rsus = request_obj.get('rsus')
+		if type(rsus) == dict and 'rsus' in rsus:
+			rsus = rsus.get('rsus', [])
+		formatted_tim['metadata_request_rsus'] = json.dumps(rsus)
+
+		snmp = request_obj.get('snmp', {})
+		formatted_tim['metadata_request_snmp_mode'] = snmp.get('mode')
+		formatted_tim['metadata_request_snmp_deliverystop'] = snmp.get('deliverystop')
+		formatted_tim['metadata_request_snmp_rsuid'] = snmp.get('rsuid')
+		formatted_tim['metadata_request_snmp_deliverystart'] = snmp.get('deliverystart')
+		formatted_tim['metadata_request_snmp_enable'] = snmp.get('enable')
+		formatted_tim['metadata_request_snmp_channel'] = snmp.get('channel')
+		formatted_tim['metadata_request_snmp_msgid'] = snmp.get('msgid')
+		formatted_tim['metadata_request_snmp_interval'] = snmp.get('interval')
+		formatted_tim['metadata_request_snmp_status'] = snmp.get('status')
 	return formatted_tim
 
 def setMiscellaneous(formatted_tim, tim_dict):
@@ -148,19 +158,26 @@ def setTravelerDataFrame(formatted_tim, tim_dict):
 	formatted_tim['travelerdataframe_sspMsgRights1'] = tim_dict.get('sspMsgRights1')
 	formatted_tim['travelerdataframe_sspMsgRights2'] = tim_dict.get('sspMsgRights2')
 	formatted_tim['travelerdataframe_startYear'] = tim_dict.get('startYear')
-	formatted_tim['travelerdataframe_msgId_crc'] = str(tim_dict.get('msgId',{}).get('roadSignID',{}).get('crc'))
-	formatted_tim['travelerdataframe_msgId_viewAngle'] = str(tim_dict.get('msgId',{}).get('roadSignID',{}).get('viewAngle'))
-	formatted_tim['travelerdataframe_msgId_mutcdCode'] = getKeyAsValue(tim_dict.get('msgId',{}).get('roadSignID',{}).get('mutcdCode', {}))
-	formatted_tim['travelerdataframe_msgId_elevation'] = tim_dict.get('msgId',{}).get('roadSignID',{}).get('position',{}).get('elevation')
-	formatted_tim['travelerdataframe_msgId_lat'] = tim_dict.get('msgId',{}).get('roadSignID',{}).get('position',{}).get('lat')
-	formatted_tim['travelerdataframe_msgId_long'] = tim_dict.get('msgId',{}).get('roadSignID',{}).get('position',{}).get('long')
 	formatted_tim['travelerdataframe_priority'] = tim_dict.get('priority')
 	formatted_tim['travelerdataframe_url'] = tim_dict.get('url')
 	formatted_tim['travelerdataframe_sspTimRights'] = tim_dict.get('sspTimRights')
 	formatted_tim['travelerdataframe_sspLocationRights'] = tim_dict.get('sspLocationRights')
 	formatted_tim['travelerdataframe_frameType'] = getKeyAsValue(tim_dict.get('frameType', {}))
 	formatted_tim['travelerdataframe_startTime'] = tim_dict.get('startTime')
-	formatted_tim['travelerdataframe_content_advisory_sequence'] = json.dumps(tim_dict.get('content',{}).get('advisory',{}).get('SEQUENCE'))
+
+	content_advisory_sequence = tim_dict.get('content',{}).get('advisory',{}).get('SEQUENCE', [])
+	formatted_tim['travelerdataframe_content_advisory_sequence'] = json.dumps(content_advisory_sequence)
+
+	roadSignID = tim_dict.get('msgId',{}).get('roadSignID',{})
+	if roadSignID:
+		formatted_tim['travelerdataframe_msgId_crc'] = str(roadSignID.get('crc'))
+		formatted_tim['travelerdataframe_msgId_viewAngle'] = str(roadSignID.get('viewAngle'))
+		formatted_tim['travelerdataframe_msgId_mutcdCode'] = getKeyAsValue(roadSignID.get('mutcdCode', {}))
+		roadSignID_position = roadSignID.get('position', {})
+		formatted_tim['travelerdataframe_msgId_elevation'] = roadSignID_position.get('elevation')
+		formatted_tim['travelerdataframe_msgId_lat'] = roadSignID_position.get('lat')
+		formatted_tim['travelerdataframe_msgId_long'] = roadSignID_position.get('long')
+
 	return formatted_tim
 
 def setRegions(formatted_tim, tim_dict):
@@ -177,19 +194,29 @@ def setRegions(formatted_tim, tim_dict):
 		formatted_tim with additional keys
 	'''
 	formatted_tim['travelerdataframe_closedPath'] = getKeyAsValue(tim_dict.get('closedPath', {}))
-	formatted_tim['travelerdataframe_anchor_elevation'] = tim_dict.get('anchor',{}).get('elevation')
-	formatted_tim['travelerdataframe_anchor_lat'] = tim_dict.get('anchor',{}).get('lat')
-	formatted_tim['travelerdataframe_anchor_long'] = tim_dict.get('anchor',{}).get('long')
+	formatted_tim['travelerdataframe_directionality'] = getKeyAsValue(tim_dict.get('directionality'))
 	formatted_tim['travelerdataframe_name'] = tim_dict.get('name')
 	formatted_tim['travelerdataframe_laneWidth'] = tim_dict.get('laneWidth')
-	formatted_tim['travelerdataframe_directionality'] = getKeyAsValue(tim_dict.get('directionality'))
-	formatted_tim['travelerdataframe_desc_nodes'] = str(tim_dict.get('description',{}).get('path',{}).get('offset',{}).get('xy',{}).get('nodes',{}).get('NodeXY'))
-	formatted_tim['travelerdataframe_desc_scale'] = tim_dict.get('description',{}).get('path',{}).get('scale')
 	formatted_tim['travelerdataframe_id'] = json.dumps(tim_dict.get('id', {}))
 	formatted_tim['travelerdataframe_direction'] = str(tim_dict.get('direction'))
+
+	region_anchor = tim_dict.get('anchor',{})
+	if region_anchor:
+		formatted_tim['travelerdataframe_anchor_elevation'] = region_anchor.get('elevation')
+		formatted_tim['travelerdataframe_anchor_lat'] = region_anchor.get('lat')
+		formatted_tim['travelerdataframe_anchor_long'] = region_anchor.get('long')
+
+	region_description_path = tim_dict.get('description',{}).get('path',{})
+	if region_description_path:
+		formatted_tim['travelerdataframe_desc_nodes'] = json.dumps(region_description_path.get('offset',{}).get('xy',{}).get('nodes',{}).get('NodeXY'))
+		formatted_tim['travelerdataframe_desc_scale'] = region_description_path.get('scale')
+
 	return formatted_tim
 
 def getTravelerDataFrames(timdict):
+	'''
+	Method for parsing travelerDataFrames from different data schemas and return it as an array of dictionaries
+	'''
 	travelerInformation = tim_dict.get('payload', {}).get('data', {}).get('MessageFrame', {}).get('value', {}).get('TravelerInformation', {})
 
 	if formatted_tim['metadata_schemaVersion'] == 5:
