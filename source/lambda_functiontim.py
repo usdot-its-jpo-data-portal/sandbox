@@ -37,6 +37,9 @@ S3_BUCKET_NAME = os.environ['S3_BUCKET_NAME'] # 'usdot-its-cvpilot-public-data'
 SOCRATA_DATASET_ID = os.environ['SOCRATA_DATASET_ID'] # '2rdx-wgpx'
 
 
+def getKeyAsValue(obj):
+	return obj.keys()[0]
+	
 def setMetadata(formatted_tim, tim_dict):
 	'''
 	Reads the metadata section of the Wyoming CV Pilot Traveler Information Messages and flattens them into
@@ -145,7 +148,7 @@ def setTravelerDataFrame(formatted_tim, tim_dict):
 	formatted_tim['travelerdataframe_startYear'] = tim_dict.get('startYear')
 	formatted_tim['travelerdataframe_msgId_crc'] = str(tim_dict.get('msgId',{}).get('roadSignID',{}).get('crc'))
 	formatted_tim['travelerdataframe_msgId_viewAngle'] = str(tim_dict.get('msgId',{}).get('roadSignID',{}).get('viewAngle'))
-	formatted_tim['travelerdataframe_msgId_mutcdCode'] = str(tim_dict.get('msgId',{}).get('roadSignID',{}).get('mutcdCode'))
+	formatted_tim['travelerdataframe_msgId_mutcdCode'] = getKeyAsValue(tim_dict.get('msgId',{}).get('roadSignID',{}).get('mutcdCode', {}))
 	formatted_tim['travelerdataframe_msgId_elevation'] = tim_dict.get('msgId',{}).get('roadSignID',{}).get('position',{}).get('elevation')
 	formatted_tim['travelerdataframe_msgId_lat'] = tim_dict.get('msgId',{}).get('roadSignID',{}).get('position',{}).get('lat')
 	formatted_tim['travelerdataframe_msgId_long'] = tim_dict.get('msgId',{}).get('roadSignID',{}).get('position',{}).get('long')
@@ -153,7 +156,7 @@ def setTravelerDataFrame(formatted_tim, tim_dict):
 	formatted_tim['travelerdataframe_url'] = tim_dict.get('url')
 	formatted_tim['travelerdataframe_sspTimRights'] = tim_dict.get('sspTimRights')
 	formatted_tim['travelerdataframe_sspLocationRights'] = tim_dict.get('sspLocationRights')
-	formatted_tim['travelerdataframe_frameType'] = str(tim_dict.get('frameType'))
+	formatted_tim['travelerdataframe_frameType'] = getKeyAsValue(tim_dict.get('frameType', {}))
 	formatted_tim['travelerdataframe_startTime'] = tim_dict.get('startTime')
 	formatted_tim['travelerdataframe_content_advisory_sequence'] = json.dumps(tim_dict.get('content',{}).get('advisory',{}).get('SEQUENCE'))
 	return formatted_tim
@@ -171,16 +174,16 @@ def setRegions(formatted_tim, tim_dict):
 	Returns:
 		formatted_tim with additional keys
 	'''
-	formatted_tim['travelerdataframe_closedPath'] = str(tim_dict.get('closedPath'))
+	formatted_tim['travelerdataframe_closedPath'] = getKeyAsValue(tim_dict.get('closedPath', {}))
 	formatted_tim['travelerdataframe_anchor_elevation'] = tim_dict.get('anchor',{}).get('elevation')
 	formatted_tim['travelerdataframe_anchor_lat'] = tim_dict.get('anchor',{}).get('lat')
 	formatted_tim['travelerdataframe_anchor_long'] = tim_dict.get('anchor',{}).get('long')
 	formatted_tim['travelerdataframe_name'] = tim_dict.get('name')
 	formatted_tim['travelerdataframe_laneWidth'] = tim_dict.get('laneWidth')
-	formatted_tim['travelerdataframe_directionality'] = str(tim_dict.get('directionality'))
+	formatted_tim['travelerdataframe_directionality'] = getKeyAsValue(tim_dict.get('directionality'))
 	formatted_tim['travelerdataframe_desc_nodes'] = str(tim_dict.get('description',{}).get('path',{}).get('offset',{}).get('xy',{}).get('nodes',{}).get('NodeXY'))
 	formatted_tim['travelerdataframe_desc_scale'] = tim_dict.get('description',{}).get('path',{}).get('scale')
-	formatted_tim['travelerdataframe_id'] = str(tim_dict.get('id'))
+	formatted_tim['travelerdataframe_id'] = json.dumps(tim_dict.get('id', {}))
 	formatted_tim['travelerdataframe_direction'] = str(tim_dict.get('direction'))
 	return formatted_tim
 
