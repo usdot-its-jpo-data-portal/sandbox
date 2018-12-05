@@ -1,1 +1,204 @@
-{"metadata": {"securityResultCode": "success", "recordGeneratedBy": "OBU", "receivedMessageDetails": {"locationData": {"elevation": 1495, "heading": 272.8875, "latitude": 40.5658333, "speed": 0.54, "longitude": -105.0320985}, "rxSource": "SAT"}, "schemaVersion": 5, "payloadType": "us.dot.its.jpo.ode.model.OdeTimPayload", "serialId": {"recordId": 2, "serialNumber": 0, "streamId": "d2b75dcb-a45f-460e-b01e-cc226c377c87", "bundleSize": 1, "bundleId": 2}, "sanitized": false, "recordGeneratedAt": "2018-05-01T15:56:13.299Z[UTC]", "recordType": "rxMsg", "logFileName": "rxMsg_1525192746_2620_31_40e0_800_226_adff_fe05_1521.csv.gz", "odeReceivedAt": "2018-05-01T21:04:48.817Z[UTC]"}, "payload": {"data": {"MessageFrame": {"messageId": 31, "value": {"TravelerInformation": {"timeStamp": 29507, "packetID": "000000000000000002", "urlB": null, "dataFrames": {"TravelerDataFrame": {"regions": {"GeographicalPath": {"closedPath": {"false": ""}, "anchor": {"elevation": 8589, "lat": 41, "long": -105}, "name": "Testing TIM", "laneWidth": 32700, "directionality": {"both": ""}, "description": {"path": {"offset": {"xy": {"nodes": {"NodeXY": [{"delta": {"node-LatLon": {"lon": -1054384188, "lat": 412238776}}}, {"delta": {"node-LatLon": {"lon": -1054385250, "lat": 412209941}}}, {"delta": {"node-LatLon": {"lon": -1054394498, "lat": 412181812}}}, {"delta": {"node-LatLon": {"lon": -1054403962, "lat": 412153723}}}, {"delta": {"node-LatLon": {"lon": -1054413260, "lat": 412125813}}}, {"delta": {"node-LatLon": {"lon": -1054414034, "lat": 412097480}}}, {"delta": {"node-LatLon": {"lon": -1054400204, "lat": 412070975}}}, {"delta": {"node-LatLon": {"lon": -1054381691, "lat": 412046104}}}, {"delta": {"node-LatLon": {"lon": -1054359947, "lat": 412022723}}}]}}}, "scale": 0}}, "id": {"id": 1, "region": 0}, "direction": 1111111111111111}}, "duratonTime": 31680, "sspMsgRights1": 0, "sspMsgRights2": 1, "startYear": 2017, "msgId": {"roadSignID": {"crc": "0000", "viewAngle": 1111111111111111, "mutcdCode": {"none": ""}, "position": {"elevation": 917, "lat": 41, "long": -108}}}, "priority": 5, "content": {"advisory": {"SEQUENCE": [{"item": {"itis": 268}}, {"item": {"itis": 12594}}, {"item": {"itis": 8720}}]}}, "url": null, "sspTimRights": 1, "sspLocationRights": 1, "frameType": {"advisory": ""}, "startTime": 459004}}, "msgCnt": 1}}}}, "dataType": "TravelerInformation"}}
+{
+  "metadata": {
+    "securityResultCode": "success",
+    "recordGeneratedBy": "OBU",
+    "receivedMessageDetails": {
+      "locationData": {
+        "elevation": 1495,
+        "heading": 272.8875,
+        "latitude": 40.5658333,
+        "speed": 0.54,
+        "longitude": -105.0320985
+      },
+      "rxSource": "SAT"
+    },
+    "schemaVersion": 5,
+    "payloadType": "us.dot.its.jpo.ode.model.OdeTimPayload",
+    "serialId": {
+      "recordId": 2,
+      "serialNumber": 0,
+      "streamId": "d2b75dcb-a45f-460e-b01e-cc226c377c87",
+      "bundleSize": 1,
+      "bundleId": 2
+    },
+    "sanitized": false,
+    "recordGeneratedAt": "2018-05-01T15:56:13.299Z[UTC]",
+    "recordType": "rxMsg",
+    "logFileName": "rxMsg_1525192746_2620_31_40e0_800_226_adff_fe05_1521.csv.gz",
+    "odeReceivedAt": "2018-05-01T21:04:48.817Z[UTC]"
+  },
+  "payload": {
+    "data": {
+      "MessageFrame": {
+        "messageId": 31,
+        "value": {
+          "TravelerInformation": {
+            "timeStamp": 29507,
+            "packetID": "000000000000000002",
+            "urlB": null,
+            "dataFrames": {
+              "TravelerDataFrame": {
+                "regions": {
+                  "GeographicalPath": {
+                    "closedPath": {
+                      "false": ""
+                    },
+                    "anchor": {
+                      "elevation": 8589,
+                      "lat": 41,
+                      "long": -105
+                    },
+                    "name": "Testing TIM",
+                    "laneWidth": 32700,
+                    "directionality": {
+                      "both": ""
+                    },
+                    "description": {
+                      "path": {
+                        "offset": {
+                          "xy": {
+                            "nodes": {
+                              "NodeXY": [
+                                {
+                                  "delta": {
+                                    "node-LatLon": {
+                                      "lon": -1054384188,
+                                      "lat": 412238776
+                                    }
+                                  }
+                                },
+                                {
+                                  "delta": {
+                                    "node-LatLon": {
+                                      "lon": -1054385250,
+                                      "lat": 412209941
+                                    }
+                                  }
+                                },
+                                {
+                                  "delta": {
+                                    "node-LatLon": {
+                                      "lon": -1054394498,
+                                      "lat": 412181812
+                                    }
+                                  }
+                                },
+                                {
+                                  "delta": {
+                                    "node-LatLon": {
+                                      "lon": -1054403962,
+                                      "lat": 412153723
+                                    }
+                                  }
+                                },
+                                {
+                                  "delta": {
+                                    "node-LatLon": {
+                                      "lon": -1054413260,
+                                      "lat": 412125813
+                                    }
+                                  }
+                                },
+                                {
+                                  "delta": {
+                                    "node-LatLon": {
+                                      "lon": -1054414034,
+                                      "lat": 412097480
+                                    }
+                                  }
+                                },
+                                {
+                                  "delta": {
+                                    "node-LatLon": {
+                                      "lon": -1054400204,
+                                      "lat": 412070975
+                                    }
+                                  }
+                                },
+                                {
+                                  "delta": {
+                                    "node-LatLon": {
+                                      "lon": -1054381691,
+                                      "lat": 412046104
+                                    }
+                                  }
+                                },
+                                {
+                                  "delta": {
+                                    "node-LatLon": {
+                                      "lon": -1054359947,
+                                      "lat": 412022723
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "scale": 0
+                      }
+                    },
+                    "id": {
+                      "id": 1,
+                      "region": 0
+                    },
+                    "direction": 1111111111111111
+                  }
+                },
+                "duratonTime": 31680,
+                "sspMsgRights1": 0,
+                "sspMsgRights2": 1,
+                "startYear": 2017,
+                "msgId": {
+                  "roadSignID": {
+                    "crc": "0000",
+                    "viewAngle": 1111111111111111,
+                    "mutcdCode": {
+                      "none": ""
+                    },
+                    "position": {
+                      "elevation": 917,
+                      "lat": 41,
+                      "long": -108
+                    }
+                  }
+                },
+                "priority": 5,
+                "content": {
+                  "advisory": {
+                    "SEQUENCE": [
+                      {
+                        "item": {
+                          "itis": 268
+                        }
+                      },
+                      {
+                        "item": {
+                          "itis": 12594
+                        }
+                      },
+                      {
+                        "item": {
+                          "itis": 8720
+                        }
+                      }
+                    ]
+                  }
+                },
+                "url": null,
+                "sspTimRights": 1,
+                "sspLocationRights": 1,
+                "frameType": {
+                  "advisory": ""
+                },
+                "startTime": 459004
+              }
+            },
+            "msgCnt": 1
+          }
+        }
+      }
+    },
+    "dataType": "TravelerInformation"
+  }
+}
