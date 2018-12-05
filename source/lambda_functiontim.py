@@ -22,14 +22,19 @@ accessible on data.transportation.gov.
 Requires:
 - Uploading to AWS requires packaging the source code with the Python extensions into a single zip file. This code requires
 the Python requests library to be packaged with the source code to work on AWS.
-- The user must edit the USERNAME, PASSWORD and API_KEY fields below to include their own Socrata credentials.
+- The user must define Environment variables for the following: SOCRATA_USERNAME, SOCRATA_PASSWORD, SOCRATA_API_KEY, S3_BUCKET_NAME, SOCRATA_DATASET_ID
+- Alternatively, the user can edit the SOCRATA_USERNAME, SOCRATA_PASSWORD and SOCRATA_API_KEY fields below to include their own Socrata credentials.
 '''
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-USERNAME = ""
-PASSWORD = ""
-API_KEY = ""
+
+SOCRATA_USERNAME = os.environ['SOCRATA_USERNAME']
+SOCRATA_PASSWORD = os.environ['SOCRATA_PASSWORD']
+SOCRATA_API_KEY = os.environ['SOCRATA_API_KEY']
+S3_BUCKET_NAME = os.environ['S3_BUCKET_NAME'] # 'usdot-its-cvpilot-public-data'
+SOCRATA_DATASET_ID = os.environ['SOCRATA_DATASET_ID'] # '2rdx-wgpx'
+
 
 def setMetadata(formatted_tim, tim_dict):
 	'''
@@ -202,7 +207,7 @@ def lambda_handler(event, context):
 	start = time.time()
 	s3 = boto3.resource('s3')
 	logger.info("Connecting to bucket")
-	mybucket = s3.Bucket('usdot-its-cvpilot-public-data')
+	mybucket = s3.Bucket(S3_BUCKET_NAME)
 
 	logger.info("Loading JSON")
 	timenow = datetime.datetime.now(tz = datetime.timezone(datetime.timedelta(hours=0)))
@@ -225,19 +230,20 @@ def lambda_handler(event, context):
 				tim_list += process_tim(tim_in)
 
 	logger.info("Connecting to Socrata")
-	client = Socrata("data.transportation.gov", API_KEY, USERNAME, PASSWORD,timeout=400)
+	client = Socrata("data.transportation.gov", SOCRATA_API_KEY, SOCRATA_USERNAME, SOCRATA_PASSWORD, timeout=400)
 
 	logger.info("Uploading...")
-	uploadResponse = client.upsert("2rdx-wgpx", tim_list)
+	uploadResponse = client.upsert(SOCRATA_DATASET_ID, tim_list)
 	logger.info(uploadResponse)
 
-	r = requests.get("https://data.transportation.gov/resource/2rdx-wgpx.json?$select=count(*)", auth=HTTPBasicAuth(USERNAME,PASSWORD))
+	r = requests.get("https://data.transportation.gov/resource/{}.json?$select=count(*)".format(SOCRATA_DATASET_ID),
+	 				auth=HTTPBasicAuth(SOCRATA_USERNAME, SOCRATA_PASSWORD))
 	r = r.json()
 	count = int(r[0]['count'])
 	if count > 3000000:
 		toDelete = count - 3000000
 		logger.info(toDelete)
-		retrievedRows = client.get("2rdx-wgpx", limit=toDelete, exclude_system_fields=False)
+		retrievedRows = client.get(SOCRATA_DATASET_ID, limit=toDelete, exclude_system_fields=False)
 		deleteList = []
 		for x in range(0,toDelete):
 			tempDictionary = {}
@@ -245,4 +251,4 @@ def lambda_handler(event, context):
 			tempDictionary[':deleted'] = True
 			deleteList.append(tempDictionary)
 		logger.info("deleting now:")
-		logger.info(client.upsert("2rdx-wgpx", deleteList))
+		logger.info(client.upsert(SOCRATA_DATASET_ID, deleteList))
