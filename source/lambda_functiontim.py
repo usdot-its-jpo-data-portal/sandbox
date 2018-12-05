@@ -76,7 +76,10 @@ def setMetadata(formatted_tim, tim_dict):
 	formatted_tim['metadata_rmd_rxSource'] = tim_dict.get('receivedMessageDetails', {}).get('rxSource')
 
 	# version 6
-	formatted_tim['metadata_request_rsus'] = json.dumps(tim_dict.get('request', {}).get('rsus'))
+	rsus = tim_dict.get('request', {}).get('rsus')
+	if type(rsus) == dict and 'rsus' in rsus:
+		rsus = rsus.get('rsus')
+	formatted_tim['metadata_request_rsus'] = json.dumps(rsus)
 	formatted_tim['metadata_request_snmp_mode'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('mode'))
 	formatted_tim['metadata_request_snmp_deliverystop'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('deliverystop'))
 	formatted_tim['metadata_request_snmp_rsuid'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('rsuid'))
