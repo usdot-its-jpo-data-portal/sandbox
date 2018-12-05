@@ -37,9 +37,8 @@ S3_BUCKET_NAME = os.environ['S3_BUCKET_NAME'] # 'usdot-its-cvpilot-public-data'
 SOCRATA_DATASET_ID = os.environ['SOCRATA_DATASET_ID'] # '2rdx-wgpx'
 
 
-def getKeyAsValue(obj):
-	return obj.keys()[0]
-	
+getKeyAsValue = lambda obj: list(obj.keys())[0]
+
 def setMetadata(formatted_tim, tim_dict):
 	'''
 	Reads the metadata section of the Wyoming CV Pilot Traveler Information Messages and flattens them into
