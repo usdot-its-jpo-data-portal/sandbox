@@ -1,4 +1,5 @@
 import os
+import copy
 import json
 from sodapy import Socrata
 import boto3
@@ -49,7 +50,8 @@ def setMetadata(formatted_tim, tim_dict):
 	Returns:
 		formatted_tim with additional keys
 	'''
-	formatted_tim['metadata_schemaVersion'] = tim_dict.get('schemaVersion')
+	schemaVersion = tim_dict.get('schemaVersion')
+	formatted_tim['metadata_schemaVersion'] = schemaVersion
 	formatted_tim['metadata_generatedAt'] = tim_dict.get('recordGeneratedAt', '').replace('Z[UTC]','')
 	formatted_tim['metadata_recordGeneratedBy'] = tim_dict.get('recordGeneratedBy')
 	formatted_tim['metadata_sanitized'] = str(tim_dict.get('sanitized', ''))
@@ -72,7 +74,7 @@ def setMetadata(formatted_tim, tim_dict):
 	formatted_tim['metadata_rmd_rxSource'] = tim_dict.get('receivedMessageDetails', {}).get('rxSource')
 
 	# version 6
-	formatted_tim['metadata_request_rsus'] = json.dumps(tim_dict.get('request', {}).get('rsus', {}).get('rsus'))
+	formatted_tim['metadata_request_rsus'] = json.dumps(tim_dict.get('request', {}).get('rsus'))
 	formatted_tim['metadata_request_snmp_mode'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('mode'))
 	formatted_tim['metadata_request_snmp_deliverystop'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('deliverystop'))
 	formatted_tim['metadata_request_snmp_rsuid'] = json.dumps(tim_dict.get('request', {}).get('snmp', {}).get('rsuid'))
@@ -133,6 +135,7 @@ def setTravelerDataFrame(formatted_tim, tim_dict):
 	Returns:
 		formatted_tim with additional keys
 	'''
+	formatted_tim = copy.deepcopy(formatted_tim)
 	if 'regions' in tim_dict:
 		if 'GeographicalPath' in tim_dict['regions']:
 			formatted_tim = setRegions(formatted_tim, tim_dict.get('regions', {}).get('GeographicalPath'))
@@ -152,13 +155,7 @@ def setTravelerDataFrame(formatted_tim, tim_dict):
 	formatted_tim['travelerdataframe_sspLocationRights'] = tim_dict.get('sspLocationRights')
 	formatted_tim['travelerdataframe_frameType'] = str(tim_dict.get('frameType'))
 	formatted_tim['travelerdataframe_startTime'] = tim_dict.get('startTime')
-
-	if formatted_tim['metadata_schemaVersion'] == 5:
-		formatted_tim['travelerdataframe_content_itis'] = tim_dict.get('content',{}).get('advisory',{}).get('SEQUENCE',{}).get('item', {}).get('itis')
-		formatted_tim['travelerdataframe_content_advisory_sequence'] = None
-	elif formatted_tim['metadata_schemaVersion'] == 6:
-		formatted_tim['travelerdataframe_content_itis'] = None
-		formatted_tim['travelerdataframe_content_advisory_sequence'] = json.dumps(tim_dict.get('content',{}).get('advisory',{}).get('SEQUENCE',{}))
+	formatted_tim['travelerdataframe_content_advisory_sequence'] = json.dumps(tim_dict.get('content',{}).get('advisory',{}).get('SEQUENCE'))
 	return formatted_tim
 
 def setRegions(formatted_tim, tim_dict):
@@ -192,8 +189,14 @@ def getTravelerDataFrames(timdict):
 
 	if formatted_tim['metadata_schemaVersion'] == 5:
 		travelerDataFrames = travelerInformation.get('dataFrames', {}).get('TravelerDataFrame')
+		travelerDataFrames = [travelerDataFrames]
 	elif formatted_tim['metadata_schemaVersion'] == 6:
-		travelerDataFrames = travelerInformation.get('dataFrames', {}).get('TravelerDataFrame') or travelerInformation.get('dataFrames', {}).get('dataFrames', {}).get('TravelerDataFrame')
+		travelerDataFrames = travelerInformation.get('dataFrames', {})
+		if type(travelerDataFrames) == dict:
+			travelerDataFrames = travelerDataFrames.get('TravelerDataFrame') or travelerDataFrames.get('dataFrames', {}).get('TravelerDataFrame')
+			travelerDataFrames = [travelerDataFrames]
+		else:
+			travelerDataFrames = [i.get('TravelerDataFrame') for i in travelerDataFrames if i.get('TravelerDataFrame')]
 	return travelerDataFrames
 
 def process_tim(tim_in):
@@ -216,8 +219,9 @@ def process_tim(tim_in):
 			formatted_tim = setMiscellaneous(formatted_tim, tim_dict.get('payload', {}))
 			formatted_tim = setTravelerInformation(formatted_tim, tim_dict.get('payload', {}).get('data', {}).get('MessageFrame', {}).get('value', {}).get('TravelerInformation'))
 			travelerDataFrames = getTravelerDataFrames(tim_dict)
-			formatted_tim = setTravelerDataFrame(formatted_tim, travelerDataFrames)
-			tim_list.append(formatted_tim)
+			for travelerDataFrame in travelerDataFrames:
+				formatted_tim = setTravelerDataFrame(formatted_tim, travelerDataFrame)
+				tim_list.append(formatted_tim)
 		except:
 			pass
 	return tim_list
