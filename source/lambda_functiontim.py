@@ -37,7 +37,7 @@ S3_BUCKET_NAME = os.environ['S3_BUCKET_NAME'] # 'usdot-its-cvpilot-public-data'
 SOCRATA_DATASET_ID = os.environ['SOCRATA_DATASET_ID'] # '2rdx-wgpx'
 
 
-getKeyAsValue = lambda obj: list(obj.keys())[0]
+getKeyAsValue = lambda obj: list(obj.keys()).pop(0) if obj.keys() else None
 
 def setMetadata(formatted_tim, tim_dict):
 	'''
@@ -151,9 +151,6 @@ def setTravelerDataFrame(formatted_tim, tim_dict):
 		formatted_tim with additional keys
 	'''
 	formatted_tim = copy.deepcopy(formatted_tim)
-	if 'regions' in tim_dict:
-		if 'GeographicalPath' in tim_dict['regions']:
-			formatted_tim = setRegions(formatted_tim, tim_dict.get('regions', {}).get('GeographicalPath'))
 	formatted_tim['travelerdataframe_durationTime'] = tim_dict.get('duratonTime')
 	formatted_tim['travelerdataframe_sspMsgRights1'] = tim_dict.get('sspMsgRights1')
 	formatted_tim['travelerdataframe_sspMsgRights2'] = tim_dict.get('sspMsgRights2')
@@ -213,7 +210,7 @@ def setRegions(formatted_tim, tim_dict):
 
 	return formatted_tim
 
-def getTravelerDataFrames(timdict):
+def getTravelerDataFrames(formatted_tim, tim_dict):
 	'''
 	Method for parsing travelerDataFrames from different data schemas and return it as an array of dictionaries
 	'''
@@ -253,7 +250,17 @@ def process_tim(tim_in):
 			travelerDataFrames = getTravelerDataFrames(tim_dict)
 			for travelerDataFrame in travelerDataFrames:
 				formatted_tim = setTravelerDataFrame(formatted_tim, travelerDataFrame)
-				tim_list.append(formatted_tim)
+				GeographicalPath = travelerDataFrame.get('regions', {}).get('GeographicalPath')
+				if GeographicalPath:
+					if type(GeographicalPath) == dict:
+						formatted_tim = setRegions(formatted_tim, GeographicalPath)
+						tim_list.append(formatted_tim)
+					elif type(GeographicalPath) == list:
+						for i in GeographicalPath:
+							formatted_tim = setRegions(formatted_tim, i)
+							tim_list.append(formatted_tim)
+				else:
+					tim_list.append(formatted_tim)
 		except:
 			pass
 	return tim_list
