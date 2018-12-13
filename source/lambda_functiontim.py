@@ -223,7 +223,8 @@ def getTravelerDataFrames(formatted_tim, tim_dict):
 		travelerDataFrames = travelerInformation.get('dataFrames', {})
 		if type(travelerDataFrames) == dict:
 			travelerDataFrames = travelerDataFrames.get('TravelerDataFrame') or travelerDataFrames.get('dataFrames', {}).get('TravelerDataFrame')
-			travelerDataFrames = [travelerDataFrames]
+			if type(travelerDataFrames) != list:
+				travelerDataFrames = [travelerDataFrames]
 		else:
 			travelerDataFrames = [i.get('TravelerDataFrame') for i in travelerDataFrames if i.get('TravelerDataFrame')]
 	return travelerDataFrames
@@ -300,6 +301,10 @@ def lambda_handler(event, context):
 				tim_in = record.get()['Body'].read().decode('utf-8')
 				tim_in = tim_in.splitlines()
 				tim_list += process_tim(tim_in)
+
+	if len(tim_list) == 0:
+		logger.info("No new data found. Exit script")
+		return
 
 	logger.info("Connecting to Socrata")
 	client = Socrata("data.transportation.gov", SOCRATA_API_KEY, SOCRATA_USERNAME, SOCRATA_PASSWORD, timeout=400)
