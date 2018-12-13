@@ -309,7 +309,7 @@ def lambda_handler(event, context):
 	logger.info("Connecting to Socrata")
 	client = Socrata("data.transportation.gov", SOCRATA_API_KEY, SOCRATA_USERNAME, SOCRATA_PASSWORD, timeout=400)
 
-	logger.info("Uploading...")
+	logger.info("Uploading {} new records".format(len(tim_list)))
 	uploadResponse = client.upsert(SOCRATA_DATASET_ID, tim_list)
 	logger.info(uploadResponse)
 
