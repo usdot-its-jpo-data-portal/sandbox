@@ -248,7 +248,7 @@ def process_tim(tim_in):
 			formatted_tim = setMetadata(formatted_tim, tim_dict.get('metadata', {}))
 			formatted_tim = setMiscellaneous(formatted_tim, tim_dict.get('payload', {}))
 			formatted_tim = setTravelerInformation(formatted_tim, tim_dict.get('payload', {}).get('data', {}).get('MessageFrame', {}).get('value', {}).get('TravelerInformation'))
-			travelerDataFrames = getTravelerDataFrames(tim_dict)
+			travelerDataFrames = getTravelerDataFrames(formatted_tim, tim_dict)
 			for travelerDataFrame in travelerDataFrames:
 				formatted_tim = setTravelerDataFrame(formatted_tim, travelerDataFrame)
 				GeographicalPath = travelerDataFrame.get('regions', {}).get('GeographicalPath')
