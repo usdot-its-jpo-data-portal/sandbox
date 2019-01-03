@@ -58,6 +58,7 @@ def setMetadata(formatted_tim, tim_dict):
 	formatted_tim['metadata_recordGeneratedBy'] = tim_dict.get('recordGeneratedBy')
 	formatted_tim['metadata_sanitized'] = str(tim_dict.get('sanitized', ''))
 	formatted_tim['metadata_payloadType'] = tim_dict.get('payloadType')
+	formatted_tim['metadata_securityResultCode'] = tim_dict.get('securityResultCode')
 
 	serialId = tim_dict.get('serialId', {})
 	if serialId:
@@ -162,8 +163,20 @@ def setTravelerDataFrame(formatted_tim, tim_dict):
 	formatted_tim['travelerdataframe_frameType'] = getKeyAsValue(tim_dict.get('frameType', {}))
 	formatted_tim['travelerdataframe_startTime'] = tim_dict.get('startTime')
 
-	content_advisory_sequence = tim_dict.get('content',{}).get('advisory',{}).get('SEQUENCE', [])
-	formatted_tim['travelerdataframe_content_advisory_sequence'] = json.dumps(content_advisory_sequence)
+	content = tim_dict.get('content')
+	if type(content) == dict:
+		formatted_tim['travelerdataframe_content_itis'] = content.get('itis')
+		advisory_sequence = content.get('advisory',{}).get('SEQUENCE', [])
+		workZone_sequence = content.get('workZone',{}).get('SEQUENCE', [])
+		genericSign_sequence = content.get('genericSign',{}).get('SEQUENCE', [])
+		speedLimit_sequence = content.get('speedLimit',{}).get('SEQUENCE', [])
+		exitService_sequence = content.get('exitService',{}).get('SEQUENCE', [])
+
+		formatted_tim['travelerdataframe_content_advisory_sequence'] = json.dumps(advisory_sequence)
+		formatted_tim['travelerdataframe_content_workZone_sequence'] = json.dumps(workZone_sequence)
+		formatted_tim['travelerdataframe_content_genericSign_sequence'] = json.dumps(genericSign_sequence)
+		formatted_tim['travelerdataframe_content_speedLimit_sequence'] = json.dumps(speedLimit_sequence)
+		formatted_tim['travelerdataframe_content_exitService_sequence'] = json.dumps(exitService_sequence)
 
 	roadSignID = tim_dict.get('msgId',{}).get('roadSignID',{})
 	if roadSignID:
