@@ -40,7 +40,7 @@ Additional information about CV data is available at:
 - [ITS JPO Data Site ](https://www.its.dot.gov/data/) -  ITS JPO data site which allows users to search for various ITS data.
 - [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode) - This ITS JPO Open Source tool is used to collect and process Connected Vehicle data in near real time, and route it to other data repositories, including the Amazon S3 bucket.  
 - [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp) - This  ITS JPO Open source module is used to sanitize the data to ensure no personal information is shared with the public.  
-- [Connected Vehicles Performance Evaluation Platform (CVPEP)](https://github.com/VolpeUSDOT/CV-PEP) - Limited access Platform for storing raw CV data for evaluation.
+- [Connected Vehicles Performance Evaluation Platform (CVPEP)](https://github.com/usdot-jpo-sdc) - Limited access Platform for storing raw CV data for evaluation.
 
 
 
@@ -130,7 +130,7 @@ To limit the data being dowloaded you can use AWS CLI's filtering which is detai
 
 ### Wyoming CV Data
 
-- [Details on Wyoming CV DATA BSMs and TIMs messages and samples](https://github.com/usdot-jpo-ode/jpo-ode/blob/develop/docs/ODE_Output_Schema_Reference.docx)
+- [Details on Wyoming CV DATA BSMs and TIMs messages and samples](https://github.com/usdot-jpo-ode/jpo-ode/blob/master/docs/ODE_Output_Schema_Reference.docx)
 - [Full data set in AWS](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html)
 
 #### WYDOT BSM
