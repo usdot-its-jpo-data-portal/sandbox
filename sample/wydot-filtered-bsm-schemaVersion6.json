@@ -1,0 +1,145 @@
+{
+  "metadata": {
+    "bsmSource": "RV",
+    "logFileName": "rxMsg_1525638388_2620%3A31%3A40e0%3A802%3A%3A1.csv",
+    "recordType": "rxMsg",
+    "securityResultCode": "inconsistentInputParameters",
+    "receivedMessageDetails": {
+      "locationData": {
+        "latitude": "0",
+        "longitude": "0",
+        "elevation": "0",
+        "speed": "0",
+        "heading": "0"
+      },
+      "rxSource": "RV"
+    },
+    "payloadType": "us.dot.its.jpo.ode.model.OdeBsmPayload",
+    "serialId": {
+      "streamId": "2ef1bea6-804e-4646-9b18-658425bb8a14",
+      "bundleSize": 1,
+      "bundleId": 4,
+      "recordId": 2,
+      "serialNumber": 0
+    },
+    "odeReceivedAt": "2018-05-09T16:29:30.349Z",
+    "schemaVersion": 6,
+    "recordGeneratedAt": "2018-05-06T20:26:28.690Z",
+    "recordGeneratedBy": "OBU",
+    "sanitized": false
+  },
+  "payload": {
+    "dataType": "us.dot.its.jpo.ode.plugin.j2735.J2735Bsm",
+    "data": {
+      "coreData": {
+        "msgCnt": 127,
+        "id": "CB950124",
+        "secMark": 28589,
+        "position": {
+          "latitude": 41.2827318,
+          "longitude": -105.5912184,
+          "elevation": 2179.1
+        },
+        "accelSet": {
+          "accelLat": 0,
+          "accelLong": -0.6,
+          "accelVert": 0,
+          "accelYaw": 2.29
+        },
+        "accuracy": {
+          "semiMajor": 2.45,
+          "semiMinor": 3.1
+        },
+        "transmission": "NEUTRAL",
+        "speed": 7.52,
+        "heading": 82.4375,
+        "brakes": {
+          "wheelBrakes": {
+            "leftFront": false,
+            "rightFront": false,
+            "unavailable": true,
+            "leftRear": false,
+            "rightRear": false
+          },
+          "traction": "unavailable",
+          "abs": "unavailable",
+          "scs": "unavailable",
+          "brakeBoost": "unavailable",
+          "auxBrakes": "unavailable"
+        },
+        "size": {
+          "width": 190,
+          "length": 409
+        }
+      },
+      "partII": [
+        {
+          "id": "VehicleSafetyExtensions",
+          "value": {
+            "pathHistory": {
+              "crumbData": [
+                {
+                  "elevationOffset": 0,
+                  "latOffset": 0.0000118,
+                  "lonOffset": 0.0000937,
+                  "timeOffset": 1
+                },
+                {
+                  "elevationOffset": -0.1,
+                  "latOffset": 0.0000692,
+                  "lonOffset": 0.0002635,
+                  "timeOffset": 2.79
+                },
+                {
+                  "elevationOffset": -0.3,
+                  "latOffset": 0.0001574,
+                  "lonOffset": 0.0003623,
+                  "timeOffset": 4.19
+                },
+                {
+                  "elevationOffset": -0.4,
+                  "latOffset": 0.0002872,
+                  "lonOffset": 0.0004046,
+                  "timeOffset": 5.7
+                },
+                {
+                  "elevationOffset": -1.1,
+                  "latOffset": 0.0008191,
+                  "lonOffset": 0.0003202,
+                  "timeOffset": 9.69
+                },
+                {
+                  "elevationOffset": -1.8,
+                  "latOffset": 0.0017064,
+                  "lonOffset": 0.0001896,
+                  "timeOffset": 14.2
+                }
+              ]
+            },
+            "pathPrediction": {
+              "confidence": 10,
+              "radiusOfCurve": 97.5
+            }
+          }
+        },
+        {
+          "id": "SupplementalVehicleExtensions",
+          "value": {
+            "classDetails": {
+              "fuelType": "unknownFuel",
+              "hpmsType": "none",
+              "keyType": 0,
+              "regional": [],
+              "role": "basicVehicle"
+            },
+            "vehicleData": {
+              "height": 1.5
+            },
+            "weatherProbe": {},
+            "regional": []
+          }
+        }
+      ]
+    }
+  }
+}
