@@ -37,10 +37,10 @@ Additional information about CV data is available at:
 
 ### Related ITS JPO Projects
 
-- [ITS JPO Data Site ](https://www.its.dot.gov/data/) -  ITS JPO data site which allows users to search for various ITS data.
+- [ITS JPO Data Site](https://www.its.dot.gov/data/) -  ITS JPO data site which allows users to search for various ITS data.
 - [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode) - This ITS JPO Open Source tool is used to collect and process Connected Vehicle data in near real time, and route it to other data repositories, including the Amazon S3 bucket.  
-- [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp) - This  ITS JPO Open source module is used to sanitize the data to ensure no personal information is shared with the public.  
-- [Connected Vehicles Performance Evaluation Platform (CVPEP)](https://github.com/usdot-jpo-sdc) - Limited access Platform for storing raw CV data for evaluation.
+- [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp) - This ITS JPO Open source module is used to sanitize the data to ensure no personal information is shared with the public.  
+- [Secure Data Commons(SDC)](https://github.com/usdot-jpo-sdc) - Limited access online data warehousing and analysis platform for transportation researchers.
 
 
 
