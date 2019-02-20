@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "schemaVersion": 1,
+    "recordGeneratedBy": "rsu",
+    "recordGeneratedAt": "2019-01-14 00:00:00.035 [ET]",
+    "logFileName": "2019_1_14_0_thea33.csv",
+    "kind": "out",
+    "psid": "32770",
+    "RSUID": "thea33",
+    "externalID": "NA",
+    "dataType": "spat"
+  },
+  "payload": {
+    "data": {
+      "SPAT": {
+        "timeStamp": "19020",
+        "intersections": {
+          "IntersectionState": {
+            "id": {
+              "id": "3150"
+            },
+            "revision": "0",
+            "status": "0000000000000000",
+            "timeStamp": "34",
+            "states": {
+              "MovementState": [
+                {
+                  "signalGroup": "10",
+                  "state-time-speed": {
+                    "MovementEvent": {
+                      "eventState": {
+                        "stop-And-Remain": null
+                      },
+                      "timing": {
+                        "minEndTime": "209"
+                      }
+                    }
+                  }
+                },
+                {
+                  "signalGroup": "9",
+                  "state-time-speed": {
+                    "MovementEvent": {
+                      "eventState": {
+                        "stop-And-Remain": null
+                      },
+                      "timing": {
+                        "minEndTime": "0"
+                      }
+                    }
+                  }
+                },
+                {
+                  "signalGroup": "4",
+                  "state-time-speed": {
+                    "MovementEvent": {
+                      "eventState": {
+                        "stop-And-Remain": null
+                      },
+                      "timing": {
+                        "minEndTime": "209"
+                      }
+                    }
+                  }
+                },
+                {
+                  "signalGroup": "2",
+                  "state-time-speed": {
+                    "MovementEvent": {
+                      "eventState": {
+                        "protected-Movement-Allowed": null
+                      },
+                      "timing": {
+                        "minEndTime": "149"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

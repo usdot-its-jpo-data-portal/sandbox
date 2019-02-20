@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "schemaVersion": 1,
+    "recordGeneratedBy": "rsu",
+    "recordGeneratedAt": "2019-01-14 00:20:30.046 [ET]",
+    "logFileName": "2019_1_14_0_thea18.csv",
+    "kind": "in",
+    "bsmSource": "RV",
+    "psid": "32",
+    "RSUID": "thea18",
+    "externalID": "NA",
+    "dataType": "bsm"
+  },
+  "payload": {
+    "data": {
+      "coreData": {
+        "msgCnt": "42",
+        "id": "8290373",
+        "secMark": "30135",
+        "lat": "279434229",
+        "long": "-824556863",
+        "elev": "-157",
+        "accuracy": {
+          "semiMajor": "4",
+          "semiMinor": "4",
+          "orientation": "7905"
+        },
+        "transmission": {
+          "unavailable": null
+        },
+        "speed": "1291",
+        "heading": "5490",
+        "angle": "127",
+        "accelSet": {
+          "long": "-2",
+          "lat": "2001",
+          "vert": "49",
+          "yaw": "-230"
+        },
+        "brakes": {
+          "wheelBrakes": "00000",
+          "traction": {
+            "unavailable": null
+          },
+          "abs": {
+            "unavailable": null
+          },
+          "scs": {
+            "unavailable": null
+          },
+          "brakeBoost": {
+            "unavailable": null
+          },
+          "auxBrakes": {
+            "unavailable": null
+          }
+        },
+        "size": {
+          "width": "200",
+          "length": "460"
+        }
+      },
+      "partII": {
+        "SEQUENCE": [
+          {
+            "partII-Id": "0",
+            "partII-Value": {
+              "VehicleSafetyExtensions": {
+                "pathHistory": {
+                  "crumbData": {
+                    "PathHistoryPoint": [
+                      {
+                        "latOffset": "965",
+                        "lonOffset": "2948",
+                        "elevationOffset": "-3",
+                        "timeOffset": "121"
+                      },
+                      {
+                        "latOffset": "2538",
+                        "lonOffset": "9411",
+                        "elevationOffset": "-5",
+                        "timeOffset": "376"
+                      },
+                      {
+                        "latOffset": "3630",
+                        "lonOffset": "17379",
+                        "elevationOffset": "-6",
+                        "timeOffset": "702"
+                      },
+                      {
+                        "latOffset": "4731",
+                        "lonOffset": "32887",
+                        "elevationOffset": "-9",
+                        "timeOffset": "1312"
+                      }
+                    ]
+                  }
+                },
+                "pathPrediction": {
+                  "radiusOfCurve": "-6078",
+                  "confidence": "183"
+                }
+              }
+            }
+          },
+          {
+            "partII-Id": "2",
+            "partII-Value": {
+              "SupplementalVehicleExtensions": {
+                "classification": "10",
+                "classDetails": {
+                  "role": {
+                    "basicVehicle": null
+                  },
+                  "hpmsType": {
+                    "car": null
+                  }
+                },
+                "vehicleData": {
+                  "height": "30",
+                  "bumpers": {
+                    "front": "43",
+                    "rear": "43"
+                  },
+                  "mass": "34"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
