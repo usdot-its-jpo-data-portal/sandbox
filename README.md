@@ -34,7 +34,6 @@ Additional information about CV data is available at:
 - [ITS JPO Connected Vehicles (CV) Pilot Deployment Program](https://www.its.dot.gov/pilots/cv_pilot_plan.htm)-  The pilot deployments are expected to integrate connected vehicle research concepts into practical and effective elements, enhancing existing operational capabilities.
 - [J2735 Standard](http://standards.sae.org/j2735_201603/) -  Standard for CV data
 - [General CV information: Vehicle Based Data and Availability](https://www.its.dot.gov/itspac/october2012/PDF/data_availability.pdf) - General introduction slides on CV data
-- [Sample of the WYDOT BSM data](https://data.transportation.gov/Automobiles/Wyoming-CV-Pilot-Basic-Safety-Message-One-Day-Samp/9k4m-a3jc) - Sample of WYDOT BSM data
 
 ### Related ITS JPO Projects
 
@@ -99,11 +98,11 @@ aws s3 ls s3://usdot-its-cvpilot-public-data/ --recursive --human-readable --sum
 
 The directory structure within the buckets will take the following form:
 
-	{Source_Name}/{Data_Type}/{Year}/{Month}/{Day}/{Hour}
+	`{Source_Name}/{Data_Type}/{Year}/{Month}/{Day}/{Hour}`
 
 So for example, accessing Wyoming CV Pilots BSM data for a specific time will look like:
 
-	wydot/BSM/2017/08/15/23/wydot-filtered-bsm-1501782546127.json
+	`wydot/BSM/2017/08/15/23/wydot-filtered-bsm-1501782546127.json`
 
 Where in this example the actual BSM file is titled 'wydot-filtered-bsm-1501782546127.json'. For Wyoming CV Pilot data, data prior to January 18, 2018 is one message per file. From that date onwards, files will contain multiple messages.
 
