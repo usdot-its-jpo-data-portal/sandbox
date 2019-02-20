@@ -1,0 +1,205 @@
+{
+  "metadata": {
+    "request": {
+      "ode": {
+        "verb": "POST",
+        "version": 3
+      },
+      "sdw": {
+        "recordId": "D69A0A12",
+        "serviceRegion": {
+          "nwCorner": {
+            "latitude": 41.715253,
+            "longitude": -106.229851
+          },
+          "seCorner": {
+            "latitude": 40.227193,
+            "longitude": -104.620706
+          }
+        },
+        "ttl": "oneminute"
+      },
+      "rsus": {
+        "rsus": {
+          "rsuTarget": "127.0.0.3",
+          "rsuRetries": 1,
+          "rsuTimeout": 1000,
+          "rsuIndex": 10
+        }
+      },
+      "snmp": {
+        "mode": 1,
+        "deliverystop": "2018-01-01T17:47:11-05:15",
+        "rsuid": "00000083",
+        "deliverystart": "2017-06-01T17:47:11-05:00",
+        "enable": 1,
+        "channel": 178,
+        "msgid": 31,
+        "interval": 2,
+        "status": 4
+      }
+    },
+    "recordGeneratedBy": "TMC",
+    "schemaVersion": 6,
+    "payloadType": "us.dot.its.jpo.ode.model.OdeTimPayload",
+    "serialId": {
+      "recordId": 0,
+      "serialNumber": 0,
+      "streamId": "3219c809-4e79-445a-aeff-6922277a0f4b",
+      "bundleSize": 1,
+      "bundleId": 0
+    },
+    "sanitized": false,
+    "recordGeneratedAt": "2018-12-10T15:00:00.682Z",
+    "odeReceivedAt": "2019-01-16T13:16:58.852Z"
+  },
+  "payload": {
+    "data": {
+      "AdvisorySituationData": {
+        "recordID": "D69A0A12",
+        "timeToLive": 0,
+        "serviceRegion": {
+          "nwCorner": {
+            "lat": 417152530,
+            "long": -1062298510
+          },
+          "seCorner": {
+            "lat": 402271930,
+            "long": -1046207060
+          }
+        },
+        "asdmDetails": {
+          "advisoryMessage": {
+            "Ieee1609Dot2Data": {
+              "protocolVersion": 3,
+              "content": {
+                "unsecuredData": {
+                  "MessageFrame": {
+                    "messageId": 31,
+                    "value": {
+                      "TravelerInformation": {
+                        "timeStamp": 494820,
+                        "packetID": 300000000000000000,
+                        "urlB": null,
+                        "dataFrames": {
+                          "TravelerDataFrame": {
+                            "regions": {
+                              "GeographicalPath": {
+                                "closedPath": {
+                                  "false": ""
+                                },
+                                "anchor": {
+                                  "lat": 405883790,
+                                  "long": -1050732280
+                                },
+                                "name": "sirius_sirius_1_2_SAT-7EFD0225",
+                                "laneWidth": 15000,
+                                "directionality": {
+                                  "both": ""
+                                },
+                                "description": {
+                                  "path": {
+                                    "offset": {
+                                      "xy": {
+                                        "nodes": {
+                                          "NodeXY": [
+                                            {
+                                              "delta": {
+                                                "node-LatLon": {
+                                                  "lon": -1050698460,
+                                                  "lat": 405859660
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "delta": {
+                                                "node-LatLon": {
+                                                  "lon": -1050617980,
+                                                  "lat": 405805730
+                                                }
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    "scale": 0
+                                  }
+                                },
+                                "id": {
+                                  "id": 0,
+                                  "region": 0
+                                },
+                                "direction": 1111111111111111
+                              }
+                            },
+                            "duratonTime": 32000,
+                            "sspMsgRights1": 1,
+                            "sspMsgRights2": 1,
+                            "startYear": 2018,
+                            "msgId": {
+                              "roadSignID": {
+                                "viewAngle": 1111111111111111,
+                                "mutcdCode": {
+                                  "warning": ""
+                                },
+                                "position": {
+                                  "lat": 263041699,
+                                  "long": -801463230
+                                }
+                              }
+                            },
+                            "priority": 5,
+                            "content": {
+                              "advisory": {
+                                "SEQUENCE": {
+                                  "item": {
+                                    "itis": 7169
+                                  }
+                                }
+                              }
+                            },
+                            "url": null,
+                            "sspTimRights": 1,
+                            "sspLocationRights": 1,
+                            "frameType": {
+                              "advisory": ""
+                            },
+                            "startTime": 494820
+                          }
+                        },
+                        "msgCnt": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "startTime": {
+            "month": 6,
+            "hour": 17,
+            "year": 2017,
+            "day": 1,
+            "minute": 47
+          },
+          "stopTime": {
+            "month": 1,
+            "hour": 17,
+            "year": 2018,
+            "day": 1,
+            "minute": 47
+          },
+          "distType": "03",
+          "asdmType": 2,
+          "asdmID": "DA3D6DC5"
+        },
+        "requestID": "DA3D6DC5",
+        "groupID": "00000000",
+        "dialogID": 156,
+        "seqID": 5
+      }
+    },
+    "dataType": "TravelerInformation"
+  }
+}
