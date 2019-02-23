@@ -102,8 +102,10 @@ def process_tim(raw_rec):
         travelerdataframe_msgId_long = float(out['travelerdataframe_msgId_long'])/10e6
         out['travelerdataframe_msgId_position'] = "POINT ({} {})".format(travelerdataframe_msgId_long, travelerdataframe_msgId_lat)
 
-    out['metadata_generatedAt'] = dateutil.parser.parse(out['metadata_generatedAt'][:23]).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3]
+    metadata_generatedAt = dateutil.parser.parse(out['metadata_generatedAt'][:23])
+    out['metadata_generatedAt'] = metadata_generatedAt.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3]
     out['randomNum'] = random.random()
+    out['metadata_generatedAt_timeOfDay'] = metadata_generatedAt.hour + metadata_generatedAt.minute/60 + metadata_generatedAt.second/3600
     return out
 
 
@@ -139,7 +141,7 @@ def lambda_handler(event, context):
 
     logger.info("Transform record dtypes according to Socrata dataset")
     col_dtype_dict = lambda_to_socrata_util.get_col_dtype_dict(client, SOCRATA_DATASET_ID)
-    float_fields = ['randomNum']
+    float_fields = ['randomNum', 'metadata_generatedAt_timeOfDay']
     out_recs = [lambda_to_socrata_util.mod_dtype(r, col_dtype_dict, float_fields) for r in out_recs]
 
     logger.info("Uploading {} new records".format(len(out_recs)))
