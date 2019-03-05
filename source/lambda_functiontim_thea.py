@@ -5,22 +5,20 @@ Connected Vehicle Pilot.
 This lambda function is triggered by file creation in the ITS DataHub
 Sandbox s3 bucket ("usdot-its-cvpilot-public-data" or "test-usdot-its-cvpilot-public-data").
 When a new file is added to the Sandbox s3 bucket, this lambda function will read
-the new JSON newline file, perform data transformation, upsert the new data
-records to the corresponding Socrata data set on data.transportation.gov, and remove the
-oldest records from the Socrata dataset to keep the data set at a manageable size.
+the new JSON newline file, perform data transformation, and upsert the new data
+records to the corresponding Socrata data set on data.transportation.gov.
 
 Data transformation includes flattening of the data structure, which is
 required for the data to work with the Socrata backend on data.transportation.gov.
 Renaming of certain fields is done to achieve consistency across data sets. No
 unit conversion will be done to the data, though occasionally, additional fields
-will be added to enhance usage of the dataset in Socrata (e.g. geolocation fields
+will be added to enhance usage of the data set in Socrata (e.g. geolocation fields
 for plotting). Any added fields will be listed in the description of each Socrata
 data set.
 
-The lambda function will delete 10,000 of the oldest records in the data set when
-the number of records exceeds 3 million. This allows the data set to hold a sample
-of the most recent ~3 million records and allows the data set to be accessible
-on data.transportation.gov with minimal lags.
+A separate lambda function using the lambda handler in `lambda_function_cleanup.py`
+will be used to keep the data set at a manageable size by removing oldest records
+from the Socrata data set.
 
 Requires:
 - Uploading to AWS requires packaging the source code with the Python extensions
@@ -42,6 +40,7 @@ from requests.auth import HTTPBasicAuth
 requests.packages.urllib3.disable_warnings()
 from sodapy import Socrata
 import time
+import copy
 
 import lambda_to_socrata_util
 
@@ -105,13 +104,37 @@ def process_tim(raw_rec):
     metadata_generatedAt = dateutil.parser.parse(out['metadata_generatedAt'][:23])
     out['metadata_generatedAt'] = metadata_generatedAt.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3]
     out['randomNum'] = random.random()
-    # out['metadata_generatedAt_timeOfDay'] = metadata_generatedAt.hour + metadata_generatedAt.minute/60 + metadata_generatedAt.second/3600
+    out['metadata_generatedAt_timeOfDay'] = metadata_generatedAt.hour + metadata_generatedAt.minute/60 + metadata_generatedAt.second/3600
     return out
 
+def split_tim_tdf(raw_rec):
+    '''
+    Reads each raw TIM data record from Tampa CV Pilot and split out each traveler data frame into its own
+    record.
+
+	Parameters:
+		raw_rec: dictionary object of a single TIM record
+
+	Returns:
+		array of raw recs, with one traveler data frame in each rec
+    '''
+    out = []
+    try:
+        tdfs = copy.deepcopy(raw_rec['payload']['data']['TravelerInformation']['dataFrames']['TravelerDataFrame'])
+        if type(tdfs) == list:
+            for tdf in tdfs:
+                temp_rec = copy.deepcopy(raw_rec)
+                temp_rec['payload']['data']['TravelerInformation']['dataFrames']['TravelerDataFrame'] = tdf
+                out.append(temp_rec)
+        else:
+            out.append(raw_rec)
+    except:
+        out.append(raw_rec)
+    return out
 
 def lambda_handler(event, context):
-	'''
-	Method called by Amazon Web Services when the lambda trigger fires. This lambda
+    '''
+    Method called by Amazon Web Services when the lambda trigger fires. This lambda
     is configured to be triggered by file creation in the ITS DataHub
     Sandbox s3 bucket ("usdot-its-cvpilot-public-data" or "test-usdot-its-cvpilot-public-data").
     When a new file is added to the Sandbox s3 bucket, this lambda function will read
@@ -119,17 +142,18 @@ def lambda_handler(event, context):
     records to the corresponding Socrata data set on data.transportation.gov, and remove the
     oldest records from the Socrata dataset to keep the data set at a manageable size.
 
-	Parameters:
-		event, context: Amazon Web Services required parameters. Describes triggering event.
-	'''
+    Parameters:
+    	event, context: Amazon Web Services required parameters. Describes triggering event.
+    '''
     # Read data from the newly deposited file and
     # perform data transformation on the records
     out_recs = []
     for bucket, key in lambda_to_socrata_util.get_fps_from_event(event):
         raw_recs = lambda_to_socrata_util.process_s3_file(bucket, key)
         for raw_rec in raw_recs:
-            processed_raw_recs = process_tim(raw_rec)
-            out_recs += [processed_raw_recs]
+            split_raw_recs = split_tim_tdf(raw_rec)
+            processed_raw_recs = [process_tim(i) for i in split_raw_recs]
+            out_recs += processed_raw_recs
 
     if len(out_recs) == 0:
         logger.info("No new data found. Exit script")
@@ -147,24 +171,3 @@ def lambda_handler(event, context):
     logger.info("Uploading {} new records".format(len(out_recs)))
     uploadResponse = client.upsert(SOCRATA_DATASET_ID, out_recs)
     logger.info(uploadResponse)
-
-    # If the corresponding Socrata data set has more than 3 million records,
-    # remove the oldest 10k records to keep the data set at a manageable size
-    r = requests.get("https://data.transportation.gov/resource/{}.json?$select=count(*)".format(SOCRATA_DATASET_ID),
-                    auth=HTTPBasicAuth(SOCRATA_USERNAME, SOCRATA_PASSWORD))
-    r = r.json()
-    count = int(r[0]['count'])
-    if count > 3000000:
-        toDelete = 3000000 - count
-        logger.info('{} rows in dataset - removing oldest {} rows'.format(count, toDelete))
-        while toDelete > 0:
-            N = min(toDelete, 50000)
-            retrievedRows = client.get(SOCRATA_DATASET_ID, limit=N, exclude_system_fields=False)
-            deleteList = [{':id': row[':id'], ':deleted': True} for row in retrievedRows]
-            try:
-                result = client.upsert(SOCRATA_DATASET_ID, deleteList)
-            except:
-                time.sleep(2)
-                result = client.upsert(SOCRATA_DATASET_ID, deleteList)
-            logger.info(result)
-            toDelete -= N
