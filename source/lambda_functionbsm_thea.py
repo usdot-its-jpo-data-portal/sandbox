@@ -5,22 +5,20 @@ Connected Vehicle Pilot.
 This lambda function is triggered by file creation in the ITS DataHub
 Sandbox s3 bucket ("usdot-its-cvpilot-public-data" or "test-usdot-its-cvpilot-public-data").
 When a new file is added to the Sandbox s3 bucket, this lambda function will read
-the new JSON newline file, perform data transformation, upsert the new data
-records to the corresponding Socrata data set on data.transportation.gov, and remove the
-oldest records from the Socrata dataset to keep the data set at a manageable size.
+the new JSON newline file, perform data transformation, and upsert the new data
+records to the corresponding Socrata data set on data.transportation.gov.
 
 Data transformation includes flattening of the data structure, which is
 required for the data to work with the Socrata backend on data.transportation.gov.
 Renaming of certain fields is done to achieve consistency across data sets. No
 unit conversion will be done to the data, though occasionally, additional fields
-will be added to enhance usage of the dataset in Socrata (e.g. geolocation fields
+will be added to enhance usage of the data set in Socrata (e.g. geolocation fields
 for plotting). Any added fields will be listed in the description of each Socrata
 data set.
 
-The lambda function will delete 10,000 of the oldest records in the data set when
-the number of records exceeds 3 million. This allows the data set to hold a sample
-of the most recent ~3 million records and allows the data set to be accessible
-on data.transportation.gov with minimal lags.
+A separate lambda function using the lambda handler in `lambda_function_cleanup.py`
+will be used to keep the data set at a manageable size by removing oldest records
+from the Socrata data set.
 
 Requires:
 - Uploading to AWS requires packaging the source code with the Python extensions
@@ -61,7 +59,7 @@ def process_bsm(raw_rec):
     including:
     1) Flatten the data structure
     2) Rename certain fields to achieve consistency across data sets
-    3) Add additional fields to enhance usage of the dataset in Socrata
+    3) Add additional fields to enhance usage of the data set in Socrata
     (e.g. randomNum, coreData_position)
 
 	Parameters:
@@ -152,18 +150,18 @@ def process_bsm(raw_rec):
 
 
 def lambda_handler(event, context):
-	'''
-	Method called by Amazon Web Services when the lambda trigger fires. This lambda
+    '''
+    Method called by Amazon Web Services when the lambda trigger fires. This lambda
     is configured to be triggered by file creation in the ITS DataHub
     Sandbox s3 bucket ("usdot-its-cvpilot-public-data" or "test-usdot-its-cvpilot-public-data").
     When a new file is added to the Sandbox s3 bucket, this lambda function will read
     the new JSON newline file, perform data transformation, upsert the new data
     records to the corresponding Socrata data set on data.transportation.gov, and remove the
-    oldest records from the Socrata dataset to keep the data set at a manageable size.
+    oldest records from the Socrata data set to keep the data set at a manageable size.
 
-	Parameters:
-		event, context: Amazon Web Services required parameters. Describes triggering event.
-	'''
+    Parameters:
+    	event, context: Amazon Web Services required parameters. Describes triggering event.
+    '''
     # Read data from the newly deposited file and
     # perform data transformation on the records
     out_recs = []
@@ -179,7 +177,7 @@ def lambda_handler(event, context):
     logger.info("Connecting to Socrata")
     client = Socrata("data.transportation.gov", SOCRATA_API_KEY, SOCRATA_USERNAME, SOCRATA_PASSWORD, timeout=400)
 
-    logger.info("Transform record dtypes according to Socrata dataset")
+    logger.info("Transform record dtypes according to Socrata data set")
     col_dtype_dict = lambda_to_socrata_util.get_col_dtype_dict(client, SOCRATA_DATASET_ID)
     float_fields = ['randomNum', 'metadata_generatedAt_timeOfDay']
     out_recs = [lambda_to_socrata_util.mod_dtype(r, col_dtype_dict, float_fields) for r in out_recs]
@@ -187,21 +185,3 @@ def lambda_handler(event, context):
     logger.info("Uploading {} new records".format(len(out_recs)))
     uploadResponse = client.upsert(SOCRATA_DATASET_ID, out_recs)
     logger.info(uploadResponse)
-
-    # If the corresponding Socrata data set has more than 3 million records,
-    # remove the oldest 10k records to keep the data set at a manageable size
-    r = requests.get("https://data.transportation.gov/resource/{}.json?$select=count(*)".format(SOCRATA_DATASET_ID),
-                    auth=HTTPBasicAuth(SOCRATA_USERNAME, SOCRATA_PASSWORD))
-    r = r.json()
-    count = int(r[0]['count'])
-    if count > 3000000:
-        logger.info('{} rows in dataset - removing oldest 10k rows'.format(count))
-        N = 10000
-        retrievedRows = client.get(SOCRATA_DATASET_ID, limit=N, exclude_system_fields=False)
-        deleteList = [{':id': row[':id'], ':deleted': True} for row in retrievedRows]
-        try:
-            result = client.upsert(SOCRATA_DATASET_ID, deleteList)
-        except:
-            time.sleep(2)
-            result = client.upsert(SOCRATA_DATASET_ID, deleteList)
-        logger.info(result)

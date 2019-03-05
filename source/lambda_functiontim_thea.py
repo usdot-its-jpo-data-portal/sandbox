@@ -105,7 +105,7 @@ def process_tim(raw_rec):
     metadata_generatedAt = dateutil.parser.parse(out['metadata_generatedAt'][:23])
     out['metadata_generatedAt'] = metadata_generatedAt.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3]
     out['randomNum'] = random.random()
-    out['metadata_generatedAt_timeOfDay'] = metadata_generatedAt.hour + metadata_generatedAt.minute/60 + metadata_generatedAt.second/3600
+    # out['metadata_generatedAt_timeOfDay'] = metadata_generatedAt.hour + metadata_generatedAt.minute/60 + metadata_generatedAt.second/3600
     return out
 
 
@@ -155,13 +155,16 @@ def lambda_handler(event, context):
     r = r.json()
     count = int(r[0]['count'])
     if count > 3000000:
-        logger.info('{} rows in dataset - removing oldest 10k rows'.format(count))
-        N = 10000
-        retrievedRows = client.get(SOCRATA_DATASET_ID, limit=N, exclude_system_fields=False)
-        deleteList = [{':id': row[':id'], ':deleted': True} for row in retrievedRows]
-        try:
-            result = client.upsert(SOCRATA_DATASET_ID, deleteList)
-        except:
-            time.sleep(2)
-            result = client.upsert(SOCRATA_DATASET_ID, deleteList)
-        logger.info(result)
+        toDelete = 3000000 - count
+        logger.info('{} rows in dataset - removing oldest {} rows'.format(count, toDelete))
+        while toDelete > 0:
+            N = min(toDelete, 50000)
+            retrievedRows = client.get(SOCRATA_DATASET_ID, limit=N, exclude_system_fields=False)
+            deleteList = [{':id': row[':id'], ':deleted': True} for row in retrievedRows]
+            try:
+                result = client.upsert(SOCRATA_DATASET_ID, deleteList)
+            except:
+                time.sleep(2)
+                result = client.upsert(SOCRATA_DATASET_ID, deleteList)
+            logger.info(result)
+            toDelete -= N
