@@ -136,7 +136,7 @@ Wyoming (WYDOT) currently provides sanitized BSM and TIM data to the public thro
 Tampa (THEA) currently provides sanitized BSM, TIM, and SPaT data to the public through ITS DataHub
 
 - The full sanitized THEA BSM, TIM, and SPaT data set can be found in the [ITS DataHub sandbox s3 bucket](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html) under `thea/` folder prefix
-- Sample THEA CV data sets on data.transportation.gov can be found [here](https://data.transportation.gov/browse?tags=tampa%20connected%20vehicle%20%28cv%29%20pilot)
+- Sample THEA CV data sets on data.transportation.gov can be found [here](https://data.transportation.gov/browse?tags=tampa+connected+vehicle+pilot+deployment+%28tampa+cv+pilot%29&utf8=%E2%9C%93)
 
 
 #### Doing simple data analysis on the Wyoming Connected Vehicles (CV) Data		
