@@ -152,7 +152,7 @@ def mod_dtype(rec, col_dtype_dict, float_fields=[]):
     dtype_func = {'number': float, 'text': str, 'checkbox': bool}
     out = {}
     for k,v in rec.items():
-        if k in float_fields:
+        if k in float_fields and k in col_dtype_dict:
             out[k] = float(v)
         elif k in col_dtype_dict:
             out[k] = dtype_func.get(col_dtype_dict.get(k, 'j'), identity)(v)

@@ -86,7 +86,8 @@ def lambda_handler(event, context):
             try:
                 # remove at most 10000 records at a time to avoid timeouts
                 N = min(toDelete, 10000)
-                retrievedRows = client.get(datasetId, limit=N, exclude_system_fields=False, select=':id')
+                retrievedRows = client.get(datasetId, limit=N, exclude_system_fields=False,
+                                           select=':id,metadata_generatedAt', order='metadata_generatedAt')
                 deleteList = [{':id': row[':id'], ':deleted': True} for row in retrievedRows]
                 result = client.upsert(datasetId, deleteList)
                 logger.info(id_toDelete_dict)
