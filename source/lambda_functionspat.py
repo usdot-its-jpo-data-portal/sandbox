@@ -29,8 +29,10 @@ packaged with the source code to work on AWS: requests, sodapy. The file
 function: SOCRATA_USERNAME, SOCRATA_PASSWORD, SOCRATA_API_KEY, SOCRATA_DATASET_ID.
 
 '''
-import boto3
+# import boto3
+import s3fs
 import dateutil.parser
+from datetime import datetime, timedelta
 import logging
 import os
 import requests
@@ -39,6 +41,7 @@ import random
 requests.packages.urllib3.disable_warnings()
 from sodapy import Socrata
 import time
+
 
 import lambda_to_socrata_util
 
@@ -51,6 +54,9 @@ SOCRATA_USERNAME = os.environ['SOCRATA_USERNAME']
 SOCRATA_PASSWORD = os.environ['SOCRATA_PASSWORD']
 SOCRATA_API_KEY = os.environ['SOCRATA_API_KEY']
 SOCRATA_DATASET_ID = os.environ['SOCRATA_DATASET_ID']
+S3_BUCKET = os.environ['S3_BUCKET']
+DATA_PROVIDER = os.environ['DATA_PROVIDER']
+DATA_TYPE = os.environ['DATA_TYPE']
 
 
 def process_spat(raw_rec):
@@ -109,26 +115,92 @@ def lambda_handler(event, context):
     Parameters:
     	event, context: Amazon Web Services required parameters. Describes triggering event.
     '''
-    # Read data from the newly deposited file and
-    # perform data transformation on the records
-    out_recs = []
-    for bucket, key in lambda_to_socrata_util.get_fps_from_event(event):
-        raw_recs = lambda_to_socrata_util.process_s3_file(bucket, key)
-        out_recs += [process_spat(i) for i in raw_recs]
+    t0 = time.time()
 
-    if len(out_recs) == 0:
-        logger.info("No new data found. Exit script")
+    # Connect to s3 client
+    s3 = s3fs.S3FileSystem()
+
+    # Get all file paths from recent ingestion day
+    ingest_day = datetime.now() - timedelta(days=2)
+    day_dir_path = os.path.join(S3_BUCKET, DATA_PROVIDER, DATA_TYPE,
+                                ingest_day.strftime('%Y'), ingest_day.strftime('%m'), ingest_day.strftime('%d'))
+    logger.info("This is the day path used for updating the data: " + day_dir_path)
+    if event.get('test') == True:
+        day_dir_path = 'usdot-its-cvpilot-public-data/thea/SPAT/2019/05/01'
+        logger.info("This is a test. Using test day path: {}".format(day_dir_path))
+
+    hour_dirs = s3.ls(day_dir_path)
+
+    # Condition for selecting only hours between 6-9 and 16-19 to present
+    for i in list(hour_dirs):
+        #print int(i.split('/')[6])
+        #if int(i.split('/')[6]) not in [6,7,8,16,17,18]:
+        if int(i.split('/')[6]) not in [8]:
+            hour_dirs.remove(i)
+
+    logger.info("Parsing data from the following hour directories: \n{}".format(",\n".join(hour_dirs)))
+
+    fps = []
+    for hour_dir in hour_dirs:
+        fps += s3.ls(hour_dir)
+
+    if len(fps) == 0:
+        logger.info("No new files found. Exit script")
         return
 
-    # Upsert the new records to the corresponding Socrata data set
+    logger.info("{} file paths found in {}".format(len(fps), day_dir_path))
+
+    if event.get('test') == True:
+        fps = fps[:10]
+        logger.info("This is a test. Only ingesting first 10 files")
+
+    # Create a draft of the Socrata data set
     logger.info("Connecting to Socrata")
     client = Socrata("data.transportation.gov", SOCRATA_API_KEY, SOCRATA_USERNAME, SOCRATA_PASSWORD, timeout=400)
 
-    logger.info("Transform record dtypes according to Socrata dataset")
     col_dtype_dict = lambda_to_socrata_util.get_col_dtype_dict(client, SOCRATA_DATASET_ID)
     float_fields = ['randomNum', 'metadata_generatedAt_timeOfDay']
-    out_recs = [lambda_to_socrata_util.mod_dtype(r, col_dtype_dict, float_fields) for r in out_recs]
 
-    logger.info("Uploading {} new records".format(len(out_recs)))
-    uploadResponse = client.upsert(SOCRATA_DATASET_ID, out_recs)
-    logger.info(uploadResponse)
+    # Create a draft of the Socrata data set
+    draftDataset = requests.post('https://data.transportation.gov/api/views/{}/publication.json'.format(SOCRATA_DATASET_ID),
+                              auth=(SOCRATA_USERNAME, SOCRATA_PASSWORD),
+                              params={'method': 'copySchema'})
+    logger.info(draftDataset.json())
+    # Grab the ID of the working draft dataset
+    workingID = draftDataset.json()['id']
+
+    # Write the event files to the newly created dataset
+    # Read data from the newly deposited file and
+    # perform data transformation on the records
+    num_fps_done = 0
+    num_recs_processed = 0
+    for fp in fps:
+        num_fps_done += 1
+        bucket = fp.split('/')[0]
+        key = "/".join(fp.split('/')[1:])
+
+        raw_recs = lambda_to_socrata_util.process_s3_file(bucket, key)
+        # sample_recs = random.sample(raw_recs, int(len(raw_recs)*.1))
+        out_recs = [process_spat(i) for i in raw_recs]
+
+        # logger.info("Transform record dtypes according to Socrata dataset")
+        out_recs = [lambda_to_socrata_util.mod_dtype(r, col_dtype_dict, float_fields) for r in out_recs]
+        num_recs_processed += len(out_recs)
+
+        # logger.info("Uploading {} new records".format(len(out_recs)))
+        uploadResponse = client.upsert(workingID, out_recs)
+        logger.info(uploadResponse)
+
+        # check duration of function. If function has been running for more than 10 min,
+        # end the for loop and publish data set
+        t1 = time.time()
+        if t1-t0 >= 810:
+            # log number of remaining files that were not upserted
+            logger.info("number of remaining files that were not upserted {}/{}".format((len(fps)-num_fps_done),len(fps)))
+            break
+
+    #Finally we replace the already published SPaT with the contents of the Virtual working SPaT
+    logger.info("Publishing draft {} to dataset {}, expecting {} records".format(workingID, SOCRATA_DATASET_ID, num_recs_processed))
+    publishResponse = requests.post('https://data.transportation.gov/api/views/{}/publication.json'.format(workingID),
+                                    auth=(SOCRATA_USERNAME, SOCRATA_PASSWORD))
+    logger.info(publishResponse.json())
