@@ -1,0 +1,24 @@
+Element Name,Element Description,Source Name,Source Table Name,Data Type,Length,List of Values,Security Classification,Archived
+metadata.recordGeneratedAt,"Closest time to which the record was created, either signed or received by the generatedBy source in UTC format. This information is taken from the communication header.",N/A,N/A,datetime,,,Public,No
+metadata.recordGeneratedBy,"Source of the record, whether [OBU, RSU, TMC].",N/A,N/A,text,,"OBU, RSU, TMC",Public,No
+metadata.logFileName,Name of the original file that deposited the message.,N/A,N/A,text,,,Public,No
+metadata.schemaVersion,Version of the metadata schema.,N/A,N/A,number,,,Public,No
+metadata.RSUID,Identifier of road side unit.,N/A,N/A,text,,,Public,No
+metadata.externalID,External ID,N/A,N/A,text,,,Public,No
+metadata.kind,Metadata kind.,N/A,N/A,text,,,Public,No
+metadata.psid,Provider Service Identifier. A number that identifies a service provided by an application. PSID is defined in IEEE Std 1609.12.,N/A,N/A,number,,,Public,No
+metadata.dataType,The data type.,N/A,N/A,text,,,Public,No
+payload.data.SPAT.timeStamp,"Timestamp of the Signal Phase and Timing (SPAT) message, expressed in minute of the year - the number of elapsed minutes of the current year in the time system being used (typically UTC time). This field is based on the J2735 Standard.",N/A,N/A,number,,,Public,No
+payload.data.SPAT.name,Human readable name for this collection of SPAT messages - to be used only in debug mode. This field is based on the J2735 Standard.,N/A,N/A,text,,,Public,No
+payload.data.SPAT.regional,Regional Extension. This field is based on the J2735 Standard.,N/A,N/A,text,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.timeStamp,The mSec point in the current UTC minute that the message was constructed. This field is based on the J2735 Standard.,N/A,N/A,number,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.moy,"Minute of current UTC year, used only with messages to be archived.  This field is based on the J2735 Standard.",N/A,N/A,number,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.name,"Minute of current UTC year, used only with messages to be archived.  This field is based on the J2735 Standard.",N/A,N/A,text,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.id.id,"SPAT intersection reference ID for a single intersection, consisting of a regionID and intersection ID assignment, and provides a unique mapping to the intersection MAP in question which provides complete location and approach/move/lane data. This field is based on the J2735 Standard.",N/A,N/A,number,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.id.region,"Road Regulator ID - a globally unique regional assignment value, typically assigned to a regional DOT authority. The value zero is used for testing. This field is based on the J2735 Standard.",N/A,N/A,text,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.status,General status of the controller(s). This field is based on the J2735 Standard.,N/A,N/A,number,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.regional,Regional Extension. This field is based on the J2735 Standard.,N/A,N/A,text,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.revision,"A sequence number within a stream of messages with the same DSRCmsgID and from the same sender. The receipt of a non-sequential MsgCount value (from the same sending device and message type) implies that one or more messages from that sending device may have been lost, unless MsgCount has been re-initialized due to an identity change. This field is based on the J2735 Standard.",N/A,N/A,number,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.states.MovementState,"Signal phase state mapping to the lanes it applies to, and point in time it will end. It may contain both active and future states. This field is based on the J2735 Standard.",N/A,N/A,text,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.enabledLanes,Enabled lanes list - a list of lanes where the RevocableLane bit has been set which are now active and therefore part of the current intersection. Used for intersection at REL ramp.  This field is based on the J2735 Standard.,N/A,N/A,text,,,Public,No
+payload.data.SPAT.intersections.IntersectionState.maneuverAssistList,Assist data consisting of a list of ConnectionManeuverAssist entries.  This field is based on the J2735 Standard.,N/A,N/A,text,,,Public,No
