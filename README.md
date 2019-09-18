@@ -12,6 +12,8 @@
 		* [Directory Structure](#directory-structure)
 		* [Downloading from S3](#downloading-from-s3)
 	* [Sandbox Exporter](#sandbox-exporter)
+		* [Prerequisites for using Sandbox Exporter](#prerequisites-for-using-sandbox-exporter)
+		* [Exporting Data to CSV with Sandbox Exporter](#exporting-data-to-csv-with-sandbox-exporter)
  * [Data Types](#data-types)
  	* [Wyoming CV Data](#wyoming-cv-data)
 	* [Tampa CV Data](#tampa-cv-data)
@@ -46,7 +48,7 @@ Additional information about CV data is available at:
 
 ## Getting Started
 
-There are three ways to access the full data sets on Amazon s3. The first way is through the [Web Interface](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html). This allows the user to browse through the folder structure and click and download individual batched data files. Alternatively, the data can be downloaded programmatically using the Amazon Command Line Interface (CLI) or our Sandbox Export script by following the directions below.
+There are three ways to access the full data sets on Amazon s3. The first way is through the [Web Interface](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html). This allows the user to browse through the folder structure and click and download individual batched data files. Alternatively, the data can be downloaded programmatically using the [Amazon Command Line Interface (CLI)](#aws-cli) or our [Sandbox Export script](#sandbox-exporter) by following the directions below.
 
 ### AWS CLI
 
@@ -129,9 +131,26 @@ To limit the data being dowloaded you can use AWS CLI's filtering which is detai
 
 You can also download data generated between a specified date range into merged CSV or JSON file by using our Sandbox Exporter script.
 
-To start:
+#### Prerequisites for using Sandbox Exporter
+
+1) Have your own Free Amazon Web Services account.
+
+	- Create one at http://aws.amazon.com
+
+2) Obtain Access Keys:
+
+	- On your Amazon account, go to your profile (at the top right)
+
+	- My Security Credentials > Access Keys > Create New Access Key
+
+	- Record the Access Key ID and Secret Access Key ID (you will need them in step 4)
+
+3) Have access to Python 3.6+. You can check your python version by entering `python --version` and `python3 --version` in command line.
+
+#### Exporting Data to CSV with Sandbox Exporter
+
 1. Download the script by cloning the git repository at https://github.com/usdot-its-jpo-data-portal/cv_pilot_ingest. You can do so by running the following in command line.
-`git clone https://github.com/usdot-its-jpo-data-portal/cv_pilot_ingest.git`
+`git clone https://github.com/usdot-its-jpo-data-portal/cv_pilot_ingest.git`. If unfamiliar with how to clone a repository, follow the guide at https://help.github.com/en/articles/cloning-a-repository.
 2. Navigate into the repository folder by entering `cd cv_pilot_ingest` in command line.
 3. Install the required packages by running `pip install -r requirements.txt`.
 4. Modify the s3 credentials listed at the head of `sandbox_to_csv.py` to use your AWS s3 credentials.
