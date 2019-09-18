@@ -129,7 +129,7 @@ To limit the data being dowloaded you can use AWS CLI's filtering which is detai
 
 ### Sandbox Exporter
 
-You can also download data generated between a specified date range into merged CSV or JSON file by using our Sandbox Exporter script.
+You can also download data generated between a specified date range into larger merged CSV or JSON file(s) by using our Sandbox Exporter script.
 
 #### Prerequisites for using Sandbox Exporter
 
