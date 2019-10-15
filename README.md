@@ -1,4 +1,4 @@
-# Accessing CV Pilots Data From a Public Amazon S3 Bucket
+# Accessing CV Pilots Data in ITS Sandbox
 
 
 **Table of Contents**
@@ -6,17 +6,21 @@
 * [Background](#backgound)
 	* [Related ITS JPO Projects](#related-its-jpo-projects)
 * [Getting Started](#getting-started)
-	* [Prerequisites for using AWS CLI](#prerequisites-for-using-aws-cli)
-	* [Accessing Files through AWS CLI](#accessing-files-through-aws-cli)
-	* [Directory Structure](#directory-structure)
-	* [Downloading from S3](#downloading-from-s3)
+	* [AWS CLI](#aws-cli)
+		* [Prerequisites for using AWS CLI](#prerequisites-for-using-aws-cli)
+		* [Accessing Files through AWS CLI](#accessing-files-through-aws-cli)
+		* [Directory Structure](#directory-structure)
+		* [Downloading from S3](#downloading-from-s3)
+	* [Sandbox Exporter](#sandbox-exporter)
+		* [Prerequisites for using Sandbox Exporter](#prerequisites-for-using-sandbox-exporter)
+		* [Exporting Data to CSV with Sandbox Exporter](#exporting-data-to-csv-with-sandbox-exporter)
  * [Data Types](#data-types)
  	* [Wyoming CV Data](#wyoming-cv-data)
 	* [Tampa CV Data](#tampa-cv-data)
 * [Get Involved](#get-involved)
 
 ## Background
-This repository contains information on accessing complete data sets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program (ITS DataHub). It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs and other streaming data sources. Currently this is a beta system using a folder hierarchy for processed Basic Safety Messages (BSM) and Traveler Information Messages (TIM) from the Wyoming CV Pilot site, and BSM, TIM, and Signal Phasing and Timing (SPaT) data from the Tampa CV Pilot site.
+This repository contains information on accessing complete datasets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program's ITS Sandbox. It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs and other streaming data sources. Currently this is a beta system using a folder hierarchy for processed Basic Safety Messages (BSM) and Traveler Information Messages (TIM) from the Wyoming CV Pilot site, and BSM, TIM, and Signal Phasing and Timing (SPaT) data from the Tampa CV Pilot site.
 
 USDOT JPO is soliciting user feedback on the current folder hierarchy to determine what the best approach is and to help inform future directory hierarchies for other data types. To provide input on the hierarchy or the data please [Open an Issue](https://github.com/usdot-its-jpo-data-portal/sandbox/issues).
 
@@ -44,9 +48,11 @@ Additional information about CV data is available at:
 
 ## Getting Started
 
-There are two ways to access the full data sets on Amazon s3. The first way is through the [Web Interface](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html). This allows the user to browse through the folder structure and click and download individual BSMs. Alternatively, the data can be downloaded programmatically using the Amazon Command Line Interface (CLI) by following the directions below.
+There are three ways to access the full data sets on Amazon s3. The first way is through the [Web Interface](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html). This allows the user to browse through the folder structure and click and download individual batched data files. Alternatively, the data can be downloaded programmatically using the [Amazon Command Line Interface (CLI)](#aws-cli) or our [Sandbox Export script](#sandbox-exporter) by following the directions below.
 
-### Prerequisites for using AWS CLI
+### AWS CLI
+
+#### Prerequisites for using AWS CLI
 
 1) Have your own Free Amazon Web Services account.
 
@@ -78,7 +84,7 @@ There are two ways to access the full data sets on Amazon s3. The first way is t
 	* Default region name (us-east-1)
 	* Default output format (ex: json)
 
-### Accessing files through AWS CLI
+#### Accessing files through AWS CLI
 
 Now go to your command window. The title of the s3 bucket is:
 
@@ -94,9 +100,9 @@ For Example:
 aws s3 ls s3://usdot-its-cvpilot-public-data/ --recursive --human-readable --summarize --profile default
 ```
 
-### Directory Structure
+#### Directory Structure
 
-The directory structure within the buckets will take the following form:
+The directory structure within the buckets will take the following form, with the year, month, day, hour based on when the data point was generated.
 
 	`{Source_Name}/{Data_Type}/{Year}/{Month}/{Day}/{Hour}`
 
@@ -106,7 +112,7 @@ So for example, accessing Wyoming CV Pilots BSM data for a specific time will lo
 
 Where in this example the actual BSM file is titled 'wydot-filtered-bsm-1501782546127.json'. For Wyoming CV Pilot data, data prior to January 18, 2018 is one message per file. From that date onwards, files will contain multiple messages.
 
-### Downloading from S3
+#### Downloading from S3
 
 To download all data from the S3 Bucket, enter the following command:
 
@@ -120,6 +126,10 @@ aws s3 cp s3://usdot-its-cvpilot-public-data/wydot/BSM/2017/ --recursive
 ```
 
 To limit the data being dowloaded you can use AWS CLI's filtering which is detailed here: http://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters.
+
+### Sandbox Exporter
+
+You can also download data generated between a specified date range into larger merged CSV or JSON file(s) by using our Sandbox Exporter resource. Please refer to the README at our [cv_pilot_ingest](https://github.com/usdot-its-jpo-data-portal/cv_pilot_ingest) GitHub repository.
 
 ## Data Types
 
