@@ -21,7 +21,7 @@
 * [Get Involved](#get-involved)
 
 ## Background
-This repository contains information on accessing complete datasets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program's ITS Sandbox. It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs, Work Zone Data Exchange (WZDx) programs, and other streaming data sources, as well as direct users to tools and resources related to the sandbox.
+This repository contains information on accessing complete datasets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program's ITS Sandbox. It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs, Work Zone Data Exchange (WZDx) programs, and other streaming data sources, as well as direct users to related tools and resources.
 
 Currently this repository contains beta folder hierarchy systems for:
 - Connected Vehicle (CV) Pilot:
@@ -167,7 +167,7 @@ Tampa (THEA) currently provides sanitized BSM, TIM, and SPaT data to the public 
 WZDx data are located in the `usdot-its-workzone-public-data` s3 bucket.
 Test WZDx data are located in the `test-usdot-its-workzone-public-data` s3 bucket.
 
-Currently, only Maricopa County (MCDOT) WZDx feed is being ingested and archived into the [ITS Work Zone Sandbox](http://usdot-its-workzone-public-data.s3.amazonaws.com/index.html), using code in the [wzdx_sandbox](https://github.com/usdot-its-jpo-data-portal/wzdx_sandbox) GitHub repository. Users can check whether or not a WZDx feed is being ingested into the sandbox by checking the [WZDx Feed Registry](https://datahub.transportation.gov/d/69qe-yiui), and new WZDx feeds will be added to the feed registry as they become available.
+MCDOT WZDx feed is currently the only feed being ingested and archived into the [ITS Work Zone Sandbox](http://usdot-its-workzone-public-data.s3.amazonaws.com/index.html), using code in the [wzdx_sandbox](https://github.com/usdot-its-jpo-data-portal/wzdx_sandbox) GitHub repository. Users can check whether or not a WZDx feed is being ingested into the sandbox by checking the [WZDx Feed Registry](https://datahub.transportation.gov/d/69qe-yiui), and new WZDx feeds will be added to the feed registry as they become available.
 
 ## Get Involved
 ------------
