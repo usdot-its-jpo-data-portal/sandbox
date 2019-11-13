@@ -1,5 +1,4 @@
-# Accessing CV Pilots Data in ITS Sandbox
-
+# Accessing Data in ITS Sandbox
 
 **Table of Contents**
 
@@ -15,12 +14,21 @@
 		* [Prerequisites for using Sandbox Exporter](#prerequisites-for-using-sandbox-exporter)
 		* [Exporting Data to CSV with Sandbox Exporter](#exporting-data-to-csv-with-sandbox-exporter)
  * [Data Types](#data-types)
- 	* [Wyoming CV Data](#wyoming-cv-data)
-	* [Tampa CV Data](#tampa-cv-data)
+ 	* [CV Pilot Data](#cv-pilot-data)
+ 	  * [Wyoming CV Data](#wyoming)
+	  * [Tampa CV Data](#tampa)
+	* [Work Zone Data Exchange Feed Data](#wzdx-feed-data)
 * [Get Involved](#get-involved)
 
 ## Background
-This repository contains information on accessing complete datasets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program's ITS Sandbox. It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs and other streaming data sources. Currently this is a beta system using a folder hierarchy for processed Basic Safety Messages (BSM) and Traveler Information Messages (TIM) from the Wyoming CV Pilot site, and BSM, TIM, and Signal Phasing and Timing (SPaT) data from the Tampa CV Pilot site.
+This repository contains information on accessing complete datasets from the United States Department of Transportation (USDOT) Joint Program Office (JPO) data program's ITS Sandbox. It is meant to propose a data folder hierarchy to structure the processed data ingested from the Connected Vehicles (CV) Pilot programs, Work Zone Data Exchange (WZDx) programs, and other streaming data sources, as well as direct users to related tools and resources.
+
+Currently this repository contains beta folder hierarchy systems for:
+- Connected Vehicle (CV) Pilot:
+	- Wyoming CV Pilot site: processed Basic Safety Messages (BSM), Traveler Information Messages (TIM)
+	- Tampa CV Pilot site: BSM, TIM, and Signal Phasing and Timing (SPaT) data
+- Work Zone Data Exchange (WZDx) Feed Archive:
+	- Maricopa County WZDx Feed
 
 USDOT JPO is soliciting user feedback on the current folder hierarchy to determine what the best approach is and to help inform future directory hierarchies for other data types. To provide input on the hierarchy or the data please [Open an Issue](https://github.com/usdot-its-jpo-data-portal/sandbox/issues).
 
@@ -39,6 +47,10 @@ Additional information about CV data is available at:
 - [J2735 Standard](http://standards.sae.org/j2735_201603/) -  Standard for CV data
 - [General CV information: Vehicle Based Data and Availability](https://www.its.dot.gov/itspac/october2012/PDF/data_availability.pdf) - General introduction slides on CV data
 
+Additional information about the WZDx specifications is available at:
+
+- [WZDx Specification GitHub repository](https://github.com/usdot-jpo-ode/jpo-wzdx)
+
 ### Related ITS JPO Projects
 
 - [ITS DataHub](https://www.its.dot.gov/data/) - ITS JPO data site which allows users to search for various ITS data.
@@ -55,24 +67,15 @@ There are three ways to access the full data sets on Amazon s3. The first way is
 #### Prerequisites for using AWS CLI
 
 1) Have your own Free Amazon Web Services account.
-
 	- Create one at http://aws.amazon.com
-
 2) Obtain Access Keys:
-
 	- On your Amazon account, go to your profile (at the top right)
-
 	- My Security Credentials > Access Keys > Create New Access Key
-
 	- Record the Access Key ID and Secret Access Key ID (you will need them in step 4)
-
 3) Have Amazon Web Services Command Line Interface (AWS CLI) installed on your computer.
-
 	- Installation options can be found at http://aws.amazon.com/cli
-
 	- To run AWS CLI on Windows, navigate to C:\Program Files\Amazon\ and run "aws
 	 --version" to confirm that the program is installed.  This should return the version number of aws that you are running.
-
 4) Run the following command through AWS CLI:
 	```
 	aws configure
@@ -129,11 +132,15 @@ To limit the data being dowloaded you can use AWS CLI's filtering which is detai
 
 ### Sandbox Exporter
 
-You can also download data generated between a specified date range into larger merged CSV or JSON file(s) by using our Sandbox Exporter resource. Please refer to the README at our [cv_pilot_ingest](https://github.com/usdot-its-jpo-data-portal/cv_pilot_ingest) GitHub repository.
+You can also download data generated between a specified date range into larger merged CSV or JSON file(s) by using our Sandbox Exporter resource. Please refer to the README at our [cv_pilot_ingest](https://github.com/usdot-its-jpo-data-portal/cv_pilot_ingest) GitHub repository. The Sandbox Exporter currently only works for CV Pilot data and not for the WZDx data.
 
 ## Data Types
 
-### Wyoming CV Data
+### CV Pilot Data
+CV Pilot data are located in the `usdot-its-cvpilot-public-data` s3 bucket.
+Test CV Pilot data are located in the `test-usdot-its-cvpilot-public-data` s3 bucket.
+
+#### Wyoming
 
 Wyoming (WYDOT) currently provides sanitized BSM and TIM data to the public through ITS DataHub.
 
@@ -141,13 +148,12 @@ Wyoming (WYDOT) currently provides sanitized BSM and TIM data to the public thro
 - Sample WYDOT CV data sets on data.transportation.gov can be found [here](https://data.transportation.gov/browse?tags=wyoming%20connected%20vehicle%20%28cv%29%20pilot)
 - Wyoming CV BSM/TIM schema descriptions can be found in the [ODE Output Schema Reference](https://github.com/usdot-jpo-ode/jpo-ode/blob/master/docs/ODE_Output_Schema_Reference.docx) document
 
-### Tampa CV Data
+#### Tampa
 
 Tampa (THEA) currently provides sanitized BSM, TIM, and SPaT data to the public through ITS DataHub
 
 - The full sanitized THEA BSM, TIM, and SPaT data set can be found in the [ITS DataHub sandbox s3 bucket](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html) under `thea/` folder prefix
 - Sample THEA CV data sets on data.transportation.gov can be found [here](https://data.transportation.gov/browse?tags=tampa+connected+vehicle+pilot+deployment+%28tampa+cv+pilot%29&utf8=%E2%9C%93)
-
 
 #### Doing simple data analysis on the Wyoming Connected Vehicles (CV) Data		
 
@@ -156,9 +162,15 @@ Tampa (THEA) currently provides sanitized BSM, TIM, and SPaT data to the public 
 
  - [Introduction to WY CV data through ITS JPO Sandbox](example/accessing_wydot.ipynb)
 
+### WZDx Feed Data
+
+WZDx data are located in the `usdot-its-workzone-public-data` s3 bucket.
+Test WZDx data are located in the `test-usdot-its-workzone-public-data` s3 bucket.
+
+MCDOT WZDx feed is currently the only feed being ingested and archived into the [ITS Work Zone Sandbox](http://usdot-its-workzone-public-data.s3.amazonaws.com/index.html), using code in the [wzdx_sandbox](https://github.com/usdot-its-jpo-data-portal/wzdx_sandbox) GitHub repository. Users can check whether or not a WZDx feed is being ingested into the sandbox by checking the [WZDx Feed Registry](https://datahub.transportation.gov/d/69qe-yiui), and new WZDx feeds will be added to the feed registry as they become available.
+
 ## Get Involved
 ------------
 
 We welcome your feedback and ideas. Here's how to reach us:
-
 - [Open an Issue](https://github.com/usdot-its-jpo-data-portal/sandbox/issues)
