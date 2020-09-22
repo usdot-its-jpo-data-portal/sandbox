@@ -140,6 +140,8 @@ You can also download data generated between a specified date range into larger 
 CV Pilot data are located in the `usdot-its-cvpilot-public-data` s3 bucket.
 Test CV Pilot data are located in the `test-usdot-its-cvpilot-public-data` s3 bucket.
 
+**Caution:** The sandbox data does not contain the full dataset for each data type as some records were retracted to preserve privacy. The data also have not been checked for completeness and duplication. Please account for these factors when you use these data in your research and analyses.
+
 #### Wyoming
 
 Wyoming (WYDOT) currently provides sanitized BSM and TIM data to the public through ITS DataHub.
