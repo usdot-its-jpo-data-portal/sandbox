@@ -60,7 +60,7 @@ Additional information about the WZDx specifications is available at:
 
 ## Getting Started
 
-There are three ways to access the large data sets on Amazon s3. The first way is through the [Web Interface](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html). This allows the user to browse through the folder structure and click and download individual batched data files. Alternatively, the data can be downloaded programmatically using the [Amazon Command Line Interface (CLI)](#aws-cli) or our [Sandbox Export script](#sandbox-exporter) by following the directions below.
+There are three ways to access the sandbox datasets on Amazon s3. The first way is through the [Web Interface](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html). This allows the user to browse through the folder structure and click and download individual batched data files. Alternatively, the data can be downloaded programmatically using the [Amazon Command Line Interface (CLI)](#aws-cli) or our [Sandbox Export script](#sandbox-exporter) by following the directions below.
 
 ### AWS CLI
 
@@ -146,16 +146,16 @@ Test CV Pilot data are located in the `test-usdot-its-cvpilot-public-data` s3 bu
 
 Wyoming (WYDOT) currently provides sanitized BSM and TIM data to the public through ITS DataHub.
 
-- The sanitized WYDOT BSM and TIM data set can be found in the [ITS DataHub sandbox s3 bucket](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html) under `wydot/` folder prefix
-- Sample WYDOT CV data sets on data.transportation.gov can be found [here](https://data.transportation.gov/browse?tags=wyoming%20connected%20vehicle%20%28cv%29%20pilot)
+- The sanitized WYDOT BSM and TIM dataset can be found in the [ITS DataHub sandbox s3 bucket](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html) under `wydot/` folder prefix
+- Sample WYDOT CV datasets on data.transportation.gov can be found [here](https://data.transportation.gov/browse?tags=wyoming%20connected%20vehicle%20%28cv%29%20pilot)
 - Wyoming CV BSM/TIM schema descriptions can be found in the [ODE Output Schema Reference](https://github.com/usdot-jpo-ode/jpo-ode/blob/master/docs/ODE_Output_Schema_Reference.docx) document
 
 #### Tampa
 
 Tampa (THEA) currently provides sanitized BSM, TIM, and SPaT data to the public through ITS DataHub
 
-- The sanitized THEA BSM, TIM, and SPaT data set can be found in the [ITS DataHub sandbox s3 bucket](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html) under `thea/` folder prefix
-- Sample THEA CV data sets on data.transportation.gov can be found [here](https://data.transportation.gov/browse?tags=tampa+connected+vehicle+pilot+deployment+%28tampa+cv+pilot%29&utf8=%E2%9C%93)
+- The sanitized THEA BSM, TIM, and SPaT dataset can be found in the [ITS DataHub sandbox s3 bucket](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html) under `thea/` folder prefix
+- Sample THEA CV datasets on data.transportation.gov can be found [here](https://data.transportation.gov/browse?tags=tampa+connected+vehicle+pilot+deployment+%28tampa+cv+pilot%29&utf8=%E2%9C%93)
 
 #### Doing simple data analysis on the Wyoming Connected Vehicles (CV) Data		
 
