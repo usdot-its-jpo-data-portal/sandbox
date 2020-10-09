@@ -140,7 +140,7 @@ You can also download data generated between a specified date range into larger 
 CV Pilot data are located in the `usdot-its-cvpilot-public-data` s3 bucket.
 Test CV Pilot data are located in the `test-usdot-its-cvpilot-public-data` s3 bucket.
 
-**Caution:** Other than organizing data by its generated-at timestamps, data in the CV Pilot (CVP) Sandbox are provided as they were received from data providers with no additions or modifications. Data may be available in the CVP Sandbox on the day they were generated or with a couple of days of lag from the date of generation. Please consult our [log of known data pipeline downtime and caveats](https://github.com/usdot-its-jpo-data-portal/sandbox/wiki/ITS-CV-Pilot-Data-Sandbox-Known-Data-Gaps-and-Caveats) prior to using the data.
+**Caution:** Other than organizing data by their generated-at timestamps, data in the CV Pilot (CVP) Sandbox are provided as they were received from data providers with no additions or modifications. Data may be available in the CVP Sandbox on the day they were generated or with a couple of days of lag from the date of generation. Please consult our [log of known data pipeline downtime and caveats](https://github.com/usdot-its-jpo-data-portal/sandbox/wiki/ITS-CV-Pilot-Data-Sandbox-Known-Data-Gaps-and-Caveats) prior to using the data.
 
 #### Wyoming
 
