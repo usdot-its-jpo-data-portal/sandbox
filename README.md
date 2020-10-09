@@ -140,9 +140,11 @@ You can also download data generated between a specified date range into larger 
 CV Pilot data are located in the `usdot-its-cvpilot-public-data` s3 bucket.
 Test CV Pilot data are located in the `test-usdot-its-cvpilot-public-data` s3 bucket.
 
+**Caution:** Other than organizing data by their generated-at timestamps, data in the CV Pilot (CVP) Sandbox are provided as they were received from data providers with no additions or modifications. Data may be available in the CVP Sandbox on the day they were generated or with a couple of days of lag from the date of generation. Please consult our [log of known data pipeline downtime and caveats](https://github.com/usdot-its-jpo-data-portal/sandbox/wiki/ITS-CV-Pilot-Data-Sandbox-Known-Data-Gaps-and-Caveats) prior to using the data.
+
 #### Wyoming
 
-Wyoming (WYDOT) currently provides sanitized BSM and TIM data to the public through ITS DataHub.
+Wyoming (WYDOT) currently provides sanitized BSM and TIM data to the public through ITS DataHub. Data from WYDOT are generated 7 days a week.
 
 - The full sanitized WYDOT BSM and TIM data set can be found in the [ITS DataHub sandbox s3 bucket](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html) under `wydot/` folder prefix
 - Sample WYDOT CV data sets on data.transportation.gov can be found [here](https://data.transportation.gov/browse?tags=wyoming%20connected%20vehicle%20%28cv%29%20pilot)
@@ -150,7 +152,7 @@ Wyoming (WYDOT) currently provides sanitized BSM and TIM data to the public thro
 
 #### Tampa
 
-Tampa (THEA) currently provides sanitized BSM, TIM, and SPaT data to the public through ITS DataHub
+Tampa (THEA) currently provides sanitized BSM, TIM, and SPaT data to the public through ITS DataHub. For THEA, only data generated on weekdays are publicly accessible.
 
 - The full sanitized THEA BSM, TIM, and SPaT data set can be found in the [ITS DataHub sandbox s3 bucket](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html) under `thea/` folder prefix
 - Sample THEA CV data sets on data.transportation.gov can be found [here](https://data.transportation.gov/browse?tags=tampa+connected+vehicle+pilot+deployment+%28tampa+cv+pilot%29&utf8=%E2%9C%93)
