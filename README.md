@@ -49,7 +49,7 @@ Additional information about CV data is available at:
 
 Additional information about the WZDx specifications is available at:
 
-- [WZDx Specification GitHub repository](https://github.com/usdot-jpo-ode/jpo-wzdx)
+- [WZDx Specification GitHub repository](https://github.com/usdot-jpo-ode/wzdx)
 
 ### Related ITS JPO Projects
 
@@ -169,7 +169,7 @@ Tampa (THEA) currently provides sanitized BSM, TIM, and SPaT data to the public 
 WZDx data are located in the `usdot-its-workzone-public-data` s3 bucket.
 Test WZDx data are located in the `test-usdot-its-workzone-public-data` s3 bucket.
 
-MCDOT WZDx feed is currently the only feed being ingested and archived into the [ITS Work Zone Sandbox](http://usdot-its-workzone-public-data.s3.amazonaws.com/index.html), using code in the [wzdx_sandbox](https://github.com/usdot-its-jpo-data-portal/wzdx_sandbox) GitHub repository. Users can check whether or not a WZDx feed is being ingested into the sandbox by checking the [WZDx Feed Registry](https://datahub.transportation.gov/d/69qe-yiui), and new WZDx feeds will be added to the feed registry as they become available.
+Feeds are ingested and archived into the [ITS Work Zone Sandbox](http://usdot-its-workzone-public-data.s3.amazonaws.com/index.html) using code in the [wzdx_sandbox](https://github.com/usdot-its-jpo-data-portal/wzdx_sandbox) GitHub repository. Users can check whether or not a WZDx feed is being ingested into the sandbox by checking the [WZDx Feed Registry](https://datahub.transportation.gov/d/69qe-yiui), and new WZDx feeds will be added to the feed registry as they become available.
 
 ## Get Involved
 ------------
