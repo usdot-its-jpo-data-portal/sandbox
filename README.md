@@ -159,7 +159,7 @@ Tampa (THEA) currently provides sanitized BSM, TIM, and SPaT data to the public 
 
 #### Doing simple data analysis on the Wyoming Connected Vehicles (CV) Data		
 
- -A basic tutorial covering accessing the data in a Python Jupyter Notebook
+ - A basic tutorial covering accessing the data in a Python Jupyter Notebook
  (note analysis of the data can be done by almost any programming langauge just Python was selected for this example):
 
  - [Introduction to WY CV data through ITS JPO Sandbox](example/accessing_wydot.ipynb)
