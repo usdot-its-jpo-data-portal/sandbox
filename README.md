@@ -43,10 +43,10 @@ CV Pilot data is currently stored in the following folder hierarchy based on whe
 
 `{Source_Name}/{Data_Type}/{Year}/{Month}/{Day}/{Hour}`
 
-* `{Source_Name}`: The data producer of the pilot. Acceptable values: `wydot`, `wydot_backup`, `thea`.
-* `{Data_Type}`: The message type of the data. Acceptable values: `BSM`, `TIM`, `SPAT`. SPAT is only available when the `Source_Name` is `thea`.
-* `{Year}`: Four-digit year value based on the `metadata.recordGeneratedAt` field in the record (e.g., `2019`). Based on UTC time.
-* `{Month}`, `{Day}`, `{Hour}`: Two-digit month/day/hour value based on the `metadata.recordGeneratedAt` field in the record(e.g., `01`). Based on UTC military time.
+* `{Source_Name}`: The data producer of the pilot. Acceptable values: `wydot`, `wydot_backup`, `thea`, `nycdot`.
+* `{Data_Type}`: The message type of the data. Acceptable values: `BSM`, `TIM`, `SPAT`, `EVENT`. `SPAT` is only available when the `Source_Name` is `thea`. `EVENT` is only available when the `Source_Name` is `nycdot`.
+* `{Year}`: Four-digit year value based on the `metadata.recordGeneratedAt` field in the record (e.g., `2019`). Based on UTC time. When `Source_Name` is `nycdot`, the year value is based on the `eventHeader.eventTimeBin` field in the record.
+* `{Month}`, `{Day}`, `{Hour}`: Two-digit month/day/hour value based on the `metadata.recordGeneratedAt` field in the record(e.g., `01`). Based on UTC military time. When `Source_Name` is `nycdot`, the month, day, and hour value is based on the `eventHeader.eventTimeBin` field in the record, with the day being day-of-week bins (`MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`) and hour being time-of-day bins (`AM`, `PM`, `MD`, `EV`, `NT`).
 
 Files generated after January 18, 2018 are newline JSON files containing multiple messages. Data generated prior to that contains one message per file. 
 
@@ -99,7 +99,7 @@ Each file is a newline JSON file containing the work zone statuses for a particu
 
 ## Accessing the Data
 
-There are various ways to access the full datasets on ITS Data Sandbox: interactively through the [web interface](#web-interface) of each sandbox, or programmatically using the [Amazon Command Line Interface (CLI)](#aws-cli) or our [Sandbox Exporter](#sandbox-exporter) Python package.
+There are various ways to access the full datasets on ITS Data Sandbox: interactively through the [web interface](#web-interface) of each sandbox, or programmatically using the [Amazon Command Line Interface (CLI)](#aws-cli) or our [Sandbox Exporter](#sandbox-exporter) Python package. At this time, the Sandbox Exporter Python package can only be used to query data from WYDOT and THEA.
 
 ### Web Interface
 One Web Interface is available for each data sandbox and allows users to browse through the sandbox's folder structure and click to download individual batched data files. The web interface for each data sandbox are available at `http://{bucket-name}.s3.amazonaws.com/index.html`. For your convenience, we have linked them here:
