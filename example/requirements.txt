@@ -1,0 +1,4 @@
+boto3==1.17.79
+jupyter==1.0.0
+pandas==1.2.4
+seaborn==0.11.1
