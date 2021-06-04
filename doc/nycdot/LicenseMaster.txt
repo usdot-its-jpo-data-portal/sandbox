@@ -1,0 +1,7 @@
+By accessing data sets and feeds available through the USDOT ITS DataHub 
+New York City (NYC) Connected Vehicle Deployment Project (CVDP) repository 
+(or the "Site"), the user agrees to all of the 
+NYC.gov Terms of Use ( http://www1.nyc.gov/home/terms-of-use.page ) and the 
+NYC.gov Privacy Policy ( https://www1.nyc.gov/home/privacy-policy.page ).
+
+Updated: May 25, 2021
