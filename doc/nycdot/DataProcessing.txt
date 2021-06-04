@@ -1,0 +1,323 @@
+Dataprocessing.txt file for the NYC CVPD EVENT dataset.
+
+The released EVENT records have undergone obfuscation of time, location, and 
+vehicle-specific identifying data elements that were originally contained 
+within the raw field collected records.  
+
+Details of the need for the obfuscation process can be found in the Performance 
+Measurement and Evaluation Support Plan Report for the NYC CVPD project, as 
+published at https://www.its.dot.gov/pilots/cv_pubs.htm
+
+Additionally, since precise time and location is not revealed in the released 
+EVENT records, additional data documenting the general operational environment 
+at the time the CV application warning was generated is added (when available) 
+to eventHeader.
+
+The general contents of the EVENT record include:
+   1) eventHeader: A DF_EventHeader dataframe
+   2) bsmList:     Sequence of DF_BSMEvent dataframes
+   3) mapList:     Sequence of DF_MAPEvent dataframes
+   4) spatList:    Sequence of DF_SPaTEvent dataframes
+   5) timList:     Sequence of DF_TIMEvent dataframes
+
+The raw field collected records followed the MSG_NycCvpdEvent message type as 
+documented in the “NYC CVPD Event Format (10 05 2020)_v2.0.pdf”.  The following 
+information provides details on the removal, modification, or obfuscation of 
+the data elements from those raw field formats prior to the EVENT record being 
+released and shared via this repository.
+
+A major element of the modifications relates to the obfuscation of the true 
+time and location of the event warnings.  The following discusses the changes 
+made throughout the EVENT file message contents.
+
+Time Obfuscation:
+All time elements in all messages are shifted to a time frame with units of 
+seconds.  The definition of time 0.000 seconds is the moment the ASD issued the 
+CV application warning to the host vehicle's driver.  All other time elements 
+included in the BSMs and other messages are translated accordingly to this new 
+event-based time scale.
+
+Location Obfuscation:
+All real-world latitude/longitude/elevation coordinates are removed and replaced 
+by an artificial X,Y,Z coordinate system with units of meters.  The point 
+(0,0,0) is set to be equal to the coordinates of the host vehicle's BSM that 
+trigger the application to issue the warning.  All other real-world coordinates 
+are likewise transcribed and translated to this new artificial coordinate 
+system.
+
+===============================================================================
+
+Changes to DF_eventHeader dataframe contents:
+-------------------------------------------------------------------------------
+-The eventTimeStamp data element has been removed
+-The asdSerialNumber data element has been removed
+-The following new data elements are added to the eventHeader:
+    -eventStatus:  Value is always “Obfuscated” for released EVENT records
+    -eventTimeBin:  String in the format “YYYY-MM-DAY-TP" to provide some 
+        details of when the event took place, where:
+        YYYY is the year (e.g. “2021”)
+        MM is the month in number format (e.g. “05”)
+        DAY is the day of the week (e.g. “TUE”) in a 3-character
+            abbreviation.  The value “N/A” may also appear as an
+            additional level of obfuscation.
+        TP is the time period of the day.  The value can be one of:
+            “NT”: Night (12-6am)
+            “AM”: Morning (6-10am)
+            “MD”: Midday (10am-3pm)
+            “PM”: Afternoon (3-8pm)
+            “EV”: Evening (8pm-12am)
+            “N/A”: Unspecified time of day. 
+        It is noted that the "N/A" values are only used when the quantities of
+        events with a common eventType, eventLocationBin, and eventTimeBin are 
+        limited and additional time obfuscation is required prior to the EVENT 
+        record being released.
+    -eventLocationBin:  String of the format “XX-YY-ZZZ”, to provide 
+        some details on where in NYC the event took place, where:
+        XX is either:
+            "CV" when the roadway is near an RSU,
+            "NY" when not near an RSU
+        YY is a 2-character abbreviation of the NYC borough:
+            "BK": Brooklyn
+            "BX": The Bronx
+            "MN": Manhattan
+            "QN": Queens
+            "SI": Staten Island
+        ZZZ provides insights into the road type where the event occurred:
+            "1wayAve": One-way Avenue in Manhattan
+            "2wayAve": Two-way Avenue in Manhattan
+            "1waySt":  One-way Street in Manhattan
+            "2waySt":  Two-way Street in Manhattan
+            "Fwy":  A freeway, parkway, or otherwise controlled access roadway
+            "Art":  An arterial roadway
+            "Oth":  Other, generally collector or local level roadways
+        Note when the event occurred outside of the NYC city limits, the code
+        "nonNYC" is used as the entire entry for the eventLocationBin.  
+        It is also noted that the eventLocationBin entry may have a value of 
+        "N/A" when the quantities of events with a common eventType, 
+        eventLocationBin, and eventTimeBin are limited and additional location
+        time obfuscation is required prior to the EVENT record being released.
+    -weatherCondition:  String describing of the weather conditions (from NWS)
+    -airTemperature:  Integer, in degrees Fahrenheit 
+    -precipitation1Hr: String, inches of precipitation in last hour; "M" 
+        indicates data is not available
+    -windSpeed: Integer, wind speed (knots)
+    -speedCondition:  Integer, miles per hour.  Average speed (mph) of the 
+        roadway where the event occurred, as provided by non-CV pilot based 
+        speed monitoring systems available.  Note that the average speed is 
+        reported for roadway segments which can be a mile or more in length; 
+        and may not truly represent the localized speeds on the roadway when 
+        the EVENT record was generated.  When average roadway speed 
+        information is not available, this data element is omitted.
+    -lastPlowed:  Integer, minutes.  Time (rounded to 5 minute values) since a 
+        snow plow last was seen on the roadway where the event occurred.  Data 
+        included is as provided by the city's snow plow tracking and reporting 
+        system.  A value of -1 indicates that snow plows were active in the 
+        city at the time of the event, but a snow plow has not yet travelled on 
+        the roadway where the event occurred.  When the city's snow plow 
+        tracking and reporting system is not active, this data element is 
+        omitted.
+Other elements of the eventHeader remain unchanged and adhere to the EVENT 
+format documentation.  The following notes are provided for additional insights
+and guidance on the EVENT records:
+    -eventType:  the CV application which triggered the warning. One of:
+        -bsw:  Blind Spot Warning (V2V)
+        -eebl: Emergency Electronic Brake Lights (V2V)
+        -fcw:  Forward Crash Warning (V2V)
+        -ima:  Intersection Movement Assist (V2V)
+        -lcw:  Lane Change Warning (V2V)
+        -vtrw: Vehicle Turning Right Warning (V2V) 
+        -cspdomp:    Curve speed compliance (V2I)
+        -evacinfo:   Emergency Communications and Evacuation Information (V2I)
+        -ovcclearancelimit:  Oversize Vehicle Compliance (V2I)
+        -pedinxwalk: Pedestrian in Signalized Crosswalk Warning (V2I)
+        -rlvw:       Red Light Violation Warning (V2I)
+        -spdcomp:    Speed Compliance (V2I)
+        -spdcompwz:  Speed Compliance in Work Zone(V2I)
+        See https://cvp.nyc/cv-safety-apps for details.
+    -parameters:  The set of parameters contain configuration parameters which 
+        help define how the ASD applications operate and how data is recorded.  
+        It is noted that which parameters are included vary based on the CV 
+        application warning type that the EVENT record is documenting.
+    -locationSource:  Provides details on which method the location of the host 
+        vehicle was determined.  Note this parameter is only meaningful in 
+        ASD firmware versions 4.3 or higher.  Values can include:
+            -gpsrsu: location is determined through a combination of GSP GNSS 
+                sensors, vehicle speed and yaw rate, and triangulation to 
+                nearby RSUs configured to broadcast V2XLocate details to ASDs.
+            -gps: location is determined through a combination of GSP GNSS 
+                sensors, vehicle speed and yaw rate.
+            -directgps: location is determined by GPS GNSS sensors only.  Note 
+                in this location mode, BSM transmissions are halted as location 
+                is not know precisely enough for safety applications, and no 
+                event warnings should be issued.
+    -asdFirmwareVersion:  The firmware running on the ASD at the time of the 
+        recorded event.
+    -eventAlertSent:  Did the CV application determine if conditions warrant 
+        that a warning should be issued?  Boolean
+    -eventAlertActive:  Did the ASD deliver the warning to the driver? Boolean.
+        True if the audible alert was issued, False if the alert was not 
+        issued (if ASD is configured for pre-deployment conditions or if the
+        vehicle is part of the control group which does not received warnings).
+    -eventAlertHeard:  Did the ASD detect that the alert was heard or detected.
+        Boolean.
+    -hostVehID:  Temporary ID of the host vehicle at the time of the warning.
+    -targetVehID:  Temporary ID of the target vehicle at the time of the 
+        warning.  Valid only for V2V applications.
+    -triggerHVSeqNum:  Sequence number of the host vehicle's BSM which 
+        triggered the warning that was issued.  Refers to the MsgSeqNum in the 
+        list of BSM records contained in the EVENT record.
+    -triggerTVSeqNum:  Sequence number of the target vehicle's BSM which 
+        triggered the warning that was issued.  Refers to the MsgSeqNum in the 
+        list of BSM records contained in the EVENT record.  Valid only for V2V 
+        applications.
+    -grpId:  Integer representing the group to which the vehicle is assigned.  
+        ID <= 19: Pilot test vehicles.  Vehicles used by the pilot team for ASD
+            testing purposes throughout the pilot.
+        ID  = 20: Control group vehicle.  Vehicles assigned to the control
+            group operate in 'silent' mode throughout the deployment.  ASDs 
+            should not deliver warnings to the drivers, but will still record 
+            EVENTS when applications determine a warning condition exists.
+        ID >= 21: Treatment group vehicle.  Vehicles assigned to the treatment
+            group will all operate in 'silent' mode for the before deployment 
+            data collection period.  At the start of the after or live 
+            deployment, all treatment vehicles will transition to 'active' 
+            mode, and start to deliver application warning messages to the 
+            drivers. 
+
+Changes to DF_BSMEvent dataframe contents
+-------------------------------------------------------------------------------
+Contents of the field collected BSM messages are modified as followed when 
+included in the obfuscated EVENT records:
+
+BSM data elements removed or modified are:
+    -secMark
+    -lat
+    -long
+    -elev
+    -speed
+    -heading
+    -accelSet elements
+    -crumbData elements (in partII)
+BSM data elements added or modified are:
+    -T_s:  Replaces the secMark element to represent time.  T_s values are 
+        float values in seconds, with a time of 0.000 seconds being the time
+        at which the event warning was delivered.  Negative T_s values indicate
+        BSMs prior to the warning, while positive T_s values are after the 
+        warning was issued.
+    -X_m:  Replaces the long element.  Values are floats in meters, with X_m 
+        of 0.000 being the X coordinate of the host vehicle's BSM which 
+        triggered the warning to be issued.  Values may be positive or negative.
+    -Y_m:  Replaces the lat element.  Values are floats in meters, with Y_m 
+        of 0.000 being the Y coordinate of the host vehicle's BSM which 
+        triggered the warning to be issued.  Values may be positive or negative.
+    -Z_m:  Replaces the elev element.  Values are floats in meters, with Z_m 
+        of 0.000 being the Z coordinate of the host vehicle's BSM which 
+        triggered the warning to be issued.  Values may be positive or negative.
+    -speed_mps:  Replaces the speed element.  Values are float values 
+        with units of meters per second.
+    -heading_deg:  Replaces the heading element.  Values are floats with units
+        of degrees in the range of 0.000 to 359.999.  A heading of zero is due 
+        north, 90 is due east, 180 due south, and 270 due east.
+    -accelSet:  The accelSet element remains, but the standard components of 
+        long, lat, vert, and yaw are replace with long_mpss, lat_mpss, 
+        vert_mpss, and yaw_dps respectively.  All new elements are float values, 
+        with the units of long_mpss, lat_mpss, and vert_mpss being meters per 
+        second per second, and the units of yaw_dps being degrees per second.
+    -crumbData:  The crumbData in the BSMs remains, but the elements of 
+        latOffset, longOffset, elevationOffset, and timeOffset are replaced with
+        yOffset_m, xOffset_m, zOffset_m, and tOffset_s.  All new elements are 
+        float values with the units of meters for yOffset_m, xOffset_m, and 
+        zOffset_m, while units for tOffset_t in seconds.
+All other BSM components are unchanged from the EVENT formats in the provided 
+PDF.
+   
+    
+Changes to DF_MAPEvent dataframe contents
+-------------------------------------------------------------------------------
+Contents of the field collected MAP messages are modified as followed when 
+included in the obfuscated EVENT records:
+
+MAP message data elements removed or modified are:
+    -msgIssueRevision:  This element is removed and not replaced.
+    -id:  The intersection id data element remains, but is replace by an generic
+        letter code (e.g. A, B, C, ...) instead of the true intersection ID.  
+    -revision:  The intersection revision data element is removed and not 
+        replaced.
+    -refPoint: The intersection refPoint element remains, but the sub-elements 
+        of lat, long, and elevation are replaced with X_m, Y_m, and Z_m.  Each
+        of these new refPoint elements are floats with units in meters.  All 
+        real-world coordinates are converted and translated to the same 
+        artificial coordinate system developed for the event's BSM location 
+        data, where the host vehicle's event trigger BSM is placed at the 
+        (0,0,0) coordinate.
+    -speed:  The intersection speedLimit element speed is removed and replaced 
+        with the new element speed_mps.  The value is a float value with the 
+        units of meters per second.
+
+The number of MAP messages is also trimmed from the raw field collected EVENT
+records.  All duplicated MAP messages heard by the host vehicle are removed to 
+reduce redundant data in the obfuscated EVENT record, and the MAP messages 
+which may be heard by the host vehicle but are not located near the EVENT 
+record BSM data points are removed. 
+
+All other MAP message components are unchanged from the EVENT formats in the 
+provided PDF, including all laneSet NodeXY delta objects.
+
+Changes to DF_TIMEvent dataframe contents
+-------------------------------------------------------------------------------
+Contents of the field collected TIM messages are modified as followed when 
+included in the obfuscated EVENT records:
+
+TIM message data elements removed or modified are:
+    -packetID:  the packetID element is retained, but the true packetID is 
+        replaced with a generic letter code (e.g. A, B, C, ...).
+    -position:  the roadSignID position information (lat, long, elevation) is 
+        removed and is not replaced.
+    -startYear:  this element is removed and not replaced.
+    -startTime:  this element is removed and not replaced.
+    -durationTime:  this element is removed and not replaced.
+    -regions:   this entire element, including all sub-elements, is removed and 
+        not replaced with any obfuscated version of that data.
+        
+The number of TIM messages is also trimmed from the raw field collected EVENT
+records, as all duplicated MAP messages heard by the host vehicle are removed
+and only one copy is included in the obfuscated EVENT record.
+
+All other TIM message components are unchanged from the EVENT formats in the 
+provided PDF.
+
+Changes to DF_SPATEvent dataframe contents
+-------------------------------------------------------------------------------
+Contents of the field collected SPaT messages are modified as followed when 
+included in the obfuscated EVENT records:
+
+SPaT message data elements removed or modified are:
+    -timeStamp (message):  the MinuteOfYear time element from the SPaT message 
+        header is removed.  Time details are retained within the individual 
+        intersection details within the body of the SPaT message.
+    -id:  the intersection ID data element remains, but the intersection ID 
+        value from the raw field data is removed and replaced with a generic 
+        letter code (e.g. A, B, C, ...).  It is noted that this letter code 
+        is modified consistently with the replacement of the intersection id 
+        for MAP data.  This allows obfuscated MAP and SPaT data from the same 
+        intersection to still be linked together with a common ID letter code.
+    -timeStamp (intersection):  the timeStamp element within each intersection 
+        is removed and replaced with the time_sec data element.  The value of 
+        time_sec is a float value with units of seconds.  The new obfuscated 
+        time_sec values use the same time scale as the obfuscated BSMs (where 
+        the event warning was issued at time=0.000).  Negative values indicate 
+        SPaT messages heard prior to the warning and postive values indicate 
+        SPaT messages heard after the warning
+    -state-time-speed Time Elements:  The minEndTime, maxEndTime, likelyTime, 
+        and nextTime elements in the signalGroup's timing details are removed 
+        and replaced with minEndTime_s, maxEndTime_s, likelyTime_s, 
+        and nextTime_s respectively.  The meanings of the elements remain the 
+        same as those in the J2735 standard, but the values are changed to float
+        values with a unit of seconds, and are transformed into the same event 
+        specific time scale as the BSMs (event warning issued at time=0.000).
+
+All other SPaT message components are unchanged from the EVENT formats in the 
+provided PDF.
+   
+File last updated: May 24, 2021
+
