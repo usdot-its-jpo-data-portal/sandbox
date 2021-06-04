@@ -36,7 +36,7 @@ There are currently three data sandboxes available:
 ### CV Pilot Data
 CV Pilot data are located in the `usdot-its-cvpilot-public-data` s3 bucket.
 
-An overview of open data resources related to the Connected Vehicle Pilot can be found in this [data story](https://data.transportation.gov/stories/s/Connected-Vehicle-Pilot-Sandbox/hr8h-ufhq). Please see change notes relating to any major changes to the data at the [cv_pilot_ingest GitHub repository wiki page](https://github.com/usdot-its-jpo-data-portal/cv_pilot_ingest/wiki/ITS-CV-Pilot-Sandbox-Data-Change-Notes) and consult our [log of known data pipeline downtime and caveats](https://github.com/usdot-its-jpo-data-portal/sandbox/wiki/ITS-CV-Pilot-Data-Sandbox-Known-Data-Gaps-and-Caveats) prior to using the data. 
+An overview of open data resources related to the Connected Vehicle Pilot can be found in this [data story](https://data.transportation.gov/stories/s/Connected-Vehicle-Pilot-Sandbox/hr8h-ufhq). Please see change notes relating to any major changes to the data at the [cv_pilot_ingest GitHub repository wiki page](https://github.com/usdot-its-jpo-data-portal/cv_pilot_ingest/wiki/ITS-CV-Pilot-Sandbox-Data-Change-Notes) and consult our [log of known data pipeline downtime and caveats](https://github.com/usdot-its-jpo-data-portal/sandbox/wiki/ITS-CV-Pilot-Data-Sandbox-Known-Data-Gaps-and-Caveats) prior to using the data. Detailed data dictionaries and documentations for the data from each pilot site can be found in their respective folders in the [doc](doc/) folder of this repository. Sample records can be downloaded from the CVP Sandbox [Web Interface](#web-interface) directly or be downloaded from the [sample](sample/) folder of this repository.
 
 #### Folder Hierarchy: CV Pilot Data
 CV Pilot data is currently stored in the following folder hierarchy based on when the data is generated:
@@ -52,7 +52,7 @@ Files generated after January 18, 2018 are newline JSON files containing multipl
 
 #### Additional Resources
 
-A basic tutorial covering how to access the WYDOT data in a Python Jupyter Notebook is provided [here](example/accessing_wydot.ipynb). Note that analysis of the data can be done by almost any programming langauge - Python was just selected for this example due to its ease of use and popularity.
+We included basic tutorials on how to access the [WYDOT](example/accessing_wydot.ipynb) and [NYCDOT](example/accessing_nycdot_data.ipynb) CVP data in Python Jupyter notebooks in this repository. Note that analysis of the data can be done by almost any programming langauge - Python was just selected for this example due to its ease of use and popularity.
 
 Additional information about CV data is available at:
 
