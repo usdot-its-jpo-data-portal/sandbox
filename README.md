@@ -102,11 +102,13 @@ Each file is a newline JSON file containing the work zone statuses for a particu
 There are various ways to access the full datasets on ITS Data Sandbox: interactively through the [web interface](#web-interface) of each sandbox, or programmatically using the [Amazon Command Line Interface (CLI)](#aws-cli) or our [Sandbox Exporter](#sandbox-exporter) Python package. At this time, the Sandbox Exporter Python package can only be used to query data from WYDOT and THEA.
 
 ### Web Interface
-One Web Interface is available for each data sandbox and allows users to browse through the sandbox's folder structure and click to download individual batched data files. The web interface for each data sandbox are available at `http://{bucket-name}.s3.amazonaws.com/index.html`. For your convenience, we have linked them here:
+One web interface is available for each data sandbox and allows users to browse through the sandbox's folder structure and click to download individual batched data files. The web interface for each data sandbox are available at `http://{bucket-name}.s3.amazonaws.com/index.html`. For your convenience, we have linked them here:
 
 - [Connected Vehicle (CV) Pilot Data Sandbox](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html)
 - [Work Zone Raw Data Sandbox](http://usdot-its-workzone-raw-public-data.s3.amazonaws.com/index.html)
 - [Work Zone Data Sandbox](http://usdot-its-workzone-public-data.s3.amazonaws.com/index.html)
+
+The `index.html` files for these web interface can be found in the [`ui`](ui/) folder of this GitHub repository, under folders with their corresponding bucket names.
 
 ### AWS CLI
 
