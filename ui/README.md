@@ -1,7 +1,7 @@
 
 # Sandbox UI
 
-This folder contains the "index.html" files that serve as the web interfaces for each of the data sandbox, under the folder matching its data bucket name (e.g. the "index.html" file for the sandbox bucket named "usdot-its-cvpilot-public-data" would be found in the [usdot-its-cvpilot-public-data/](usdot-its-cvpilot-public-data/) folder).
+This folder contains the "index.html" files that serve as the web interface for each data sandbox, under the folder matching its bucket name (e.g. the "index.html" file for the sandbox named "usdot-its-cvpilot-public-data" would be found in the [usdot-its-cvpilot-public-data/](usdot-its-cvpilot-public-data/) folder).
 
 ## Deployment of Sandbox UI (i.e. S3 Explorer site)
 
