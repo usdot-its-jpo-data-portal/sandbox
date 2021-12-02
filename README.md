@@ -34,7 +34,7 @@ There are currently three data sandboxes available:
 - [Work Zone Data Sandbox](#folder-hierarchy-wzdx-semi-processed-data)
 
 ### CV Pilot Data
-CV Pilot data are located in the `usdot-its-cvpilot-public-data` s3 bucket.
+CV Pilot data are located in the `usdot-its-cvpilot-publicdata` s3 bucket.
 
 An overview of open data resources related to the Connected Vehicle Pilot can be found in this [data story](https://data.transportation.gov/stories/s/Connected-Vehicle-Pilot-Sandbox/hr8h-ufhq). Please see change notes relating to any major changes to the data at the [cv_pilot_ingest GitHub repository wiki page](https://github.com/usdot-its-jpo-data-portal/cv_pilot_ingest/wiki/ITS-CV-Pilot-Sandbox-Data-Change-Notes) and consult our [log of known data pipeline downtime and caveats](https://github.com/usdot-its-jpo-data-portal/sandbox/wiki/ITS-CV-Pilot-Data-Sandbox-Known-Data-Gaps-and-Caveats) prior to using the data. Detailed data dictionaries and documentations for the data from each pilot site can be found in their respective folders in the [doc](doc/) folder of this repository. Sample records can be downloaded from the CVP Sandbox [Web Interface](#web-interface) directly or be downloaded from the [sample](sample/) folder of this repository.
 
