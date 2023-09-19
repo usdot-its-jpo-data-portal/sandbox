@@ -34,7 +34,7 @@ There are currently three data sandboxes available:
 - [Work Zone Data Sandbox](#folder-hierarchy-wzdx-semi-processed-data)
 
 ### CV Pilot Data
-CV Pilot data are located in the `usdot-its-cvpilot-public-data` s3 bucket.
+CV Pilot data are located in the `usdot-its-cvpilot-publicdata` s3 bucket.
 
 An overview of open data resources related to the Connected Vehicle Pilot can be found in this [data story](https://data.transportation.gov/stories/s/Connected-Vehicle-Pilot-Sandbox/hr8h-ufhq). Please see change notes relating to any major changes to the data at the [cv_pilot_ingest GitHub repository wiki page](https://github.com/usdot-its-jpo-data-portal/cv_pilot_ingest/wiki/ITS-CV-Pilot-Sandbox-Data-Change-Notes) and consult our [log of known data pipeline downtime and caveats](https://github.com/usdot-its-jpo-data-portal/sandbox/wiki/ITS-CV-Pilot-Data-Sandbox-Known-Data-Gaps-and-Caveats) prior to using the data. Detailed data dictionaries and documentations for the data from each pilot site can be found in their respective folders in the [doc](doc/) folder of this repository. Sample records can be downloaded from the CVP Sandbox [Web Interface](#web-interface) directly or be downloaded from the [sample](sample/) folder of this repository.
 
@@ -62,10 +62,10 @@ Additional information about CV data is available at:
 
 ### WZDx Feed Data
 
-Raw WZDx data are located in the `usdot-its-workzone-raw-public-data` S3 bucket.
-Semi-processed WZDx data are located in the `usdot-its-workzone-public-data` S3 bucket.
+Raw WZDx data are located in the `usdot-its-workzone-raw-publicdata` S3 bucket.
+Semi-processed WZDx data are located in the `usdot-its-workzone-publicdata` S3 bucket.
 
-Feeds are ingested and archived into the [ITS Work Zone Raw Data Sandbox](http://usdot-its-workzone-raw-public-data.s3.amazonaws.com/index.html) and [ITS Work Zone Data Sandbox](http://usdot-its-workzone-public-data.s3.amazonaws.com/index.html) using code in the [wzdx_sandbox](https://github.com/usdot-its-jpo-data-portal/wzdx_sandbox) GitHub repository. Users can check whether or not a WZDx feed is being ingested into the sandbox by checking the [WZDx Feed Registry](https://datahub.transportation.gov/d/69qe-yiui), and new WZDx feeds will be added to the feed registry as they become available.
+Feeds are ingested and archived into the [ITS Work Zone Raw Data Sandbox](http://usdot-its-workzone-raw-publicdata.s3.amazonaws.com/index.html) and [ITS Work Zone Data Sandbox](http://usdot-its-workzone-publicdata.s3.amazonaws.com/index.html) using code in the [wzdx_sandbox](https://github.com/usdot-its-jpo-data-portal/wzdx_sandbox) GitHub repository. Users can check whether or not a WZDx feed is being ingested into the sandbox by checking the [WZDx Feed Registry](https://datahub.transportation.gov/d/69qe-yiui), and new WZDx feeds will be added to the feed registry as they become available.
 
 Please browse our [WZDx data story](https://datahub.transportation.gov/stories/s/Work-Zone-Data-Initiative-Partnership/jixs-h7uw/) for an overview of resources related to the Work Zone Data Exchange Feed Registry and Archive. Additional information about the WZDx specifications is available at the [WZDx Specification GitHub repository](https://github.com/usdot-jpo-ode/wzdx).
 
@@ -104,11 +104,11 @@ There are various ways to access the full datasets on ITS Data Sandbox: interact
 ### Web Interface
 Each data sandbox has a web interface, allowing users to browse the sandbox's folder structure and download individual batched data files. The web interface for each data sandbox is available at `http://{bucket-name}.s3.amazonaws.com/index.html`. For your convenience, we have also listed them here:
 
-- [Connected Vehicle (CV) Pilot Data Sandbox](http://usdot-its-cvpilot-public-data.s3.amazonaws.com/index.html)
-- [Work Zone Raw Data Sandbox](http://usdot-its-workzone-raw-public-data.s3.amazonaws.com/index.html)
-- [Work Zone Data Sandbox](http://usdot-its-workzone-public-data.s3.amazonaws.com/index.html)
+- [Connected Vehicle (CV) Pilot Data Sandbox](http://usdot-its-cvpilot-publicdata.s3.amazonaws.com/index.html)
+- [Work Zone Raw Data Sandbox](http://usdot-its-workzone-raw-publicdata.s3.amazonaws.com/index.html)
+- [Work Zone Data Sandbox](http://usdot-its-workzone-publicdata.s3.amazonaws.com/index.html)
 
-The web interface "index.html" files can be found in this GitHub repository within the [`ui`](ui/) folder, under the folder matching its bucket name (e.g. the "index.html" file for the sandbox named "usdot-its-cvpilot-public-data" would be found in the [ui/usdot-its-cvpilot-public-data/](ui/usdot-its-cvpilot-public-data/) folder).
+The web interface "index.html" files can be found in this GitHub repository within the [`ui`](ui/) folder, under the folder matching its bucket name (e.g. the "index.html" file for the sandbox named "usdot-its-cvpilot-publicdata" would be found in the [ui/usdot-its-cvpilot-publicdata/](ui/usdot-its-cvpilot-publicdata/) folder).
 
 ### AWS CLI
 
@@ -139,9 +139,9 @@ The web interface "index.html" files can be found in this GitHub repository with
 
 Now go to your command window. As mentioned previously, the name of the public data sandbox buckets are:
 
- * CV Pilot Data Sandbox: usdot-its-cvpilot-public-data 
- * Work Zone Raw Data Sandbox: usdot-its-workzone-raw-public-data 
- * Work Zone Data Sandbox: usdot-its-workzone-public-data 
+ * CV Pilot Data Sandbox: usdot-its-cvpilot-publicdata 
+ * Work Zone Raw Data Sandbox: usdot-its-workzone-raw-publicdata 
+ * Work Zone Data Sandbox: usdot-its-workzone-publicdata 
 
 Run the following to check access:
 ```
@@ -150,7 +150,7 @@ aws s3 ls s3://{bucket name}/ --recursive --human-readable --summarize --profile
 
 For Example:
 ```
-aws s3 ls s3://usdot-its-cvpilot-public-data/ --recursive --human-readable --summarize --profile default
+aws s3 ls s3://usdot-its-cvpilot-publicdata/ --recursive --human-readable --summarize --profile default
 ```
 
 #### Downloading from S3
@@ -163,7 +163,7 @@ aws s3 cp s3://{bucketname}/ {local_directory} --recursive
 
 For example, to download all BSM data from 2017:
 ```
-aws s3 cp s3://usdot-its-cvpilot-public-data/wydot/BSM/2017/ . --recursive
+aws s3 cp s3://usdot-its-cvpilot-publicdata/wydot/BSM/2017/ . --recursive
 ```
 
 To limit the data being dowloaded you can use AWS CLI's filtering which is detailed here: http://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters.
