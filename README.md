@@ -176,7 +176,7 @@ You can also download data generated between a specified date range into larger 
 - [ITS DataHub](https://www.its.dot.gov/data/) - ITS JPO site which allows users to search for open data from ITS JPO funded research projects.
 - [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode) - Open-source tool from ITS JPO that is used to collect and process CV data in near real time, and route it to other data repositories, including the Amazon S3 bucket.  
 - [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp) - Open-source module from ITS JPO that is used to sanitize the data to ensure no personal information is shared with the public.  
-- [Secure Data Commons(SDC)](https://www.transportation.gov/data/secure) - Limited access online data warehousing and analysis platform for transportation researchers.
+- [Secure Data Commons (SDC)](https://www.transportation.gov/data/secure) - Limited access online data warehousing and analysis platform for transportation researchers.
 
 ## Get Involved
 
