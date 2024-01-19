@@ -17,7 +17,7 @@ This repository contains information on accessing complete datasets from the Uni
 
 ## Background
 
-The ITS Data Sandbox are a collection of public Amazon Simple Storage Service (S3) buckets maintained by JPO's ITS DataHub team and came out of the desire to make raw research data with evolving data schema to be availale in near-real-time. S3 buckets provide an alternative that is similar to traversing a directory structure. The intention of the hierarchy is to:
+The ITS Data Sandbox are a collection of public Amazon Simple Storage Service (S3) buckets maintained by JPO's ITS DataHub team and came out of the desire to make raw research data with evolving data schema to be available in near-real-time. S3 buckets provide an alternative that is similar to traversing a directory structure. The intention of the hierarchy is to:
 
 - Provide a consistent structure within a pilot program
 - Be easily understood by a human traversing the directories
@@ -52,13 +52,12 @@ Files generated after January 18, 2018 are newline JSON files containing multipl
 
 #### Additional Resources
 
-We included basic tutorials on how to access the [WYDOT](example/accessing_wydot.ipynb) and [NYCDOT](example/accessing_nycdot_data.ipynb) CVP data in Python Jupyter notebooks in this repository. Note that analysis of the data can be done by almost any programming langauge - Python was just selected for this example due to its ease of use and popularity.
+We included basic tutorials on how to access the [WYDOT](example/accessing_wydot.ipynb) and [NYCDOT](example/accessing_nycdot_data.ipynb) CVP data in Python Jupyter notebooks in this repository. Note that analysis of the data can be done by almost any programming language - Python was just selected for this example due to its ease of use and popularity.
 
 Additional information about CV data is available at:
 
-- [ITS JPO Connected Vehicles (CV) Pilot Deployment Program](https://www.its.dot.gov/pilots/cv_pilot_plan.htm)-  The pilot deployments are expected to integrate connected vehicle research concepts into practical and effective elements, enhancing existing operational capabilities.
-- [J2735 Standard](http://standards.sae.org/j2735_201603/) - Data standard for CV data
-- [General CV information: Vehicle Based Data and Availability](https://www.its.dot.gov/itspac/october2012/PDF/data_availability.pdf) - General introduction slides on CV data
+- [ITS JPO Connected Vehicles (CV) Pilot Deployment Program](https://www.its.dot.gov/pilots/) - The pilot deployments are expected to integrate connected vehicle research concepts into practical and effective elements, enhancing existing operational capabilities.
+- [J2735 Standard](https://www.sae.org/standards/content/j2735_200911/) - Data standard for CV data
 
 ### WZDx Feed Data
 
@@ -115,7 +114,7 @@ The web interface "index.html" files can be found in this GitHub repository with
 #### Prerequisites for using AWS CLI
 
 1) Have your own Free Amazon Web Services account.
-	- Create one at http://aws.amazon.com
+	- Create one at [this link](https://portal.aws.amazon.com/billing/signup?nc2=h_ct&src=header_signup&redirect_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation#/start/email).
 2) Obtain Access Keys:
 	- On your Amazon account, go to your profile (at the top right)
 	- My Security Credentials > Access Keys > Create New Access Key
@@ -166,7 +165,7 @@ For example, to download all BSM data from 2017:
 aws s3 cp s3://usdot-its-cvpilot-publicdata/wydot/BSM/2017/ . --recursive
 ```
 
-To limit the data being dowloaded you can use AWS CLI's filtering which is detailed here: http://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters.
+To limit the data being downloaded you can use AWS CLI's filtering which is detailed here: http://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters.
 
 ### Sandbox Exporter
 
@@ -177,7 +176,7 @@ You can also download data generated between a specified date range into larger 
 - [ITS DataHub](https://www.its.dot.gov/data/) - ITS JPO site which allows users to search for open data from ITS JPO funded research projects.
 - [Operational Data Environment (ODE)](https://github.com/usdot-jpo-ode/jpo-ode) - Open-source tool from ITS JPO that is used to collect and process CV data in near real time, and route it to other data repositories, including the Amazon S3 bucket.  
 - [Privacy Module](https://github.com/usdot-jpo-ode/jpo-cvdp) - Open-source module from ITS JPO that is used to sanitize the data to ensure no personal information is shared with the public.  
-- [Secure Data Commons(SDC)](https://its.dot.gov/data/secure/) - Limited access online data warehousing and analysis platform for transportation researchers.
+- [Secure Data Commons (SDC)](https://www.transportation.gov/data/secure) - Limited access online data warehousing and analysis platform for transportation researchers.
 
 ## Get Involved
 
